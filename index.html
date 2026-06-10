@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roelof Junior Haar · Creatief Ontwerper &amp; Videograaf</title>
+  <meta name="description" content="Portfolio van Roelof Junior Haar, creatief ontwerper, videograaf en editor vanuit Nederland." />
+  <meta name="theme-color" content="#F0EEE6" />
+  <meta property="og:title" content="Roelof Junior Haar · Creatief Ontwerper &amp; Videograaf" />
+  <meta property="og:description" content="Portfolio van Roelof Junior Haar, creatief ontwerper, videograaf en editor vanuit Nederland." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Schibsted+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
+</head>
+<body>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <header class="site-nav" id="siteNav">
+    <a href="index.html" class="site-nav__logo">R<em>J</em>H</a>
+    <nav class="site-nav__links" aria-label="Hoofdnavigatie">
+      <a href="#over">Over</a>
+      <a href="#werk">Werk</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="#contact" class="site-nav__status">Beschikbaar voor freelance</a>
+  </header>
+
+  <section class="hero" id="hero">
+    <canvas class="hero__canvas" id="heroCanvas" aria-hidden="true"></canvas>
+
+    <div class="hero__meta">
+      <span class="mono-label hero__meta-item">Portfolio / Vol. 01</span>
+      <span class="mono-label hero__meta-item hero__meta-item--hide-sm">Geselecteerd werk / 2026</span>
+      <span class="mono-label hero__meta-item">Gevestigd in Nederland</span>
+    </div>
+
+    <h1 class="hero__name">
+      <span class="hero__line hero__line--1"><span class="hero__line-inner">Roelof</span></span>
+      <span class="hero__line hero__line--2"><span class="hero__line-inner"><em>Junior</em></span></span>
+      <span class="hero__line hero__line--3"><span class="hero__line-inner">Haar<span class="hero__period">.</span></span></span>
+    </h1>
+
+    <div class="hero__foot">
+      <p class="hero__role">
+        <span class="mono-label">Wat ik doe</span>
+        Creatief ontwerper <em>&amp;</em> videograaf <em>/</em> editor
+      </p>
+      <div class="hero__actions">
+        <a href="https://www.instagram.com/bemooks/?hl=en" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+          </svg>
+          @bemooks
+        </a>
+        <a href="#werk" class="btn btn--solid">Bekijk werk ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="over">
+    <div class="section__head reveal">
+      <h2 class="section__title">Over <em>mij</em></h2>
+      <span class="mono-label">01 / Over</span>
+    </div>
+
+    <div class="about__grid">
+      <div class="about__left reveal">
+        <h3 class="about__heading">Dingen maken die <em>ergens over gaan.</em></h3>
+        <p class="about__bio">
+          Ik ben Roelof, ik ontwerp en film. Niet omdat het moet, maar omdat ik anders niet weet waar ik mee bezig ben. Alles wat ik maak heeft een reden en een gevoel, van een merkidentiteit tot een korte film.
+        </p>
+        <p class="about__bio">
+          Wat mij drijft is het verhaal achter het beeld. Een goed ontwerp of een goede video hoeft niet per se fancy te zijn, het moet gewoon kloppen. En als het klopt, blijft het hangen.
+        </p>
+
+        <div class="tools">
+          <span class="mono-label">Wat ik gebruik</span>
+          <div class="tool">
+            <span class="tool__index">01</span>
+            <span class="tool__name">DaVinci Resolve</span>
+            <span class="tool__pct">100%</span>
+            <div class="tool__track"><div class="tool__bar" data-width="100"></div></div>
+          </div>
+          <div class="tool">
+            <span class="tool__index">02</span>
+            <span class="tool__name">Adobe Suite</span>
+            <span class="tool__pct">100%</span>
+            <div class="tool__track"><div class="tool__bar" data-width="100"></div></div>
+          </div>
+          <div class="tool">
+            <span class="tool__index">03</span>
+            <span class="tool__name">Claude Code / Agentic Workflows</span>
+            <span class="tool__pct">100%</span>
+            <div class="tool__track"><div class="tool__bar" data-width="100"></div></div>
+          </div>
+          <div class="tool">
+            <span class="tool__index">04</span>
+            <span class="tool__name">After Effects</span>
+            <span class="tool__pct">100%</span>
+            <div class="tool__track"><div class="tool__bar" data-width="100"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="portrait reveal d1">
+        <img src="assets/thumbs/roelof-image%20Large.jpeg" alt="Portret van Roelof Junior Haar" decoding="async" />
+        <span class="portrait__caption">Roelof Junior Haar / NL</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="werk">
+    <div class="section__head reveal">
+      <h2 class="section__title">Mijn <em>werk</em></h2>
+      <span class="mono-label">02 / Werk</span>
+    </div>
+
+    <div class="work-list">
+      <a href="brand-identity/index.html" class="work-row reveal" data-preview="assets/thumbs/brand-identity.png">
+        <span class="work-row__index">01</span>
+        <h3 class="work-row__title">Brand <em>Identity</em></h3>
+        <span class="work-row__tags">Ontwerp / Merkidentiteit / Print</span>
+        <span class="work-row__arrow">→</span>
+        <img class="work-row__thumb" src="assets/thumbs/brand-identity.png" alt="" decoding="async" />
+      </a>
+      <a href="visual-motion/index.html" class="work-row reveal" data-preview="assets/thumbs/visual-motion-opt.jpg">
+        <span class="work-row__index">02</span>
+        <h3 class="work-row__title">Visual <em>Motion</em></h3>
+        <span class="work-row__tags">After Effects / Motion Graphics</span>
+        <span class="work-row__arrow">→</span>
+        <img class="work-row__thumb" src="assets/thumbs/visual-motion-opt.jpg" alt="" decoding="async" />
+      </a>
+      <a href="video-editing/index.html" class="work-row reveal" data-preview="assets/thumbs/classic-hits-opt.jpg">
+        <span class="work-row__index">03</span>
+        <h3 class="work-row__title">Video <em>/ Editing</em></h3>
+        <span class="work-row__tags">Edit / Storytelling / Event</span>
+        <span class="work-row__arrow">→</span>
+        <img class="work-row__thumb" src="assets/thumbs/classic-hits-opt.jpg" alt="" decoding="async" />
+      </a>
+      <a href="social-marketing/index.html" class="work-row reveal" data-preview="assets/thumbs/zet-m-op%20Large.jpeg">
+        <span class="work-row__index">04</span>
+        <h3 class="work-row__title">Social <em>Marketing</em></h3>
+        <span class="work-row__tags">Social Ads / Content / Campagne</span>
+        <span class="work-row__arrow">→</span>
+        <img class="work-row__thumb" src="assets/thumbs/zet-m-op%20Large.jpeg" alt="" decoding="async" />
+      </a>
+    </div>
+    <div class="work-preview" id="workPreview" aria-hidden="true"></div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="contact__grid">
+      <div class="contact__left reveal">
+        <span class="mono-label">03 / Contact</span>
+        <h2 class="contact__heading">Samen<em>werken?</em></h2>
+        <a href="mailto:bemooks@gmail.com" class="contact__email">bemooks@gmail.com</a>
+        <div class="contact__meta">
+          <span>Beschikbaar voor freelance</span>
+          <span>Nederland &amp; remote</span>
+        </div>
+      </div>
+      <div class="contact__right reveal d1">
+        <form class="contact-form" id="contactForm" action="https://formspree.io/f/xaqlozww" method="POST" novalidate>
+          <div class="form-field">
+            <label for="name" class="form-label">Naam</label>
+            <input type="text" id="name" name="name" class="form-input" placeholder="Jouw naam" required autocomplete="name" />
+          </div>
+          <div class="form-field">
+            <label for="email" class="form-label">E-mail</label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="jouw@email.com" required autocomplete="email" />
+          </div>
+          <div class="form-field">
+            <label for="message" class="form-label">Bericht</label>
+            <textarea id="message" name="message" class="form-input form-textarea" placeholder="Vertel me over jouw project..." required rows="4"></textarea>
+          </div>
+          <button type="submit" class="form-btn" id="formBtn">Stuur bericht →</button>
+          <p class="form-status" id="formStatus" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer__watermark" aria-hidden="true">Roelof Junior Haar</div>
+    <div class="footer__bar">
+      <span>&copy; 2026 Roelof Junior Haar</span>
+      <a href="https://www.instagram.com/bemooks/?hl=en" target="_blank" rel="noopener noreferrer">Instagram / @bemooks</a>
+      <a href="#hero">Terug naar boven ↑</a>
+    </div>
+  </footer>
+
+</body>
+</html>

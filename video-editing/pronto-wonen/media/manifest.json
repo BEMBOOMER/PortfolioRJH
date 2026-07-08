@@ -1,0 +1,362 @@
+[
+ {
+  "slug": "mvv-man",
+  "title": "Man vs Vrouw — Man",
+  "group": "man-vs-vrouw",
+  "duration": 20.2
+ },
+ {
+  "slug": "mvv-vrouw",
+  "title": "Man vs Vrouw — Vrouw",
+  "group": "man-vs-vrouw",
+  "duration": 40.0
+ },
+ {
+  "slug": "mvv-vs",
+  "title": "Man vs Vrouw — VS",
+  "group": "man-vs-vrouw",
+  "duration": 54.2
+ },
+ {
+  "slug": "mvv-outro1",
+  "title": "Kussens — outro 1",
+  "group": "man-vs-vrouw",
+  "duration": 26.9
+ },
+ {
+  "slug": "mvv-outro2",
+  "title": "Kussens — outro 2",
+  "group": "man-vs-vrouw",
+  "duration": 26.7
+ },
+ {
+  "slug": "mvv-deel1",
+  "title": "Vrouw — deel 1",
+  "group": "man-vs-vrouw",
+  "duration": 19.5
+ },
+ {
+  "slug": "mvv-deel2",
+  "title": "Vrouw — deel 2",
+  "group": "man-vs-vrouw",
+  "duration": 14.4
+ },
+ {
+  "slug": "mvv-deel3",
+  "title": "Vrouw — deel 3",
+  "group": "man-vs-vrouw",
+  "duration": 12.1
+ },
+ {
+  "slug": "pov-500euro",
+  "title": "POV: 500 euro budget",
+  "group": "pov",
+  "duration": 22.4
+ },
+ {
+  "slug": "pov-rondje",
+  "title": "POV: rondje Pronto",
+  "group": "pov",
+  "duration": 41.3
+ },
+ {
+  "slug": "pov-kort1",
+  "title": "POV: rondje — kort 1",
+  "group": "pov",
+  "duration": 15.9
+ },
+ {
+  "slug": "pov-kort2",
+  "title": "POV: rondje — kort 2",
+  "group": "pov",
+  "duration": 14.0
+ },
+ {
+  "slug": "podcast-1",
+  "title": "Podcast — fragment 1",
+  "group": "podcast",
+  "duration": 15.1
+ },
+ {
+  "slug": "podcast-2",
+  "title": "Podcast — fragment 2",
+  "group": "podcast",
+  "duration": 16.9
+ },
+ {
+  "slug": "podcast-3",
+  "title": "Podcast — fragment 3",
+  "group": "podcast",
+  "duration": 13.8
+ },
+ {
+  "slug": "podcast-4",
+  "title": "Podcast — fragment 4",
+  "group": "podcast",
+  "duration": 17.7
+ },
+ {
+  "slug": "podcast-5",
+  "title": "Podcast — fragment 5",
+  "group": "podcast",
+  "duration": 21.2
+ },
+ {
+  "slug": "podcast-6",
+  "title": "Podcast — fragment 6",
+  "group": "podcast",
+  "duration": 13.0
+ },
+ {
+  "slug": "wk-fabriekbank1",
+  "title": "WK — Fabriek bank 1",
+  "group": "wk",
+  "duration": 13.0
+ },
+ {
+  "slug": "wk-fabriekbank2",
+  "title": "WK — Fabriek bank 2",
+  "group": "wk",
+  "duration": 13.2
+ },
+ {
+  "slug": "wk-hoekbank",
+  "title": "WK — Hoekbank",
+  "group": "wk",
+  "duration": 9.9
+ },
+ {
+  "slug": "wk-persconf",
+  "title": "WK — Persconferentie",
+  "group": "wk",
+  "duration": 52.1
+ },
+ {
+  "slug": "wk-voetbal",
+  "title": "WK — Voetbal",
+  "group": "wk",
+  "duration": 14.1
+ },
+ {
+  "slug": "wk-japan",
+  "title": "WK — Japan",
+  "group": "wk",
+  "duration": 15.2
+ },
+ {
+  "slug": "wk-pauzeer",
+  "title": "WK — Pauzeer",
+  "group": "wk",
+  "duration": 4.4
+ },
+ {
+  "slug": "wk-tunesie",
+  "title": "WK — Tunesië",
+  "group": "wk",
+  "duration": 27.0
+ },
+ {
+  "slug": "wk-tunesie-gw",
+  "title": "WK — Tunesië (geen winnaar)",
+  "group": "wk",
+  "duration": 19.3
+ },
+ {
+  "slug": "wk-winnaar-tunesie",
+  "title": "WK — Winnaar Tunesië",
+  "group": "wk",
+  "duration": 14.8
+ },
+ {
+  "slug": "wk-zweden",
+  "title": "WK — Zweden",
+  "group": "wk",
+  "duration": 25.3
+ },
+ {
+  "slug": "wk-zweden-gw",
+  "title": "WK — Zweden (geen winnaar)",
+  "group": "wk",
+  "duration": 16.4
+ },
+ {
+  "slug": "vangen-1",
+  "title": "Vangen 1",
+  "group": "vangen",
+  "duration": 9.4
+ },
+ {
+  "slug": "vangen-2",
+  "title": "Vangen 2",
+  "group": "vangen",
+  "duration": 5.7
+ },
+ {
+  "slug": "vangen-3",
+  "title": "Vangen 3",
+  "group": "vangen",
+  "duration": 10.0
+ },
+ {
+  "slug": "vangen-4",
+  "title": "Vangen 4",
+  "group": "vangen",
+  "duration": 11.0
+ },
+ {
+  "slug": "vangen-5",
+  "title": "Vangen 5",
+  "group": "vangen",
+  "duration": 7.5
+ },
+ {
+  "slug": "vangen-trend",
+  "title": "Vangen — TikTok trend",
+  "group": "vangen",
+  "duration": 13.7
+ },
+ {
+  "slug": "raden-blind1",
+  "title": "Blind raden 1",
+  "group": "raden",
+  "duration": 11.4
+ },
+ {
+  "slug": "raden-blind2",
+  "title": "Blind raden 2",
+  "group": "raden",
+  "duration": 19.5
+ },
+ {
+  "slug": "raden-kaarshouder",
+  "title": "Raad het — kaarshouder",
+  "group": "raden",
+  "duration": 21.9
+ },
+ {
+  "slug": "raden-vaas",
+  "title": "Raad het — vaas",
+  "group": "raden",
+  "duration": 21.9
+ },
+ {
+  "slug": "raden-lovesign",
+  "title": "Raad het — love sign",
+  "group": "raden",
+  "duration": 35.9
+ },
+ {
+  "slug": "raden-vogel",
+  "title": "Raad het — vogel",
+  "group": "raden",
+  "duration": 18.7
+ },
+ {
+  "slug": "raden-compilatie",
+  "title": "Raad het — compilatie",
+  "group": "raden",
+  "duration": 54.7
+ },
+ {
+  "slug": "raden-kijker",
+  "title": "Raad mee met de kijker",
+  "group": "raden",
+  "duration": 27.6
+ },
+ {
+  "slug": "past-niet-1",
+  "title": "Past hier niet 1",
+  "group": "past-niet",
+  "duration": 10.6
+ },
+ {
+  "slug": "past-niet-2",
+  "title": "Past hier niet 2",
+  "group": "past-niet",
+  "duration": 11.3
+ },
+ {
+  "slug": "past-niet-3",
+  "title": "Past hier niet 3",
+  "group": "past-niet",
+  "duration": 13.0
+ },
+ {
+  "slug": "hitte-1",
+  "title": "POV: hitte — waaier",
+  "group": "hitte",
+  "duration": 20.0
+ },
+ {
+  "slug": "hitte-2",
+  "title": "POV: hitte — stekker",
+  "group": "hitte",
+  "duration": 31.5
+ },
+ {
+  "slug": "hitte-3",
+  "title": "POV: hitte — ventilator",
+  "group": "hitte",
+  "duration": 32.7
+ },
+ {
+  "slug": "hitte-4",
+  "title": "POV: hitte — combi",
+  "group": "hitte",
+  "duration": 31.0
+ },
+ {
+  "slug": "zoekmij-kort",
+  "title": "Zoek mij — kort",
+  "group": "zoekmij",
+  "duration": 25.3
+ },
+ {
+  "slug": "zoekmij-lang",
+  "title": "Zoek mij — lang",
+  "group": "zoekmij",
+  "duration": 29.0
+ },
+ {
+  "slug": "irritaties-1",
+  "title": "Irritaties — de boer",
+  "group": "irritaties",
+  "duration": 20.4
+ },
+ {
+  "slug": "irritaties-2",
+  "title": "Irritaties — de catwalk",
+  "group": "irritaties",
+  "duration": 15.5
+ },
+ {
+  "slug": "irritaties-3",
+  "title": "Irritaties — de discussie",
+  "group": "irritaties",
+  "duration": 28.5
+ },
+ {
+  "slug": "irritaties-cta",
+  "title": "Irritaties — CTA",
+  "group": "irritaties",
+  "duration": 9.5
+ },
+ {
+  "slug": "irritaties-1-cta",
+  "title": "Irritaties 1 + CTA",
+  "group": "irritaties",
+  "duration": 29.9
+ },
+ {
+  "slug": "irritaties-2-cta",
+  "title": "Irritaties 2 + CTA",
+  "group": "irritaties",
+  "duration": 25.0
+ },
+ {
+  "slug": "irritaties-3-cta",
+  "title": "Irritaties 3 + CTA",
+  "group": "irritaties",
+  "duration": 38.0
+ }
+]

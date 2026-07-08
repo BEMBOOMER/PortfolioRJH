@@ -1,534 +1,687 @@
-/* ════════════════════════════════════════════════════════════
-   ROELOF JUNIOR HAAR / PORTFOLIO
-   script.js / "ATELIER" v2 (no external libraries)
+/* ═══════════════════════════════════════════════════════════
+   ROELOF JUNIOR HAAR — PORTFOLIO
+   script.js — NEO-BRUTALISM REBRAND
 
-   1.  Custom cursor
-   2.  Navigation (hide on scroll down)
-   3.  Hero entrance + liquid canvas
-   4.  Scroll reveals (IntersectionObserver)
-   5.  Tool bars
-   6.  Work list hover preview
-   7.  YouTube facade (click-to-play)
-   8.  Gallery lightbox
-   9.  Contact form (Formspree)
+   TABLE OF CONTENTS
+   1.  Custom Cursor
+   2.  Navigation (hide on scroll down, show on scroll up)
+   3.  Hero Entrance Animation
+   4.  Scroll Reveal (IntersectionObserver)
+   5.  Skill Bar Animation
+   6.  Contact Form (async Formspree submission)
+   7.  Stagger Animations
+   8.  Magnetic Hover Effects
+   9.  Video Fallback Links
    10. Init
-   ════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════════ */
 
 'use strict';
 
-const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-/* ── 1. Custom cursor ─────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   1. Custom Cursor
+───────────────────────────────────────── */
 function initCursor() {
   const dot  = document.getElementById('cursorDot');
   const ring = document.getElementById('cursorRing');
+
   if (!dot || !ring) return;
   if (window.matchMedia('(pointer: coarse)').matches) return;
 
   let mouseX = -100, mouseY = -100;
   let ringX  = -100, ringY  = -100;
 
-  document.addEventListener('mousemove', (e) => {
+  document.addEventListener('pointermove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
     dot.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
-  });
+  }, { passive: true });
 
-  const LERP = 0.22;
-  (function animateRing() {
+  const LERP = 0.12;
+
+  function animateRing() {
     ringX += (mouseX - ringX) * LERP;
     ringY += (mouseY - ringY) * LERP;
     ring.style.transform = `translate(calc(${ringX}px - 50%), calc(${ringY}px - 50%))`;
     requestAnimationFrame(animateRing);
-  })();
+  }
+  animateRing();
 
-  const interactive = 'a, button, [role="button"], input, textarea, label';
+  const interactiveSelector = 'a, button, [role="button"], input, textarea, label, .project-card';
+
   document.addEventListener('mouseover', (e) => {
-    if (e.target.closest(interactive)) document.body.classList.add('cursor--hover');
+    if (e.target.closest(interactiveSelector)) {
+      document.body.classList.add('cursor--hover');
+    }
   });
   document.addEventListener('mouseout', (e) => {
-    if (e.target.closest(interactive)) document.body.classList.remove('cursor--hover');
+    if (e.target.closest(interactiveSelector)) {
+      document.body.classList.remove('cursor--hover');
+    }
   });
-  document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
-  document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '1'; });
+
+  document.addEventListener('mouseleave', () => {
+    dot.style.opacity  = '0';
+    ring.style.opacity = '0';
+  });
+  document.addEventListener('mouseenter', () => {
+    dot.style.opacity  = '1';
+    ring.style.opacity = '1';
+  });
 }
 
-/* ── 2. Navigation ────────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   2. Navigation
+───────────────────────────────────────── */
 function initNav() {
-  const nav = document.getElementById('siteNav');
+  const nav = document.getElementById('nav');
   if (!nav) return;
 
-  let lastY = 0, ticking = false;
-  const THRESHOLD = 90;
+  let lastScrollY = 0;
+  let ticking     = false;
+  const THRESHOLD = 80;
 
-  function update() {
-    const y = window.scrollY;
-    if (y > THRESHOLD && y > lastY) nav.classList.add('site-nav--hidden');
-    else nav.classList.remove('site-nav--hidden');
-    lastY = y;
+  function updateNav() {
+    const currentY = window.scrollY;
+
+    if (currentY > THRESHOLD) {
+      if (currentY > lastScrollY) {
+        nav.classList.add('nav--hidden');
+      } else {
+        nav.classList.remove('nav--hidden');
+      }
+    } else {
+      nav.classList.remove('nav--hidden');
+    }
+
+    lastScrollY = currentY;
     ticking = false;
   }
 
   window.addEventListener('scroll', () => {
-    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    if (!ticking) {
+      requestAnimationFrame(updateNav);
+      ticking = true;
+    }
   }, { passive: true });
 }
 
-/* ── 3a. Hero entrance ────────────────────────────────────── */
-function initHero() {
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => document.body.classList.add('is-loaded'));
-  });
-}
+/* ─────────────────────────────────────────
+   3. Hero Entrance Animation
+───────────────────────────────────────── */
+function initHeroAnimation() {
+  const words  = document.querySelectorAll('.hero__word');
+  const role   = document.querySelector('.hero__role');
+  const scroll = document.querySelector('.hero__scroll');
+  const labels = document.querySelectorAll('.hero__label');
 
-/* split the hero name into letters for the per-letter hover */
-function initHeroChars() {
-  const inners = document.querySelectorAll('.hero__name .hero__line-inner');
-  if (!inners.length) return;
+  const BASE_DELAY = 120;
 
-  inners.forEach(inner => {
-    const walker = document.createTreeWalker(inner, NodeFilter.SHOW_TEXT);
-    const textNodes = [];
-    while (walker.nextNode()) {
-      const node = walker.currentNode;
-      if (node.textContent.trim() && !node.parentElement.closest('.hero__period')) {
-        textNodes.push(node);
-      }
-    }
-    textNodes.forEach(node => {
-      const frag = document.createDocumentFragment();
-      for (const ch of node.textContent) {
-        if (ch.trim()) {
-          const span = document.createElement('span');
-          span.className = 'hero__char';
-          span.textContent = ch;
-          frag.appendChild(span);
-        } else {
-          frag.appendChild(document.createTextNode(ch));
-        }
-      }
-      node.replaceWith(frag);
-    });
+  words.forEach((word, i) => {
+    setTimeout(() => {
+      word.classList.add('is-visible');
+    }, BASE_DELAY + i * 120);
   });
 
-  const period = document.querySelector('.hero__period');
-  if (period) period.classList.add('hero__char');
-}
+  // Animate labels with stagger
+  labels.forEach((label, i) => {
+    label.style.opacity = '0';
+    label.style.transform = 'scale(0.8)';
+    label.style.transition = 'opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+    setTimeout(() => {
+      label.style.opacity = '1';
+      label.style.transform = 'scale(1)';
+    }, 400 + i * 100);
+  });
 
-/* ── 3b. Hero liquid canvas ───────────────────────────────────
-   Angular "liquid" shader in paper/terracotta tones that chases
-   the pointer. Plain WebGL, no dependencies, DPR capped, paused
-   when the hero is off screen. */
-function initHeroCanvas() {
-  const canvas = document.getElementById('heroCanvas');
-  const hero = document.querySelector('.hero');
-  if (!canvas || !hero) return;
-  if (REDUCED_MOTION) { canvas.remove(); return; }
-
-  const gl = canvas.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' });
-  if (!gl) { canvas.remove(); return; }
-
-  const VERT = `
-attribute vec2 a;
-void main() { gl_Position = vec4(a, 0.0, 1.0); }`;
-
-  const FRAG = `
-precision highp float;
-uniform vec2 u_res;
-uniform float u_t;
-uniform vec2 u_m;
-
-float hash(vec2 p) {
-  p = fract(p * vec2(123.34, 456.21));
-  p += dot(p, p + 45.32);
-  return fract(p.x * p.y);
-}
-float noise(vec2 p) {
-  vec2 i = floor(p), f = fract(p);
-  f = f * f * (3.0 - 2.0 * f);
-  float a = hash(i);
-  float b = hash(i + vec2(1.0, 0.0));
-  float c = hash(i + vec2(0.0, 1.0));
-  float d = hash(i + vec2(1.0, 1.0));
-  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
-}
-float fbm(vec2 p) {
-  float v = 0.0, amp = 0.5;
-  for (int i = 0; i < 4; i++) { v += amp * noise(p); p *= 2.03; amp *= 0.5; }
-  return v;
-}
-
-void main() {
-  vec2 uv = gl_FragCoord.xy / u_res;
-  float asp = u_res.x / u_res.y;
-  vec2 p = vec2(uv.x * asp, uv.y);
-  vec2 m = vec2(u_m.x * asp, u_m.y);
-  float t = u_t * 0.07;
-  float dm = distance(p, m);
-
-  /* domain warp, quantized for a faceted, angular feel */
-  vec2 w = vec2(fbm(p * 2.0 + t), fbm(p * 2.0 - t + 5.2));
-  w = floor(w * 5.0) / 5.0;
-  float pull = smoothstep(0.95, 0.0, dm);
-  float n = fbm(p * 2.4 + w * 1.5 + (m - p) * 0.45 * pull);
-  float q = floor(n * 8.0) / 8.0;
-
-  vec3 paper  = vec3(0.941, 0.933, 0.902);
-  vec3 cream  = vec3(0.988, 0.984, 0.970);
-  vec3 orange = vec3(0.851, 0.467, 0.341);
-  vec3 ink    = vec3(0.078, 0.078, 0.075);
-
-  vec3 col = mix(paper, cream, q * 0.9);
-
-  /* faint facet edges */
-  float e = abs(fract(n * 8.0) - 0.5) * 2.0;
-  col = mix(col, ink, (1.0 - smoothstep(0.0, 0.22, e)) * 0.045);
-
-  /* angular liquid blob chasing the pointer */
-  float blob = smoothstep(0.46, 0.05, dm + (q - 0.5) * 0.30);
-  col = mix(col, orange, blob * 0.5);
-
-  /* warm halo around the blob */
-  col = mix(col, orange, smoothstep(0.8, 0.22, dm) * 0.07);
-
-  gl_FragColor = vec4(col, 1.0);
-}`;
-
-  function compile(type, src) {
-    const s = gl.createShader(type);
-    gl.shaderSource(s, src);
-    gl.compileShader(s);
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) return null;
-    return s;
+  if (role) {
+    setTimeout(() => {
+      role.classList.add('is-visible');
+    }, BASE_DELAY + words.length * 120 + 200);
   }
 
-  const vs = compile(gl.VERTEX_SHADER, VERT);
-  const fs = compile(gl.FRAGMENT_SHADER, FRAG);
-  if (!vs || !fs) { canvas.remove(); return; }
-
-  const prog = gl.createProgram();
-  gl.attachShader(prog, vs);
-  gl.attachShader(prog, fs);
-  gl.linkProgram(prog);
-  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { canvas.remove(); return; }
-  gl.useProgram(prog);
-
-  const buf = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-  const loc = gl.getAttribLocation(prog, 'a');
-  gl.enableVertexAttribArray(loc);
-  gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-
-  const uRes = gl.getUniformLocation(prog, 'u_res');
-  const uT   = gl.getUniformLocation(prog, 'u_t');
-  const uM   = gl.getUniformLocation(prog, 'u_m');
-
-  const DPR = Math.min(window.devicePixelRatio || 1, 1.25);
-  function resize() {
-    const w = Math.round(hero.clientWidth * DPR);
-    const h = Math.round(hero.clientHeight * DPR);
-    if (canvas.width !== w || canvas.height !== h) {
-      canvas.width = w;
-      canvas.height = h;
-      gl.viewport(0, 0, w, h);
-    }
+  if (scroll) {
+    setTimeout(() => {
+      scroll.classList.add('is-visible');
+    }, BASE_DELAY + words.length * 120 + 620);
   }
-  resize();
-  window.addEventListener('resize', resize, { passive: true });
-
-  /* pointer tracking with snappy lerp; idle drift when untouched */
-  let tx = 0.68, ty = 0.62, mx = tx, my = ty;
-  let lastMove = 0;
-
-  hero.addEventListener('pointermove', (e) => {
-    const r = hero.getBoundingClientRect();
-    tx = (e.clientX - r.left) / r.width;
-    ty = 1 - (e.clientY - r.top) / r.height;
-    lastMove = performance.now();
-  }, { passive: true });
-
-  let visible = true;
-  new IntersectionObserver((entries) => { visible = entries[0].isIntersecting; }, { threshold: 0 }).observe(hero);
-
-  const start = performance.now();
-  (function frame(now) {
-    requestAnimationFrame(frame);
-    if (!visible || document.hidden) return;
-
-    const t = (now - start) / 1000;
-    if (now - lastMove > 3000) {
-      tx = 0.5 + 0.34 * Math.sin(t * 0.21);
-      ty = 0.55 + 0.28 * Math.cos(t * 0.16);
-    }
-    mx += (tx - mx) * 0.22;
-    my += (ty - my) * 0.22;
-
-    resize();
-    gl.uniform2f(uRes, canvas.width, canvas.height);
-    gl.uniform1f(uT, t);
-    gl.uniform2f(uM, mx, my);
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
-  })(start);
 }
 
-/* ── 4. Scroll reveals ────────────────────────────────────── */
-function initReveals() {
-  const els = document.querySelectorAll('.reveal');
-  if (!els.length) return;
+/* ─────────────────────────────────────────
+   4. Scroll Reveal (IntersectionObserver)
+───────────────────────────────────────── */
+function initScrollReveal() {
+  const revealEls = document.querySelectorAll('.reveal');
+  if (!revealEls.length) return;
 
-  if (REDUCED_MOTION || !('IntersectionObserver' in window)) {
-    els.forEach(el => el.classList.add('is-visible'));
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    revealEls.forEach(el => el.classList.add('visible'));
     return;
   }
 
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        io.unobserve(entry.target);
-      }
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px',
+    }
+  );
+
+  revealEls.forEach(el => observer.observe(el));
+}
+
+/* ─────────────────────────────────────────
+   5. Skill Bar Animation
+───────────────────────────────────────── */
+function initSkillBars() {
+  const bars = document.querySelectorAll('.skill__bar');
+  if (!bars.length) return;
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    bars.forEach(bar => {
+      bar.style.width = `${bar.dataset.width || 0}%`;
     });
-  }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
-  els.forEach(el => io.observe(el));
-}
-
-/* ── 5. Tool bars ─────────────────────────────────────────── */
-function initToolBars() {
-  const tools = document.querySelector('.tools');
-  const bars = document.querySelectorAll('.tool__bar');
-  if (!tools || !bars.length) return;
-
-  const fill = () => bars.forEach((bar, i) => {
-    setTimeout(() => { bar.style.width = `${bar.dataset.width || 0}%`; }, REDUCED_MOTION ? 0 : i * 90);
-  });
-
-  if (REDUCED_MOTION) return fill();
-
-  const io = new IntersectionObserver((entries) => {
-    if (entries.some(e => e.isIntersecting)) { fill(); io.disconnect(); }
-  }, { threshold: 0.3 });
-  io.observe(tools);
-}
-
-/* ── 6. Work list hover preview ───────────────────────────── */
-function initWorkPreview() {
-  const preview = document.getElementById('workPreview');
-  const rows = document.querySelectorAll('.work-row[data-preview]');
-  if (!preview || !rows.length) return;
-  if (window.matchMedia('(pointer: coarse)').matches) return;
-
-  const imgs = new Map();
-  rows.forEach(row => {
-    const img = document.createElement('img');
-    img.src = row.dataset.preview;
-    img.alt = '';
-    img.decoding = 'async';
-    preview.appendChild(img);
-    imgs.set(row, img);
-  });
-
-  let targetX = 0, targetY = 0, x = 0, y = 0, raf = null;
-
-  function loop() {
-    x += (targetX - x) * 0.18;
-    y += (targetY - y) * 0.18;
-    preview.style.transform = `translate(${x}px, ${y}px) scale(1)`;
-    raf = requestAnimationFrame(loop);
+    return;
   }
 
-  const list = document.querySelector('.work-list');
-  list.addEventListener('mousemove', (e) => {
-    targetX = e.clientX + 28;
-    targetY = e.clientY - 100;
-  });
+  let animated = false;
 
-  rows.forEach(row => {
-    row.addEventListener('mouseenter', (e) => {
-      imgs.forEach(img => img.classList.remove('is-current'));
-      imgs.get(row).classList.add('is-current');
-      x = targetX = e.clientX + 28;
-      y = targetY = e.clientY - 100;
-      preview.classList.add('is-active');
-      if (!raf) loop();
-    });
-    row.addEventListener('mouseleave', () => {
-      preview.classList.remove('is-active');
-      cancelAnimationFrame(raf);
-      raf = null;
-    });
-  });
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !animated) {
+          animated = true;
+          bars.forEach((bar, i) => {
+            const target = bar.dataset.width || '0';
+            setTimeout(() => {
+              bar.style.width = `${target}%`;
+            }, i * 150);
+          });
+          observer.disconnect();
+        }
+      });
+    },
+    { threshold: 0.4 }
+  );
+
+  const skillsContainer = document.querySelector('.skills') || document.querySelector('#about');
+  if (skillsContainer) observer.observe(skillsContainer);
 }
 
-/* ── 7. YouTube facade ────────────────────────────────────── */
-function initYouTubeFacades() {
-  document.querySelectorAll('.yt[data-id]').forEach(facade => {
-    const btn = facade.querySelector('.yt__btn');
-    if (!btn) return;
-    btn.addEventListener('click', () => {
-      const id = facade.dataset.id;
-      const iframe = document.createElement('iframe');
-      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
-      iframe.title = facade.dataset.title || 'YouTube video';
-      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-      iframe.allowFullscreen = true;
-      facade.innerHTML = '';
-      facade.appendChild(iframe);
-    }, { once: true });
-  });
-}
-
-/* ── 8. Gallery lightbox ──────────────────────────────────── */
-function initLightbox() {
-  const items = Array.from(document.querySelectorAll('.gallery__item img'));
-  if (!items.length) return;
-
-  const box = document.createElement('div');
-  box.className = 'lightbox';
-  box.setAttribute('role', 'dialog');
-  box.setAttribute('aria-label', 'Fotoweergave');
-  box.innerHTML = `
-    <button class="lightbox__btn lightbox__btn--prev" type="button" aria-label="Vorige foto">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-    </button>
-    <img class="lightbox__img" alt="" />
-    <button class="lightbox__btn lightbox__btn--next" type="button" aria-label="Volgende foto">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
-    </button>
-    <button class="lightbox__close" type="button" aria-label="Sluiten">✕</button>
-    <span class="lightbox__counter"></span>`;
-  document.body.appendChild(box);
-
-  const imgEl    = box.querySelector('.lightbox__img');
-  const counter  = box.querySelector('.lightbox__counter');
-  const prevBtn  = box.querySelector('.lightbox__btn--prev');
-  const nextBtn  = box.querySelector('.lightbox__btn--next');
-  const closeBtn = box.querySelector('.lightbox__close');
-
-  let index = 0;
-
-  function show(i) {
-    index = (i + items.length) % items.length;
-    imgEl.src = items[index].src;
-    imgEl.alt = items[index].alt || '';
-    counter.textContent = `${index + 1} / ${items.length}`;
-  }
-  function open(i) {
-    show(i);
-    box.classList.add('is-open');
-    document.body.classList.add('lightbox-open');
-  }
-  function close() {
-    box.classList.remove('is-open');
-    document.body.classList.remove('lightbox-open');
-  }
-
-  items.forEach((img, i) => {
-    img.closest('.gallery__item').addEventListener('click', () => open(i));
-  });
-
-  prevBtn.addEventListener('click', () => show(index - 1));
-  nextBtn.addEventListener('click', () => show(index + 1));
-  closeBtn.addEventListener('click', close);
-  box.addEventListener('click', (e) => { if (e.target === box) close(); });
-
-  document.addEventListener('keydown', (e) => {
-    if (!box.classList.contains('is-open')) return;
-    if (e.key === 'Escape') close();
-    if (e.key === 'ArrowLeft') show(index - 1);
-    if (e.key === 'ArrowRight') show(index + 1);
-  });
-
-  /* swipe on touch */
-  let startX = null;
-  box.addEventListener('pointerdown', (e) => { startX = e.clientX; }, { passive: true });
-  box.addEventListener('pointerup', (e) => {
-    if (startX === null) return;
-    const dx = e.clientX - startX;
-    if (Math.abs(dx) > 50) show(index + (dx < 0 ? 1 : -1));
-    startX = null;
-  }, { passive: true });
-}
-
-/* ── 9. Contact form ──────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   6. Contact Form
+───────────────────────────────────────── */
 function initContactForm() {
   const form   = document.getElementById('contactForm');
   const btn    = document.getElementById('formBtn');
   const status = document.getElementById('formStatus');
+
   if (!form || !btn || !status) return;
-
-  const IDLE_LABEL = 'Stuur bericht →';
-
-  function setStatus(msg, type) {
-    status.textContent = msg;
-    status.style.color = type === 'error' ? '#E8A48E' : type === 'success' ? '#D97757' : '';
-  }
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const name    = form.querySelector('#name');
-    const email   = form.querySelector('#email');
-    const message = form.querySelector('#message');
+    const nameInput    = form.querySelector('#name');
+    const emailInput   = form.querySelector('#email');
+    const messageInput = form.querySelector('#message');
 
-    if (!name.value.trim() || !email.value.trim() || !message.value.trim()) {
-      return setStatus('Vul alle velden in.', 'error');
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
-      return setStatus('Vul een geldig e-mailadres in.', 'error');
+    if (
+      !nameInput.value.trim() ||
+      !emailInput.value.trim() ||
+      !messageInput.value.trim()
+    ) {
+      setStatus('Vul alle velden in.', 'error');
+      return;
     }
 
-    btn.disabled = true;
-    btn.textContent = 'Versturen…';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim())) {
+      setStatus('Vul een geldig e-mailadres in.', 'error');
+      return;
+    }
+
+    btn.disabled    = true;
+    btn.textContent = 'VERSTUREN...';
     setStatus('', 'clear');
 
     try {
-      const res = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
+      const response = await fetch(form.action, {
+        method:  'POST',
+        body:    new FormData(form),
         headers: { Accept: 'application/json' },
       });
 
-      if (res.ok) {
-        btn.textContent = 'Verstuurd ✓';
-        setStatus('Bedankt! Ik neem snel contact op.', 'success');
+      if (response.ok) {
+        btn.textContent = 'VERSTUURD ✓';
+        setStatus("Bedankt! Ik neem snel contact op.", 'success');
         form.reset();
+
         setTimeout(() => {
-          btn.textContent = IDLE_LABEL;
-          btn.disabled = false;
+          btn.textContent = 'STUUR BERICHT →';
+          btn.disabled    = false;
           setStatus('', 'clear');
         }, 6000);
+
       } else {
-        const data = await res.json().catch(() => ({}));
-        const msg = (data?.errors || []).map(err => err.message).join(', ')
+        const data = await response.json().catch(() => ({}));
+        const msg  = (data?.errors || []).map(err => err.message).join(', ')
           || 'Er ging iets mis. Probeer het opnieuw.';
         setStatus(msg, 'error');
-        btn.textContent = IDLE_LABEL;
-        btn.disabled = false;
+        btn.textContent = 'STUUR BERICHT →';
+        btn.disabled    = false;
       }
+
     } catch (err) {
+      console.error('Form error:', err);
       setStatus('Netwerkfout. Controleer je verbinding.', 'error');
-      btn.textContent = IDLE_LABEL;
-      btn.disabled = false;
+      btn.textContent = 'STUUR BERICHT →';
+      btn.disabled    = false;
     }
   });
 
   form.addEventListener('input', () => {
-    if (status.textContent && !status.textContent.includes('✓')) setStatus('', 'clear');
+    if (status.textContent && !status.textContent.includes('✓')) {
+      setStatus('', 'clear');
+    }
+  });
+
+  function setStatus(msg, type) {
+    status.textContent = msg;
+    if (type === 'error')   status.style.color = '#FF4F81';
+    if (type === 'success') status.style.color = '#06D6A0';
+    if (type === 'clear')   status.style.color = '';
+  }
+}
+
+/* ─────────────────────────────────────────
+   7. Stagger Card Animations
+───────────────────────────────────────── */
+function initStaggerAnimations() {
+  const cards = document.querySelectorAll('.project-card');
+  if (!cards.length) return;
+
+  cards.forEach((card, i) => {
+    // Random slight rotation for brutalist feel
+    const rotation = (Math.random() - 0.5) * 2;
+    card.style.transform = `rotate(${rotation}deg)`;
+
+    card.addEventListener('mouseenter', () => {
+      card.style.transform = 'rotate(0deg) translate(-4px, -4px)';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = `rotate(${rotation}deg)`;
+    });
+  });
+
+  // Stagger section labels
+  const sectionLabels = document.querySelectorAll('.section-label');
+  sectionLabels.forEach((label, i) => {
+    label.style.animationDelay = `${i * 0.5}s`;
   });
 }
 
-/* ── 10. Init ─────────────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   8. Parallax-light on scroll for decorative elements
+───────────────────────────────────────── */
+function initParallax() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const heroHeight = hero.offsetHeight;
+
+    if (scrollY < heroHeight) {
+      const ratio = scrollY / heroHeight;
+      // Parallax on hero pseudo-elements via CSS custom property
+      hero.style.setProperty('--scroll-ratio', ratio);
+    }
+  }, { passive: true });
+}
+
+/* ─────────────────────────────────────────
+   9. Video fallback links
+───────────────────────────────────────── */
+function initVideoFallbackLinks() {
+  const videoBlocks = document.querySelectorAll('.video-block');
+  if (!videoBlocks.length) return;
+
+  videoBlocks.forEach((block) => {
+    if (block.querySelector('.video-block__cta')) return;
+
+    const iframe = block.querySelector('iframe[src*="youtube.com/embed/"]');
+    const info = block.querySelector('.video-block__info');
+    if (!iframe || !info) return;
+
+    const match = iframe.src.match(/embed\/([^?&"/]+)/);
+    if (!match?.[1]) return;
+
+    const videoId = match[1];
+    const link = document.createElement('a');
+    link.href = `https://www.youtube.com/watch?v=${videoId}`;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.className = 'video-block__cta';
+    link.textContent = 'Bekijk op YouTube';
+
+    info.appendChild(link);
+  });
+}
+
+/* ─────────────────────────────────────────
+   10. Snake Game
+───────────────────────────────────────── */
+function initSnakeGame() {
+  const canvas   = document.getElementById('snakeCanvas');
+  if (!canvas) return;
+
+  const ctx      = canvas.getContext('2d');
+  const GRID     = 20;
+  const SIZE     = 280;
+  canvas.width   = SIZE;
+  canvas.height  = SIZE;
+  const CELL     = SIZE / GRID; // 14px per cell
+
+  const overlay  = document.getElementById('snakeOverlay');
+  const titleEl  = document.getElementById('snakeOverlayTitle');
+  const subEl    = document.getElementById('snakeOverlaySub');
+  const startBtn = document.getElementById('snakeStartBtn');
+  const scoreEl  = document.getElementById('snakeScore');
+
+  if (!overlay || !titleEl || !subEl || !startBtn || !scoreEl) return;
+
+  const C = {
+    bg:        '#F5F0E8',
+    grid:      'rgba(26,26,26,0.05)',
+    border:    '#1A1A1A',
+    head:      '#A855F7',
+    food:      ['#FF4F81','#CCFF00','#FF6B35','#4361EE','#FFD600','#06D6A0'],
+  };
+
+  let state = 'idle';
+  let snake, dir, nextDir, food, score, gameLoop, foodColor, highScore = 0;
+
+  function resetGame() {
+    snake    = [{ x: 10, y: 10 }, { x: 9, y: 10 }, { x: 8, y: 10 }];
+    dir      = { x: 1, y: 0 };
+    nextDir  = { x: 1, y: 0 };
+    score    = 0;
+    scoreEl.textContent = '0';
+    spawnFood();
+  }
+
+  function spawnFood() {
+    let pos;
+    do {
+      pos = { x: Math.floor(Math.random() * GRID), y: Math.floor(Math.random() * GRID) };
+    } while (snake.some(s => s.x === pos.x && s.y === pos.y));
+    food      = pos;
+    foodColor = C.food[Math.floor(Math.random() * C.food.length)];
+  }
+
+  function drawCell(x, y, fill, radius) {
+    const px = x * CELL + 1.5;
+    const py = y * CELL + 1.5;
+    const sz = CELL - 3;
+    ctx.fillStyle   = fill;
+    ctx.strokeStyle = C.border;
+    ctx.lineWidth   = 1.5;
+    ctx.beginPath();
+    if (ctx.roundRect) {
+      ctx.roundRect(px, py, sz, sz, radius);
+    } else {
+      ctx.rect(px, py, sz, sz);
+    }
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  function drawCanvas() {
+    ctx.fillStyle = C.bg;
+    ctx.fillRect(0, 0, SIZE, SIZE);
+
+    // Subtle grid lines
+    ctx.strokeStyle = C.grid;
+    ctx.lineWidth   = 0.5;
+    for (let i = 1; i < GRID; i++) {
+      ctx.beginPath(); ctx.moveTo(i * CELL, 0); ctx.lineTo(i * CELL, SIZE); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, i * CELL); ctx.lineTo(SIZE, i * CELL); ctx.stroke();
+    }
+
+    // Food
+    drawCell(food.x, food.y, foodColor, 3);
+    // Cross mark on food
+    const fx = food.x * CELL + CELL / 2;
+    const fy = food.y * CELL + CELL / 2;
+    ctx.fillStyle = C.border;
+    ctx.fillRect(fx - 1, fy - 4, 2, 8);
+    ctx.fillRect(fx - 4, fy - 1, 8, 2);
+
+    // Snake body (tail to head so head is on top)
+    for (let i = snake.length - 1; i >= 0; i--) {
+      const seg = snake[i];
+      let fill;
+      if (i === 0) {
+        fill = C.head;
+      } else {
+        const t  = Math.min(i / snake.length, 1);
+        const v  = Math.round(26 + t * 70);
+        fill = `rgb(${v},${v},${v})`;
+      }
+      drawCell(seg.x, seg.y, fill, i === 0 ? 5 : 2);
+    }
+  }
+
+  function step() {
+    dir = nextDir;
+    const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+
+    if (head.x < 0 || head.x >= GRID || head.y < 0 || head.y >= GRID) {
+      return gameOver();
+    }
+    if (snake.slice(0, -1).some(s => s.x === head.x && s.y === head.y)) {
+      return gameOver();
+    }
+
+    snake.unshift(head);
+
+    if (head.x === food.x && head.y === food.y) {
+      score++;
+      if (score > highScore) highScore = score;
+      scoreEl.textContent = score;
+      spawnFood();
+    } else {
+      snake.pop();
+    }
+
+    drawCanvas();
+  }
+
+  function gameOver() {
+    state = 'gameover';
+    clearInterval(gameLoop);
+
+    const wrap = canvas.closest('.snake-canvas-wrap');
+    if (wrap) {
+      wrap.style.borderColor = '#FF4F81';
+      setTimeout(() => { wrap.style.borderColor = ''; }, 700);
+    }
+
+    titleEl.textContent  = 'GAME OVER';
+    subEl.textContent    = `Score: ${score}${score > 0 && score === highScore ? ' ★' : ''}`;
+    startBtn.textContent = 'OPNIEUW';
+    overlay.style.display = 'flex';
+  }
+
+  function startGame() {
+    resetGame();
+    state = 'playing';
+    overlay.style.display = 'none';
+    drawCanvas();
+    gameLoop = setInterval(step, 130);
+  }
+
+  startBtn.addEventListener('click', startGame);
+
+  // Keyboard: WASD + arrow keys
+  document.addEventListener('keydown', (e) => {
+    if (state !== 'playing') {
+      if (e.key === 'Enter') startGame();
+      return;
+    }
+    switch (e.key) {
+      case 'ArrowUp':    case 'w': case 'W': if (dir.y !== 1)  { nextDir = { x: 0, y: -1 }; e.preventDefault(); } break;
+      case 'ArrowDown':  case 's': case 'S': if (dir.y !== -1) { nextDir = { x: 0, y:  1 }; e.preventDefault(); } break;
+      case 'ArrowLeft':  case 'a': case 'A': if (dir.x !== 1)  { nextDir = { x: -1, y: 0 }; e.preventDefault(); } break;
+      case 'ArrowRight': case 'd': case 'D': if (dir.x !== -1) { nextDir = { x:  1, y: 0 }; e.preventDefault(); } break;
+    }
+  });
+
+  // D-pad buttons
+  [
+    ['snakeUp',    0, -1],
+    ['snakeDown',  0,  1],
+    ['snakeLeft', -1,  0],
+    ['snakeRight', 1,  0],
+  ].forEach(([id, dx, dy]) => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    const move = () => {
+      if (state !== 'playing') return;
+      if (dx !== 0 && dir.x === -dx) return;
+      if (dy !== 0 && dir.y === -dy) return;
+      nextDir = { x: dx, y: dy };
+    };
+    btn.addEventListener('click', move);
+    btn.addEventListener('touchstart', (e) => { e.preventDefault(); move(); }, { passive: false });
+  });
+
+  // Render initial idle canvas
+  ctx.fillStyle = C.bg;
+  ctx.fillRect(0, 0, SIZE, SIZE);
+  ctx.strokeStyle = C.grid;
+  ctx.lineWidth   = 0.5;
+  for (let i = 1; i < GRID; i++) {
+    ctx.beginPath(); ctx.moveTo(i * CELL, 0); ctx.lineTo(i * CELL, SIZE); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, i * CELL); ctx.lineTo(SIZE, i * CELL); ctx.stroke();
+  }
+}
+
+
+/* ─────────────────────────────────────────
+   12. Werk-dropdown (klik voor touch/keyboard, hover via CSS)
+───────────────────────────────────────── */
+function initNavDropdown() {
+  document.querySelectorAll('.nav__item--dropdown').forEach((item) => {
+    const btn = item.querySelector('.nav__drop-btn');
+    if (!btn) return;
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = item.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', (e) => {
+      if (!item.contains(e.target)) {
+        item.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        item.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.focus();
+      }
+    });
+  });
+}
+
+/* ─────────────────────────────────────────
+   13. 3D-tilt op projectkaarten
+───────────────────────────────────────── */
+function initCardTilt() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+
+  document.querySelectorAll('.project-card__link').forEach((link) => {
+    link.classList.add('tilt-3d');
+    let raf = null;
+
+    link.addEventListener('mousemove', (e) => {
+      const r = link.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        link.style.transform = `rotateY(${px * 10}deg) rotateX(${py * -10}deg)`;
+        raf = null;
+      });
+    });
+    link.addEventListener('mouseleave', () => {
+      if (raf) { cancelAnimationFrame(raf); raf = null; }
+      link.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      link.style.transform = 'rotateY(0deg) rotateX(0deg)';
+      setTimeout(() => { link.style.transition = ''; }, 400);
+    });
+  });
+}
+
+/* ─────────────────────────────────────────
+   14. 3D hero-camera parallax (volgt de muis)
+───────────────────────────────────────── */
+function initHero3D() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+
+  const scene = document.querySelector('.hero__camera-float');
+  const hero = document.querySelector('.hero');
+  if (!scene || !hero) return;
+
+  // de CSS-drift-animatie overschrijft inline transforms — uitzetten,
+  // de zweef-beweging zit nu in de JS-loop zelf
+  scene.style.animation = 'none';
+
+  let tx = 0, ty = 0, cx = 0, cy = 0;
+
+  hero.addEventListener('pointermove', (e) => {
+    const r = hero.getBoundingClientRect();
+    tx = ((e.clientX - r.left) / r.width - 0.5) * 18;
+    ty = ((e.clientY - r.top) / r.height - 0.5) * -18;
+  }, { passive: true });
+  hero.addEventListener('pointerleave', () => { tx = 0; ty = 0; });
+
+  (function loop(t) {
+    cx += (tx - cx) * 0.09;
+    cy += (ty - cy) * 0.09;
+    const bobY = Math.sin((t || 0) / 1400) * 2.2;
+    const bobX = Math.cos((t || 0) / 1900) * 1.4;
+    scene.style.transform = `translateY(${bobY * 3}px) rotateY(${cx + bobX}deg) rotateX(${cy + bobY}deg)`;
+    requestAnimationFrame(loop);
+  })(0);
+}
+
+/* ─────────────────────────────────────────
+   11. Init
+───────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   initCursor();
   initNav();
-  initHero();
-  initHeroChars();
-  initHeroCanvas();
-  initReveals();
-  initToolBars();
-  initWorkPreview();
-  initYouTubeFacades();
-  initLightbox();
+  initHeroAnimation();
+  initScrollReveal();
+  initSkillBars();
   initContactForm();
+  initStaggerAnimations();
+  initParallax();
+  initVideoFallbackLinks();
+  initSnakeGame();
+  initNavDropdown();
+  initCardTilt();
+  initHero3D();
 });

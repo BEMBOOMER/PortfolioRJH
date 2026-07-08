@@ -1,0 +1,100 @@
+[
+ {
+  "slug": "vacature-1",
+  "duration": 18.9,
+  "wide": false,
+  "title": "Vacaturevideo 1",
+  "group": "vacature"
+ },
+ {
+  "slug": "vacature-2",
+  "duration": 10.4,
+  "wide": false,
+  "title": "Vacaturevideo 2",
+  "group": "vacature"
+ },
+ {
+  "slug": "vacature-3",
+  "duration": 14.3,
+  "wide": false,
+  "title": "Vacaturevideo 3",
+  "group": "vacature"
+ },
+ {
+  "slug": "vacature-4",
+  "duration": 27.4,
+  "wide": false,
+  "title": "Vacaturevideo 4",
+  "group": "vacature"
+ },
+ {
+  "slug": "vacature-5",
+  "duration": 13.9,
+  "wide": false,
+  "title": "Vacaturevideo 5",
+  "group": "vacature"
+ },
+ {
+  "slug": "vacature-6",
+  "duration": 19.3,
+  "wide": false,
+  "title": "Vacaturevideo 6",
+  "group": "vacature"
+ },
+ {
+  "slug": "vacature-7",
+  "duration": 20.4,
+  "wide": false,
+  "title": "Vacaturevideo 7",
+  "group": "vacature"
+ },
+ {
+  "slug": "vacature-8",
+  "duration": 43.3,
+  "wide": false,
+  "title": "Vacaturevideo 8",
+  "group": "vacature"
+ },
+ {
+  "slug": "vacature-9",
+  "duration": 16.6,
+  "wide": false,
+  "title": "Vacaturevideo 9",
+  "group": "vacature"
+ },
+ {
+  "slug": "vacature-10",
+  "duration": 23.7,
+  "wide": false,
+  "title": "Vacaturevideo 10",
+  "group": "vacature"
+ },
+ {
+  "slug": "vacature-11",
+  "duration": 10.7,
+  "wide": false,
+  "title": "Vacaturevideo 11",
+  "group": "vacature"
+ },
+ {
+  "slug": "vacature-12",
+  "duration": 10.7,
+  "wide": false,
+  "title": "Vacaturevideo 12",
+  "group": "vacature"
+ },
+ {
+  "slug": "vacature-13",
+  "duration": 10.7,
+  "wide": false,
+  "title": "Vacaturevideo 13",
+  "group": "vacature"
+ },
+ {
+  "slug": "vacature-14",
+  "duration": 9.9,
+  "wide": false,
+  "title": "Vacaturevideo 14",
+  "group": "vacature"
+ }
+]

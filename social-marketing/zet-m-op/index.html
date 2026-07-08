@@ -3,130 +3,180 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ZET 'M OP! · Social Marketing · Roelof Junior Haar</title>
-  <meta name="description" content="Campagnecontent voor ZET 'M OP! met merkverhaal, promotionele shorts en visuele animatie." />
-  <meta name="theme-color" content="#F0EEE6" />
-  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg" />
-  <script>document.documentElement.classList.add('js');</script>
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>ZET 'M OP! — Roelof Junior Haar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Schibsted+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../../style.css" />
-  <script defer src="../../script.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../style.css?v=20260708d" />
+  <style>
+    .subpage { padding: 7rem clamp(1.5rem, 6vw, 5rem) 5rem; min-height: 100vh; }
+    .subpage__back { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,244,240,0.4); margin-bottom: 3rem; transition: color 0.2s; cursor: none; }
+    .subpage__back:hover { color: var(--red); }
+    .subpage__label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 1rem; }
+    .subpage__title { font-family: var(--font-display); font-size: clamp(3.5rem, 9vw, 9rem); line-height: 0.9; letter-spacing: 0.01em; margin-bottom: 1.5rem; }
+    .subpage__desc { max-width: 640px; color: rgba(245,244,240,0.65); line-height: 1.8; font-size: 1rem; margin-bottom: 4rem; }
+    .videos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: clamp(1rem, 3vw, 2rem); max-width: 960px; }
+    .video-block { display: flex; flex-direction: column; gap: 1rem; }
+    .video-block__embed { position: relative; aspect-ratio: 9/16; width: 100%; background: #111; overflow: hidden; }
+    .video-block__embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+    .video-block__info { padding: 0 0.1rem; }
+    .video-block__title { font-family: var(--font-display); font-size: 1.4rem; letter-spacing: 0.05em; color: var(--off-white); margin-bottom: 0.3rem; }
+    .video-block__desc { font-size: 0.78rem; color: rgba(245,244,240,0.4); line-height: 1.6; }
+  </style>
 </head>
 <body>
-
-  <div class="grain" aria-hidden="true"></div>
   <div class="cursor-dot" id="cursorDot"></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
-  <header class="site-nav" id="siteNav">
-    <a href="../../index.html" class="site-nav__logo">R<em>J</em>H</a>
-    <span class="site-nav__crumb">Social Marketing / <em>ZET 'M OP!</em></span>
-    <a href="../index.html" class="back-pill">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-      Social Marketing
-    </a>
-  </header>
+  <nav class="nav" id="nav">
+    <a href="../../index.html" class="nav__logo">RJH</a>
+    <ul class="nav__links">
+      <li><a href="../../index.html">Home</a></li>
+      <li class="nav__item nav__item--dropdown">
+        <button class="nav__drop-btn" type="button" aria-expanded="false" aria-haspopup="true">Werk <span class="nav__caret">&#9662;</span></button>
+        <ul class="nav__dropdown">
+        <li><a href="../../brand-identity/index.html" data-accent="purple">Brand Identity</a></li>
+        <li><a href="../../visual-motion/index.html" data-accent="lime">Visual Motion</a></li>
+        <li><a href="../../video-editing/index.html" data-accent="orange">Video/Editing</a></li>
+        <li><a href="../../social-marketing/index.html" data-accent="coral" class="is-active">Social Marketing</a></li>
+        </ul>
+      </li>
+      <li><a href="../../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-  <section class="page-hero">
-    <div class="page-hero__kicker reveal"><span class="mono-label">Social Marketing / ZET 'M OP!</span></div>
-    <h1 class="page-hero__title reveal">Zet 'm<br /><em>op!</em></h1>
-    <p class="page-hero__desc reveal d1">
+  <div class="subpage">
+    <a href="../index.html" class="subpage__back">&#8592; Terug naar Social Marketing</a>
+    <p class="subpage__label">Social Marketing</p>
+    <h1 class="subpage__title">ZET 'M<br>OP!.</h1>
+    <p class="subpage__desc">
       Campagnecontent voor ZET 'M OP! met een mix van merkverhaal, promotionele shorts en visuele animatie. Gemaakt om op socials snel op te vallen en duidelijk over te brengen waar het merk voor staat.
     </p>
-  </section>
 
-  <section class="page-body">
-    <span class="mono-label reveal">Video's / 7 stuks</span>
-    <div class="media-grid">
-      <div class="media-block reveal">
-        <div class="yt yt--tall" data-id="iHkDhZS44yw" data-title="Brand Identity Video">
-          <img class="yt__thumb" src="https://i.ytimg.com/vi/iHkDhZS44yw/hqdefault.jpg" alt="" decoding="async" />
-          <button class="yt__btn" type="button" aria-label="Speel video af: Brand Identity Video">
-            <span class="yt__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
-          </button>
+    <div class="videos-grid">
+      <div class="video-block reveal">
+        <div class="video-block__embed">
+          <iframe
+            src="https://www.youtube.com/embed/iHkDhZS44yw"
+            title="ZET 'M OP! - Brand identity video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
         </div>
-        <h2 class="media-block__title">Brand Identity Video</h2>
-        <p class="media-block__desc">Merkvideo die de uitstraling en positionering van ZET 'M OP! direct voelbaar maakt.</p>
-        <a class="media-block__cta" href="https://www.youtube.com/watch?v=iHkDhZS44yw" target="_blank" rel="noopener noreferrer">Bekijk op YouTube</a>
+        <div class="video-block__info">
+          <h3 class="video-block__title">Brand Identity Video</h3>
+          <p class="video-block__desc">Merkvideo die de uitstraling en positionering van ZET 'M OP! direct voelbaar maakt.</p>
+        </div>
       </div>
-      <div class="media-block reveal d1">
-        <div class="yt yt--tall" data-id="XMnSbFs8mMs" data-title="Promotional Video">
-          <img class="yt__thumb" src="https://i.ytimg.com/vi/XMnSbFs8mMs/hqdefault.jpg" alt="" decoding="async" />
-          <button class="yt__btn" type="button" aria-label="Speel video af: Promotional Video">
-            <span class="yt__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
-          </button>
+
+      <div class="video-block reveal reveal--delay-1">
+        <div class="video-block__embed">
+          <iframe
+            src="https://www.youtube.com/embed/XMnSbFs8mMs"
+            title="ZET 'M OP! - Promotional video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
         </div>
-        <h2 class="media-block__title">Promotional Video</h2>
-        <p class="media-block__desc">Korte promotionele social video gericht op verkoop, aandacht en directe actie.</p>
-        <a class="media-block__cta" href="https://www.youtube.com/watch?v=XMnSbFs8mMs" target="_blank" rel="noopener noreferrer">Bekijk op YouTube</a>
+        <div class="video-block__info">
+          <h3 class="video-block__title">Promotional Video</h3>
+          <p class="video-block__desc">Korte promotionele social video gericht op verkoop, aandacht en directe actie.</p>
+        </div>
       </div>
-      <div class="media-block reveal d2">
-        <div class="yt yt--tall" data-id="uVYbQeUzlmc" data-title="Visual Animation Video">
-          <img class="yt__thumb" src="https://i.ytimg.com/vi/uVYbQeUzlmc/hqdefault.jpg" alt="" decoding="async" />
-          <button class="yt__btn" type="button" aria-label="Speel video af: Visual Animation Video">
-            <span class="yt__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
-          </button>
+
+      <div class="video-block reveal reveal--delay-2">
+        <div class="video-block__embed">
+          <iframe
+            src="https://www.youtube.com/embed/uVYbQeUzlmc"
+            title="ZET 'M OP! - Visual animation video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
         </div>
-        <h2 class="media-block__title">Visual Animation Video</h2>
-        <p class="media-block__desc">Motion-led short die extra visuele energie toevoegt binnen dezelfde social campagne.</p>
-        <a class="media-block__cta" href="https://www.youtube.com/watch?v=uVYbQeUzlmc" target="_blank" rel="noopener noreferrer">Bekijk op YouTube</a>
+        <div class="video-block__info">
+          <h3 class="video-block__title">Visual Animation Video</h3>
+          <p class="video-block__desc">Motion-led short die extra visuele energie toevoegt binnen dezelfde social campagne.</p>
+        </div>
       </div>
-      <div class="media-block reveal">
-        <div class="yt yt--tall" data-id="bI3bKEYDO_c" data-title="Social Short #1">
-          <img class="yt__thumb" src="https://i.ytimg.com/vi/bI3bKEYDO_c/hqdefault.jpg" alt="" decoding="async" />
-          <button class="yt__btn" type="button" aria-label="Speel video af: Social Short #1">
-            <span class="yt__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
-          </button>
+
+      <div class="video-block reveal reveal--delay-3">
+        <div class="video-block__embed">
+          <iframe
+            src="https://www.youtube.com/embed/bI3bKEYDO_c"
+            title="ZET 'M OP! - Short 1"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
         </div>
-        <h2 class="media-block__title">Social Short #1</h2>
-        <p class="media-block__desc">Korte social short voor ZET 'M OP!. Snel, pakkend en gemaakt voor maximale impact op socials.</p>
-        <a class="media-block__cta" href="https://www.youtube.com/watch?v=bI3bKEYDO_c" target="_blank" rel="noopener noreferrer">Bekijk op YouTube</a>
+        <div class="video-block__info">
+          <h3 class="video-block__title">Social Short #1</h3>
+          <p class="video-block__desc">Korte social short voor ZET 'M OP! — snel, pakkend en gemaakt voor maximale impact op socials.</p>
+        </div>
       </div>
-      <div class="media-block reveal d1">
-        <div class="yt yt--tall" data-id="3nw6gkxwWNQ" data-title="Social Short #2">
-          <img class="yt__thumb" src="https://i.ytimg.com/vi/3nw6gkxwWNQ/hqdefault.jpg" alt="" decoding="async" />
-          <button class="yt__btn" type="button" aria-label="Speel video af: Social Short #2">
-            <span class="yt__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
-          </button>
+
+      <div class="video-block reveal reveal--delay-4">
+        <div class="video-block__embed">
+          <iframe
+            src="https://www.youtube.com/embed/3nw6gkxwWNQ"
+            title="ZET 'M OP! - Short 2"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
         </div>
-        <h2 class="media-block__title">Social Short #2</h2>
-        <p class="media-block__desc">Korte social short voor ZET 'M OP!. Snel, pakkend en gemaakt voor maximale impact op socials.</p>
-        <a class="media-block__cta" href="https://www.youtube.com/watch?v=3nw6gkxwWNQ" target="_blank" rel="noopener noreferrer">Bekijk op YouTube</a>
+        <div class="video-block__info">
+          <h3 class="video-block__title">Social Short #2</h3>
+          <p class="video-block__desc">Korte social short voor ZET 'M OP! — snel, pakkend en gemaakt voor maximale impact op socials.</p>
+        </div>
       </div>
-      <div class="media-block reveal d2">
-        <div class="yt yt--tall" data-id="LN9-YFmZSOM" data-title="Social Short #3">
-          <img class="yt__thumb" src="https://i.ytimg.com/vi/LN9-YFmZSOM/hqdefault.jpg" alt="" decoding="async" />
-          <button class="yt__btn" type="button" aria-label="Speel video af: Social Short #3">
-            <span class="yt__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
-          </button>
+
+      <div class="video-block reveal reveal--delay-5">
+        <div class="video-block__embed">
+          <iframe
+            src="https://www.youtube.com/embed/LN9-YFmZSOM"
+            title="ZET 'M OP! - Short 3"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
         </div>
-        <h2 class="media-block__title">Social Short #3</h2>
-        <p class="media-block__desc">Korte social short voor ZET 'M OP!. Snel, pakkend en gemaakt voor maximale impact op socials.</p>
-        <a class="media-block__cta" href="https://www.youtube.com/watch?v=LN9-YFmZSOM" target="_blank" rel="noopener noreferrer">Bekijk op YouTube</a>
+        <div class="video-block__info">
+          <h3 class="video-block__title">Social Short #3</h3>
+          <p class="video-block__desc">Korte social short voor ZET 'M OP! — snel, pakkend en gemaakt voor maximale impact op socials.</p>
+        </div>
       </div>
-      <div class="media-block reveal">
-        <div class="yt yt--tall" data-id="uYDqQGIM9P8" data-title="Social Short #4">
-          <img class="yt__thumb" src="https://i.ytimg.com/vi/uYDqQGIM9P8/hqdefault.jpg" alt="" decoding="async" />
-          <button class="yt__btn" type="button" aria-label="Speel video af: Social Short #4">
-            <span class="yt__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
-          </button>
+
+      <div class="video-block reveal reveal--delay-6">
+        <div class="video-block__embed">
+          <iframe
+            src="https://www.youtube.com/embed/uYDqQGIM9P8"
+            title="ZET 'M OP! - Short 4"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
         </div>
-        <h2 class="media-block__title">Social Short #4</h2>
-        <p class="media-block__desc">Korte social short voor ZET 'M OP!. Snel, pakkend en gemaakt voor maximale impact op socials.</p>
-        <a class="media-block__cta" href="https://www.youtube.com/watch?v=uYDqQGIM9P8" target="_blank" rel="noopener noreferrer">Bekijk op YouTube</a>
+        <div class="video-block__info">
+          <h3 class="video-block__title">Social Short #4</h3>
+          <p class="video-block__desc">Korte social short voor ZET 'M OP! — snel, pakkend en gemaakt voor maximale impact op socials.</p>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <footer class="footer footer--page">
-    <div class="footer__watermark" aria-hidden="true">Zet 'm op!</div>
-    <div class="footer__bar">
-      <span>&copy; 2026 Roelof Junior Haar</span>
-      <a href="../../index.html">Terug naar home ↑</a>
+  <footer class="footer">
+    <div class="footer__inner">
+      <span class="footer__logo">RJH</span>
+      <span class="footer__copy">&copy; 2026 Roelof Junior Haar.</span>
+      <span class="footer__back"><a href="../../index.html">Terug naar home &uarr;</a></span>
     </div>
   </footer>
 
+  <script src="../../script.js?v=20260708d"></script>
 </body>
 </html>

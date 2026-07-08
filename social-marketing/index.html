@@ -3,71 +3,100 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Social Marketing · Roelof Junior Haar</title>
-  <meta name="description" content="Social marketing werk van Roelof Junior Haar. Content die direct aandacht pakt zonder leeg te voelen." />
-  <meta name="theme-color" content="#F0EEE6" />
-  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
-  <script>document.documentElement.classList.add('js');</script>
+  <title>Social Marketing — Roelof Junior Haar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Schibsted+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../style.css" />
-  <script defer src="../script.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css?v=20260708d" />
+  <style>
+    .subpage { padding: calc(var(--nav-h) + 50px) clamp(1.5rem, 6vw, 5rem) 5rem; min-height: 100vh; }
+    .subpage__back { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text); background: var(--lime); padding: 0.4rem 0.8rem; border: var(--border-thin); border-radius: 999px; box-shadow: var(--shadow-sm); transition: transform 0.2s var(--ease-bounce), box-shadow 0.2s ease; cursor: none; margin-bottom: 3rem; }
+    .subpage__back:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px var(--text); }
+    .subpage__label { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text); background: var(--orange); padding: 0.3rem 0.7rem; border: var(--border-thin); border-radius: 999px; margin-bottom: 1rem; }
+    .subpage__title { font-family: var(--font-display); font-size: clamp(3.5rem, 9vw, 9rem); line-height: 0.93; letter-spacing: -0.02em; margin-bottom: 1.5rem; color: var(--text); }
+    .subpage__desc { max-width: 620px; color: var(--text); opacity: 0.65; line-height: 1.8; font-size: 1rem; }
+    .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+    .project-grid .project-card__img--placeholder { aspect-ratio: 4/3; background: var(--purple); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; border: var(--border); border-radius: var(--radius); transition: transform 0.3s var(--ease-bounce); }
+    .project-card__link:hover .project-card__img--placeholder { transform: translate(-2px, -2px); }
+  </style>
 </head>
 <body>
-
-  <div class="grain" aria-hidden="true"></div>
   <div class="cursor-dot" id="cursorDot"></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
-  <header class="site-nav" id="siteNav">
-    <a href="../index.html" class="site-nav__logo">R<em>J</em>H</a>
-    <span class="site-nav__crumb">Werk / <em>Social Marketing</em></span>
-    <a href="../index.html#werk" class="back-pill">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-      Terug
-    </a>
-  </header>
+  <nav class="nav" id="nav">
+    <a href="../index.html" class="nav__logo">RJH</a>
+    <ul class="nav__links">
+      <li><a href="../index.html">Home</a></li>
+      <li class="nav__item nav__item--dropdown">
+        <button class="nav__drop-btn" type="button" aria-expanded="false" aria-haspopup="true">Werk <span class="nav__caret">&#9662;</span></button>
+        <ul class="nav__dropdown">
+        <li><a href="../brand-identity/index.html" data-accent="purple">Brand Identity</a></li>
+        <li><a href="../visual-motion/index.html" data-accent="lime">Visual Motion</a></li>
+        <li><a href="../video-editing/index.html" data-accent="orange">Video/Editing</a></li>
+        <li><a href="../social-marketing/index.html" data-accent="coral" class="is-active">Social Marketing</a></li>
+        </ul>
+      </li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-  <section class="page-hero">
-    <div class="page-hero__kicker reveal"><span class="mono-label">04 / Social Marketing</span></div>
-    <h1 class="page-hero__title reveal">Social<br /><em>Marketing</em></h1>
-    <p class="page-hero__desc reveal d1">
-      Social marketing moet snel binnenkomen, maar ook iets achterlaten. Ik maak content die direct aandacht pakt zonder leeg te voelen: herkenbare branding, slimme montage en formats die werken op het tempo van socials, maar wel menselijk en helder blijven.
-    </p>
-  </section>
-
-  <section class="page-body">
-    <span class="mono-label reveal">Projecten binnen Social Marketing</span>
-    <div class="card-grid">
-      <a href="contentbrein/index.html" class="card reveal">
-        <div class="card__media">
-          <img src="../assets/thumbs/contentbrein.jpg" alt="Contentbrein" decoding="async" />
-        </div>
-        <div class="card__info">
-          <h2 class="card__title">Contentbrein</h2>
-          <span class="card__tags">Social Ads / Video / Campagne</span>
-        </div>
-      </a>
-      <a href="zet-m-op/index.html" class="card reveal d1">
-        <div class="card__media">
-          <img src="../assets/thumbs/zet-m-op%20Large.jpeg" alt="ZET 'M OP!" decoding="async" />
-        </div>
-        <div class="card__info">
-          <h2 class="card__title">ZET 'M OP!</h2>
-          <span class="card__tags">Promo / Shorts / Campagne</span>
-        </div>
-      </a>
+  <div class="subpage">
+    <a href="../index.html" class="subpage__back">&#8592; Terug naar home</a>
+    <div class="page-showcase reveal">
+      <div class="page-showcase__copy">
+        <p class="subpage__label">04 / Social Marketing</p>
+        <h1 class="subpage__title">Social<br>Marketing.</h1>
+        <p class="subpage__desc">
+          Social marketing moet snel binnenkomen, maar ook iets achterlaten. Ik maak content die direct aandacht pakt zonder leeg te voelen: herkenbare branding, slimme montage en formats die werken op het tempo van socials, maar wel menselijk en helder blijven.
+        </p>
+      </div>
+      <div class="page-showcase__art page-showcase__art--social" aria-hidden="true">
+        <div class="social-pill social-pill--one">Brand Reach</div>
+        <div class="social-pill social-pill--two">Short-form Content</div>
+        <div class="social-pill social-pill--three">Campaign Flow</div>
+        <div class="social-orb social-orb--one"></div>
+        <div class="social-orb social-orb--two"></div>
+      </div>
     </div>
-  </section>
 
-  <footer class="footer footer--page">
-    <div class="footer__watermark" aria-hidden="true">Social Marketing</div>
-    <div class="footer__bar">
-      <span>&copy; 2026 Roelof Junior Haar</span>
-      <a href="../index.html">Terug naar home ↑</a>
+    <div class="project-grid">
+      <article class="project-card reveal">
+        <a href="contentbrein/index.html" class="project-card__link">
+          <div class="project-card__img">
+            <img src="../assets/thumbs/contentbrein.jpg" alt="Contentbrein" loading="lazy" />
+            <div class="project-card__overlay"><span>Bekijk project</span></div>
+          </div>
+          <div class="project-card__info">
+            <h3 class="project-card__title">Contentbrein</h3>
+            <p class="project-card__tags">Social Ads / Video / Campagne</p>
+          </div>
+        </a>
+      </article>
+
+      <article class="project-card reveal reveal--delay-1">
+        <a href="zet-m-op/index.html" class="project-card__link">
+          <div class="project-card__img">
+            <img src="../assets/thumbs/zet-m-op.jpg" alt="ZET 'M OP!'" loading="lazy" />
+            <div class="project-card__overlay"><span>Bekijk project</span></div>
+          </div>
+          <div class="project-card__info">
+            <h3 class="project-card__title">ZET 'M OP!</h3>
+            <p class="project-card__tags">Social Marketing / Promo / Shorts</p>
+          </div>
+        </a>
+      </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <span class="footer__logo">RJH</span>
+      <span class="footer__copy">&copy; 2026 Roelof Junior Haar.</span>
+      <span class="footer__back"><a href="../index.html">Terug naar home &uarr;</a></span>
     </div>
   </footer>
 
+  <script src="../script.js?v=20260708d"></script>
 </body>
 </html>

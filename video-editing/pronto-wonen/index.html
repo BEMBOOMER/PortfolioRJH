@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pronto Wonen — Video/Editing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../style.css?v=20260708d" />
+  <style>
+    .subpage { padding: calc(var(--nav-h) + 50px) clamp(1.5rem, 6vw, 5rem) 5rem; min-height: 100vh; }
+    .subpage__back { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text); background: var(--lime); padding: 0.4rem 0.8rem; border: var(--border-thin); border-radius: 999px; box-shadow: var(--shadow-sm); transition: transform 0.2s var(--ease-bounce), box-shadow 0.2s ease; cursor: none; margin-bottom: 3rem; }
+    .subpage__back:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px var(--text); }
+    .subpage__label { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-light); background: #1a2b3c; padding: 0.3rem 0.7rem; border: var(--border-thin); border-radius: 999px; margin-bottom: 1rem; }
+    .subpage__title { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 8rem); line-height: 0.93; letter-spacing: -0.02em; margin-bottom: 1.5rem; color: var(--text); }
+    .subpage__desc { max-width: 620px; color: var(--text); opacity: 0.65; line-height: 1.8; font-size: 1rem; }
+
+    /* hero: logo-blok in huisstijlblauw */
+    .pw-hero { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; margin-bottom: 3.5rem; }
+    .pw-hero__brand { background: #1a2b3c; border: var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; padding: clamp(1.5rem, 4vw, 3rem); transition: transform 0.3s var(--ease-bounce); position: relative; overflow: hidden; }
+    .pw-hero__brand:hover { transform: translate(-3px, -3px) rotate(-0.5deg); }
+    .pw-hero__brand img { width: 78%; height: auto; }
+    .pw-hero__badge { position: absolute; top: 1rem; right: 1rem; background: var(--yellow); border: var(--border-thin); border-radius: 999px; padding: 0.3rem 0.8rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; transform: rotate(4deg); }
+    .pw-stats { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.8rem; }
+    .pw-stat { background: var(--bg); border: var(--border-thin); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 0.7rem 1.1rem; text-align: center; }
+    .pw-stat b { display: block; font-family: var(--font-display); font-size: 1.5rem; line-height: 1.1; }
+    .pw-stat span { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.55; }
+
+    /* filters */
+    .pw-filters { position: sticky; top: calc(var(--nav-h) + 10px); z-index: 20; display: flex; gap: 0.5rem; flex-wrap: wrap; background: var(--bg); border: var(--border-thin); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 0.6rem; margin-bottom: 2.5rem; }
+    .pw-filter { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text); background: var(--bg); border: var(--border-thin); border-radius: 999px; padding: 0.35rem 0.8rem; cursor: none; transition: transform 0.15s var(--ease-bounce), background 0.15s ease, box-shadow 0.15s ease; }
+    .pw-filter span { opacity: 0.5; margin-left: 0.2rem; }
+    .pw-filter:hover { transform: translate(-1px, -1px); box-shadow: 2px 2px 0 var(--text); }
+    .pw-filter.is-active { background: var(--chip, var(--text)); box-shadow: 3px 3px 0 var(--text); }
+    .pw-filter[data-filter="all"].is-active { background: var(--text); color: var(--bg); }
+
+    /* grid */
+    .pw-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.5rem; }
+    .pw-divider { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 1rem; margin-top: 1.5rem; border-bottom: var(--border); padding-bottom: 0.6rem; }
+    .pw-divider:first-child { margin-top: 0; }
+    .pw-divider__nr { font-family: var(--font-display); font-size: 1rem; background: #1a2b3c; color: var(--text-light); border: var(--border-thin); border-radius: 999px; padding: 0.15rem 0.7rem; }
+    .pw-divider__title { font-family: var(--font-display); font-size: clamp(1.6rem, 3.5vw, 2.6rem); letter-spacing: 0.02em; }
+    .pw-divider__count { font-size: 0.8rem; font-weight: 700; opacity: 0.45; letter-spacing: 0.08em; text-transform: uppercase; }
+
+    .pw-card { display: flex; flex-direction: column; gap: 0.7rem; }
+    .pw-card.is-hidden { display: none; }
+    .pw-card__media { position: relative; display: block; width: 100%; aspect-ratio: 9/16; border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; background: #1a2b3c; padding: 0; cursor: none; transition: transform 0.25s var(--ease-bounce), box-shadow 0.25s ease; }
+    .pw-card__media:hover { transform: translate(-3px, -3px); box-shadow: 8px 8px 0 var(--text); }
+    .pw-card__media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pw-card__dur { position: absolute; bottom: 0.6rem; right: 0.6rem; background: var(--bg); border: var(--border-thin); border-radius: 999px; font-size: 0.7rem; font-weight: 700; padding: 0.1rem 0.55rem; letter-spacing: 0.05em; }
+    .pw-card__play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 54px; height: 54px; display: flex; align-items: center; justify-content: center; background: var(--chip, var(--lime)); border: var(--border-thin); border-radius: 50%; font-size: 1rem; padding-left: 4px; box-shadow: var(--shadow-sm); transition: transform 0.2s var(--ease-bounce), opacity 0.2s ease; }
+    .pw-card__media:hover .pw-card__play { transform: translate(-50%, -50%) scale(1.12); }
+    .pw-card.is-playing .pw-card__play { opacity: 0; }
+    .pw-card__info { display: flex; flex-direction: column; gap: 0.35rem; align-items: flex-start; }
+    .pw-card__chip { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--chip, var(--lime)); border: var(--border-thin); border-radius: 999px; padding: 0.12rem 0.6rem; }
+    .pw-card__title { font-family: var(--font-display); font-size: 0.98rem; letter-spacing: 0.02em; line-height: 1.25; }
+
+    .pw-card--photos .pw-photos { display: grid; grid-template-rows: repeat(3, 1fr); gap: 0.5rem; aspect-ratio: 9/16; border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; background: #1a2b3c; padding: 0.5rem; }
+    .pw-card--photos img { width: 100%; height: 100%; object-fit: cover; border: var(--border-thin); border-radius: var(--radius-sm); }
+
+    /* lightbox */
+    .pw-lightbox { border: none; padding: 0; background: transparent; max-width: none; max-height: none; width: 100vw; height: 100vh; display: none; align-items: center; justify-content: center; position: fixed; inset: 0; z-index: 100; }
+    .pw-lightbox[open] { display: flex; }
+    .pw-lightbox::backdrop { background: rgba(26, 43, 60, 0.85); }
+    .pw-lightbox__inner { position: relative; height: min(86vh, 900px); aspect-ratio: 9/16; }
+    .pw-lightbox__inner video { width: 100%; height: 100%; object-fit: contain; border: var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); background: #000; display: block; }
+    .pw-lightbox__title { position: absolute; top: -2.6rem; left: 0; color: var(--text-light); font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.04em; }
+    .pw-lightbox__close { position: absolute; top: -2.9rem; right: -0.4rem; background: var(--coral); border: var(--border-thin); border-radius: 999px; width: 40px; height: 40px; font-size: 1rem; font-weight: 700; cursor: none; box-shadow: var(--shadow-sm); transition: transform 0.15s var(--ease-bounce); }
+    .pw-lightbox__close:hover { transform: rotate(90deg) scale(1.08); }
+
+    @media (max-width: 800px) {
+      .pw-hero { grid-template-columns: 1fr; }
+      .pw-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
+      .pw-filters { top: calc(var(--nav-h) + 4px); }
+      .pw-lightbox__inner { height: auto; width: min(92vw, 420px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav class="nav" id="nav">
+    <a href="../../index.html" class="nav__logo">RJH</a>
+    <ul class="nav__links">
+      <li><a href="../../index.html">Home</a></li>
+      <li class="nav__item nav__item--dropdown">
+        <button class="nav__drop-btn" type="button" aria-expanded="false" aria-haspopup="true">Werk <span class="nav__caret">&#9662;</span></button>
+        <ul class="nav__dropdown">
+        <li><a href="../../brand-identity/index.html" data-accent="purple">Brand Identity</a></li>
+        <li><a href="../../visual-motion/index.html" data-accent="lime">Visual Motion</a></li>
+        <li><a href="../../video-editing/index.html" data-accent="orange" class="is-active">Video/Editing</a></li>
+        <li><a href="../../social-marketing/index.html" data-accent="coral">Social Marketing</a></li>
+        </ul>
+      </li>
+      <li><a href="../../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="subpage">
+    <a href="../index.html" class="subpage__back">&#8592; Terug naar Video/Editing</a>
+
+    <div class="pw-hero">
+      <div class="pw-hero__copy reveal">
+        <p class="subpage__label">Video/Editing / Pronto Wonen</p>
+        <h1 class="subpage__title">Pronto<br>Wonen.</h1>
+        <p class="subpage__desc">
+          Drie shortform-campagnes voor Pronto Wonen, geschoten in de winkel en gemonteerd voor TikTok en Reels. Van een WK-serie met voetballende collega's tot raadspelletjes met een tas over je hoofd: elke video is kort, herkenbaar en gemaakt om te blijven hangen tijdens het scrollen.
+        </p>
+        <div class="pw-stats">
+          <div class="pw-stat"><b>96</b><span>video's</span></div>
+          <div class="pw-stat"><b>3</b><span>campagnes</span></div>
+          <div class="pw-stat"><b>9:16</b><span>vertical</span></div>
+        </div>
+      </div>
+      <div class="pw-hero__brand reveal reveal--delay-1">
+        <span class="pw-hero__badge">Klantwerk</span>
+        <img src="media/pw-logo-wit.png" alt="Pronto Wonen logo" />
+      </div>
+    </div>
+
+    <div class="pw-filters reveal" id="pwFilters">
+      <button class="pw-filter is-active" data-filter="all" type="button">Alles <span>96</span></button>
+      <button class="pw-filter" data-filter="april" type="button" style="--chip:var(--blue)">April <span>36</span></button>
+      <button class="pw-filter" data-filter="man-vs-vrouw" type="button" style="--chip:var(--lime)">Man vs Vrouw <span>8</span></button>
+      <button class="pw-filter" data-filter="pov" type="button" style="--chip:var(--orange)">POV <span>4</span></button>
+      <button class="pw-filter" data-filter="podcast" type="button" style="--chip:var(--purple)">Podcast <span>6</span></button>
+      <button class="pw-filter" data-filter="wk" type="button" style="--chip:var(--teal)">WK <span>12</span></button>
+      <button class="pw-filter" data-filter="vangen" type="button" style="--chip:var(--yellow)">Vangen <span>6</span></button>
+      <button class="pw-filter" data-filter="raden" type="button" style="--chip:var(--coral)">Raad het <span>8</span></button>
+      <button class="pw-filter" data-filter="past-niet" type="button" style="--chip:var(--blue)">Past hier niet <span>3</span></button>
+      <button class="pw-filter" data-filter="hitte" type="button" style="--chip:var(--orange)">POV: hitte <span>4</span></button>
+      <button class="pw-filter" data-filter="zoekmij" type="button" style="--chip:var(--lime)">Zoek mij <span>2</span></button>
+      <button class="pw-filter" data-filter="irritaties" type="button" style="--chip:var(--purple)">Irritaties <span>7</span></button>
+    </div>
+
+    <div class="pw-grid" id="pwGrid">
+      <div class="pw-divider reveal" data-camp="0">
+        <span class="pw-divider__nr">01</span>
+        <h2 class="pw-divider__title">Aprilcampagne</h2>
+        <span class="pw-divider__count">36 video's</span>
+      </div>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-1" data-title="April · A1" aria-label="Speel April · A1 af">
+          <video muted playsinline preload="none" poster="media/april-1.jpg" src="media/april-1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:22</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A1</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-1-1" data-title="April · A1.1" aria-label="Speel April · A1.1 af">
+          <video muted playsinline preload="none" poster="media/april-1-1.jpg" src="media/april-1-1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:23</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A1.1</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-1-2" data-title="April · A1.2" aria-label="Speel April · A1.2 af">
+          <video muted playsinline preload="none" poster="media/april-1-2.jpg" src="media/april-1-2.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:20</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A1.2</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-1-3" data-title="April · A1.3" aria-label="Speel April · A1.3 af">
+          <video muted playsinline preload="none" poster="media/april-1-3.jpg" src="media/april-1-3.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:11</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A1.3</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-1-4" data-title="April · A1.4" aria-label="Speel April · A1.4 af">
+          <video muted playsinline preload="none" poster="media/april-1-4.jpg" src="media/april-1-4.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:15</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A1.4</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-1-5" data-title="April · A1.5" aria-label="Speel April · A1.5 af">
+          <video muted playsinline preload="none" poster="media/april-1-5.jpg" src="media/april-1-5.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:15</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A1.5</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-1-6" data-title="April · A1.6" aria-label="Speel April · A1.6 af">
+          <video muted playsinline preload="none" poster="media/april-1-6.jpg" src="media/april-1-6.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:11</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A1.6</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-1-7" data-title="April · A1.7" aria-label="Speel April · A1.7 af">
+          <video muted playsinline preload="none" poster="media/april-1-7.jpg" src="media/april-1-7.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:10</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A1.7</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-1-8" data-title="April · A1.8" aria-label="Speel April · A1.8 af">
+          <video muted playsinline preload="none" poster="media/april-1-8.jpg" src="media/april-1-8.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:09</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A1.8</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-1-8-1" data-title="April · A1.8.1" aria-label="Speel April · A1.8.1 af">
+          <video muted playsinline preload="none" poster="media/april-1-8-1.jpg" src="media/april-1-8-1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:11</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A1.8.1</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-1-8-2" data-title="April · A1.8.2" aria-label="Speel April · A1.8.2 af">
+          <video muted playsinline preload="none" poster="media/april-1-8-2.jpg" src="media/april-1-8-2.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:11</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A1.8.2</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-1-9" data-title="April · A1.9" aria-label="Speel April · A1.9 af">
+          <video muted playsinline preload="none" poster="media/april-1-9.jpg" src="media/april-1-9.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:27</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A1.9</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-2-1" data-title="April · A2.1" aria-label="Speel April · A2.1 af">
+          <video muted playsinline preload="none" poster="media/april-2-1.jpg" src="media/april-2-1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:29</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A2.1</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-2-2" data-title="April · A2.2" aria-label="Speel April · A2.2 af">
+          <video muted playsinline preload="none" poster="media/april-2-2.jpg" src="media/april-2-2.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:17</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A2.2</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-2-3" data-title="April · A2.3" aria-label="Speel April · A2.3 af">
+          <video muted playsinline preload="none" poster="media/april-2-3.jpg" src="media/april-2-3.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:16</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A2.3</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-2-4" data-title="April · A2.4" aria-label="Speel April · A2.4 af">
+          <video muted playsinline preload="none" poster="media/april-2-4.jpg" src="media/april-2-4.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:13</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A2.4</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-3" data-title="April · A3" aria-label="Speel April · A3 af">
+          <video muted playsinline preload="none" poster="media/april-3.jpg" src="media/april-3.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:17</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A3</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-3-1" data-title="April · A3.1" aria-label="Speel April · A3.1 af">
+          <video muted playsinline preload="none" poster="media/april-3-1.jpg" src="media/april-3-1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:14</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A3.1</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-3-2" data-title="April · A3.2" aria-label="Speel April · A3.2 af">
+          <video muted playsinline preload="none" poster="media/april-3-2.jpg" src="media/april-3-2.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:22</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A3.2</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-3-3" data-title="April · A3.3" aria-label="Speel April · A3.3 af">
+          <video muted playsinline preload="none" poster="media/april-3-3.jpg" src="media/april-3-3.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:14</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A3.3</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-6" data-title="April · A6" aria-label="Speel April · A6 af">
+          <video muted playsinline preload="none" poster="media/april-6.jpg" src="media/april-6.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:11</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A6</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-6-1" data-title="April · A6.1" aria-label="Speel April · A6.1 af">
+          <video muted playsinline preload="none" poster="media/april-6-1.jpg" src="media/april-6-1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:10</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A6.1</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-6-2" data-title="April · A6.2" aria-label="Speel April · A6.2 af">
+          <video muted playsinline preload="none" poster="media/april-6-2.jpg" src="media/april-6-2.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:08</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A6.2</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-9" data-title="April · A9" aria-label="Speel April · A9 af">
+          <video muted playsinline preload="none" poster="media/april-9.jpg" src="media/april-9.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:13</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A9</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-9-1" data-title="April · A9.1" aria-label="Speel April · A9.1 af">
+          <video muted playsinline preload="none" poster="media/april-9-1.jpg" src="media/april-9-1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:16</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A9.1</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-10" data-title="April · A10" aria-label="Speel April · A10 af">
+          <video muted playsinline preload="none" poster="media/april-10.jpg" src="media/april-10.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:16</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A10</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-11" data-title="April · A11" aria-label="Speel April · A11 af">
+          <video muted playsinline preload="none" poster="media/april-11.jpg" src="media/april-11.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:16</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A11</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-11-1" data-title="April · A11.1" aria-label="Speel April · A11.1 af">
+          <video muted playsinline preload="none" poster="media/april-11-1.jpg" src="media/april-11-1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:20</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A11.1</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-11-2" data-title="April · A11.2" aria-label="Speel April · A11.2 af">
+          <video muted playsinline preload="none" poster="media/april-11-2.jpg" src="media/april-11-2.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:12</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A11.2</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-11-3" data-title="April · A11.3" aria-label="Speel April · A11.3 af">
+          <video muted playsinline preload="none" poster="media/april-11-3.jpg" src="media/april-11-3.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:14</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A11.3</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-12" data-title="April · A12" aria-label="Speel April · A12 af">
+          <video muted playsinline preload="none" poster="media/april-12.jpg" src="media/april-12.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:08</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A12</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-13" data-title="April · A13" aria-label="Speel April · A13 af">
+          <video muted playsinline preload="none" poster="media/april-13.jpg" src="media/april-13.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:20</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A13</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-13-1" data-title="April · A13.1" aria-label="Speel April · A13.1 af">
+          <video muted playsinline preload="none" poster="media/april-13-1.jpg" src="media/april-13-1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:21</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A13.1</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-13-2" data-title="April · A13.2" aria-label="Speel April · A13.2 af">
+          <video muted playsinline preload="none" poster="media/april-13-2.jpg" src="media/april-13-2.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:17</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A13.2</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-13-3" data-title="April · A13.3" aria-label="Speel April · A13.3 af">
+          <video muted playsinline preload="none" poster="media/april-13-3.jpg" src="media/april-13-3.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:28</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A13.3</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="april" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="april-14" data-title="April · A14" aria-label="Speel April · A14 af">
+          <video muted playsinline preload="none" poster="media/april-14.jpg" src="media/april-14.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:14</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">April</span>
+          <h3 class="pw-card__title">April · A14</h3>
+        </div>
+      </article>
+      <div class="pw-divider reveal" data-camp="1">
+        <span class="pw-divider__nr">02</span>
+        <h2 class="pw-divider__title">Meicampagne</h2>
+        <span class="pw-divider__count">30 video's</span>
+      </div>
+      <article class="pw-card reveal" data-group="man-vs-vrouw" style="--chip:var(--lime)">
+        <button class="pw-card__media" type="button" data-slug="mvv-man" data-title="Man vs Vrouw · Man" aria-label="Speel Man vs Vrouw · Man af">
+          <video muted playsinline preload="none" poster="media/mvv-man.jpg" src="media/mvv-man.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:20</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Man vs Vrouw</span>
+          <h3 class="pw-card__title">Man vs Vrouw · Man</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="man-vs-vrouw" style="--chip:var(--lime)">
+        <button class="pw-card__media" type="button" data-slug="mvv-vrouw" data-title="Man vs Vrouw · Vrouw" aria-label="Speel Man vs Vrouw · Vrouw af">
+          <video muted playsinline preload="none" poster="media/mvv-vrouw.jpg" src="media/mvv-vrouw.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:40</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Man vs Vrouw</span>
+          <h3 class="pw-card__title">Man vs Vrouw · Vrouw</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="man-vs-vrouw" style="--chip:var(--lime)">
+        <button class="pw-card__media" type="button" data-slug="mvv-vs" data-title="Man vs Vrouw · VS" aria-label="Speel Man vs Vrouw · VS af">
+          <video muted playsinline preload="none" poster="media/mvv-vs.jpg" src="media/mvv-vs.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:54</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Man vs Vrouw</span>
+          <h3 class="pw-card__title">Man vs Vrouw · VS</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="man-vs-vrouw" style="--chip:var(--lime)">
+        <button class="pw-card__media" type="button" data-slug="mvv-outro1" data-title="Kussens · outro 1" aria-label="Speel Kussens · outro 1 af">
+          <video muted playsinline preload="none" poster="media/mvv-outro1.jpg" src="media/mvv-outro1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:27</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Man vs Vrouw</span>
+          <h3 class="pw-card__title">Kussens · outro 1</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="man-vs-vrouw" style="--chip:var(--lime)">
+        <button class="pw-card__media" type="button" data-slug="mvv-outro2" data-title="Kussens · outro 2" aria-label="Speel Kussens · outro 2 af">
+          <video muted playsinline preload="none" poster="media/mvv-outro2.jpg" src="media/mvv-outro2.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:27</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Man vs Vrouw</span>
+          <h3 class="pw-card__title">Kussens · outro 2</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="man-vs-vrouw" style="--chip:var(--lime)">
+        <button class="pw-card__media" type="button" data-slug="mvv-deel1" data-title="Vrouw · deel 1" aria-label="Speel Vrouw · deel 1 af">
+          <video muted playsinline preload="none" poster="media/mvv-deel1.jpg" src="media/mvv-deel1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:20</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Man vs Vrouw</span>
+          <h3 class="pw-card__title">Vrouw · deel 1</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="man-vs-vrouw" style="--chip:var(--lime)">
+        <button class="pw-card__media" type="button" data-slug="mvv-deel2" data-title="Vrouw · deel 2" aria-label="Speel Vrouw · deel 2 af">
+          <video muted playsinline preload="none" poster="media/mvv-deel2.jpg" src="media/mvv-deel2.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:14</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Man vs Vrouw</span>
+          <h3 class="pw-card__title">Vrouw · deel 2</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="man-vs-vrouw" style="--chip:var(--lime)">
+        <button class="pw-card__media" type="button" data-slug="mvv-deel3" data-title="Vrouw · deel 3" aria-label="Speel Vrouw · deel 3 af">
+          <video muted playsinline preload="none" poster="media/mvv-deel3.jpg" src="media/mvv-deel3.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:12</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Man vs Vrouw</span>
+          <h3 class="pw-card__title">Vrouw · deel 3</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="pov" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="pov-500euro" data-title="POV: 500 euro budget" aria-label="Speel POV: 500 euro budget af">
+          <video muted playsinline preload="none" poster="media/pov-500euro.jpg" src="media/pov-500euro.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:22</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">POV</span>
+          <h3 class="pw-card__title">POV: 500 euro budget</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="pov" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="pov-rondje" data-title="POV: rondje Pronto" aria-label="Speel POV: rondje Pronto af">
+          <video muted playsinline preload="none" poster="media/pov-rondje.jpg" src="media/pov-rondje.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:41</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">POV</span>
+          <h3 class="pw-card__title">POV: rondje Pronto</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="pov" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="pov-kort1" data-title="POV: rondje · kort 1" aria-label="Speel POV: rondje · kort 1 af">
+          <video muted playsinline preload="none" poster="media/pov-kort1.jpg" src="media/pov-kort1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:16</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">POV</span>
+          <h3 class="pw-card__title">POV: rondje · kort 1</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="pov" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="pov-kort2" data-title="POV: rondje · kort 2" aria-label="Speel POV: rondje · kort 2 af">
+          <video muted playsinline preload="none" poster="media/pov-kort2.jpg" src="media/pov-kort2.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:14</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">POV</span>
+          <h3 class="pw-card__title">POV: rondje · kort 2</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="podcast" style="--chip:var(--purple)">
+        <button class="pw-card__media" type="button" data-slug="podcast-1" data-title="Podcast · fragment 1" aria-label="Speel Podcast · fragment 1 af">
+          <video muted playsinline preload="none" poster="media/podcast-1.jpg" src="media/podcast-1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:15</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Podcast</span>
+          <h3 class="pw-card__title">Podcast · fragment 1</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="podcast" style="--chip:var(--purple)">
+        <button class="pw-card__media" type="button" data-slug="podcast-2" data-title="Podcast · fragment 2" aria-label="Speel Podcast · fragment 2 af">
+          <video muted playsinline preload="none" poster="media/podcast-2.jpg" src="media/podcast-2.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:17</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Podcast</span>
+          <h3 class="pw-card__title">Podcast · fragment 2</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="podcast" style="--chip:var(--purple)">
+        <button class="pw-card__media" type="button" data-slug="podcast-3" data-title="Podcast · fragment 3" aria-label="Speel Podcast · fragment 3 af">
+          <video muted playsinline preload="none" poster="media/podcast-3.jpg" src="media/podcast-3.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:14</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Podcast</span>
+          <h3 class="pw-card__title">Podcast · fragment 3</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="podcast" style="--chip:var(--purple)">
+        <button class="pw-card__media" type="button" data-slug="podcast-4" data-title="Podcast · fragment 4" aria-label="Speel Podcast · fragment 4 af">
+          <video muted playsinline preload="none" poster="media/podcast-4.jpg" src="media/podcast-4.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:18</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Podcast</span>
+          <h3 class="pw-card__title">Podcast · fragment 4</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="podcast" style="--chip:var(--purple)">
+        <button class="pw-card__media" type="button" data-slug="podcast-5" data-title="Podcast · fragment 5" aria-label="Speel Podcast · fragment 5 af">
+          <video muted playsinline preload="none" poster="media/podcast-5.jpg" src="media/podcast-5.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:21</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Podcast</span>
+          <h3 class="pw-card__title">Podcast · fragment 5</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="podcast" style="--chip:var(--purple)">
+        <button class="pw-card__media" type="button" data-slug="podcast-6" data-title="Podcast · fragment 6" aria-label="Speel Podcast · fragment 6 af">
+          <video muted playsinline preload="none" poster="media/podcast-6.jpg" src="media/podcast-6.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:13</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Podcast</span>
+          <h3 class="pw-card__title">Podcast · fragment 6</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="wk" style="--chip:var(--teal)">
+        <button class="pw-card__media" type="button" data-slug="wk-fabriekbank1" data-title="WK · Fabriek bank 1" aria-label="Speel WK · Fabriek bank 1 af">
+          <video muted playsinline preload="none" poster="media/wk-fabriekbank1.jpg" src="media/wk-fabriekbank1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:13</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">WK</span>
+          <h3 class="pw-card__title">WK · Fabriek bank 1</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="wk" style="--chip:var(--teal)">
+        <button class="pw-card__media" type="button" data-slug="wk-fabriekbank2" data-title="WK · Fabriek bank 2" aria-label="Speel WK · Fabriek bank 2 af">
+          <video muted playsinline preload="none" poster="media/wk-fabriekbank2.jpg" src="media/wk-fabriekbank2.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:13</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">WK</span>
+          <h3 class="pw-card__title">WK · Fabriek bank 2</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="wk" style="--chip:var(--teal)">
+        <button class="pw-card__media" type="button" data-slug="wk-hoekbank" data-title="WK · Hoekbank" aria-label="Speel WK · Hoekbank af">
+          <video muted playsinline preload="none" poster="media/wk-hoekbank.jpg" src="media/wk-hoekbank.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:10</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">WK</span>
+          <h3 class="pw-card__title">WK · Hoekbank</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="wk" style="--chip:var(--teal)">
+        <button class="pw-card__media" type="button" data-slug="wk-persconf" data-title="WK · Persconferentie" aria-label="Speel WK · Persconferentie af">
+          <video muted playsinline preload="none" poster="media/wk-persconf.jpg" src="media/wk-persconf.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:52</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">WK</span>
+          <h3 class="pw-card__title">WK · Persconferentie</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="wk" style="--chip:var(--teal)">
+        <button class="pw-card__media" type="button" data-slug="wk-voetbal" data-title="WK · Voetbal" aria-label="Speel WK · Voetbal af">
+          <video muted playsinline preload="none" poster="media/wk-voetbal.jpg" src="media/wk-voetbal.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:14</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">WK</span>
+          <h3 class="pw-card__title">WK · Voetbal</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="wk" style="--chip:var(--teal)">
+        <button class="pw-card__media" type="button" data-slug="wk-japan" data-title="WK · Japan" aria-label="Speel WK · Japan af">
+          <video muted playsinline preload="none" poster="media/wk-japan.jpg" src="media/wk-japan.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:15</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">WK</span>
+          <h3 class="pw-card__title">WK · Japan</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="wk" style="--chip:var(--teal)">
+        <button class="pw-card__media" type="button" data-slug="wk-pauzeer" data-title="WK · Pauzeer" aria-label="Speel WK · Pauzeer af">
+          <video muted playsinline preload="none" poster="media/wk-pauzeer.jpg" src="media/wk-pauzeer.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:04</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">WK</span>
+          <h3 class="pw-card__title">WK · Pauzeer</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="wk" style="--chip:var(--teal)">
+        <button class="pw-card__media" type="button" data-slug="wk-tunesie" data-title="WK · Tunesië" aria-label="Speel WK · Tunesië af">
+          <video muted playsinline preload="none" poster="media/wk-tunesie.jpg" src="media/wk-tunesie.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:27</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">WK</span>
+          <h3 class="pw-card__title">WK · Tunesië</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="wk" style="--chip:var(--teal)">
+        <button class="pw-card__media" type="button" data-slug="wk-tunesie-gw" data-title="WK · Tunesië (geen winnaar)" aria-label="Speel WK · Tunesië (geen winnaar) af">
+          <video muted playsinline preload="none" poster="media/wk-tunesie-gw.jpg" src="media/wk-tunesie-gw.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:19</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">WK</span>
+          <h3 class="pw-card__title">WK · Tunesië (geen winnaar)</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="wk" style="--chip:var(--teal)">
+        <button class="pw-card__media" type="button" data-slug="wk-winnaar-tunesie" data-title="WK · Winnaar Tunesië" aria-label="Speel WK · Winnaar Tunesië af">
+          <video muted playsinline preload="none" poster="media/wk-winnaar-tunesie.jpg" src="media/wk-winnaar-tunesie.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:15</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">WK</span>
+          <h3 class="pw-card__title">WK · Winnaar Tunesië</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="wk" style="--chip:var(--teal)">
+        <button class="pw-card__media" type="button" data-slug="wk-zweden" data-title="WK · Zweden" aria-label="Speel WK · Zweden af">
+          <video muted playsinline preload="none" poster="media/wk-zweden.jpg" src="media/wk-zweden.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:25</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">WK</span>
+          <h3 class="pw-card__title">WK · Zweden</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="wk" style="--chip:var(--teal)">
+        <button class="pw-card__media" type="button" data-slug="wk-zweden-gw" data-title="WK · Zweden (geen winnaar)" aria-label="Speel WK · Zweden (geen winnaar) af">
+          <video muted playsinline preload="none" poster="media/wk-zweden-gw.jpg" src="media/wk-zweden-gw.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:16</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">WK</span>
+          <h3 class="pw-card__title">WK · Zweden (geen winnaar)</h3>
+        </div>
+      </article>
+      <div class="pw-divider reveal" data-camp="2">
+        <span class="pw-divider__nr">03</span>
+        <h2 class="pw-divider__title">Sittard-Geleen</h2>
+        <span class="pw-divider__count">30 video's</span>
+      </div>
+      <article class="pw-card reveal" data-group="vangen" style="--chip:var(--yellow)">
+        <button class="pw-card__media" type="button" data-slug="vangen-1" data-title="Vangen 1" aria-label="Speel Vangen 1 af">
+          <video muted playsinline preload="none" poster="media/vangen-1.jpg" src="media/vangen-1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:09</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Vangen</span>
+          <h3 class="pw-card__title">Vangen 1</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="vangen" style="--chip:var(--yellow)">
+        <button class="pw-card__media" type="button" data-slug="vangen-2" data-title="Vangen 2" aria-label="Speel Vangen 2 af">
+          <video muted playsinline preload="none" poster="media/vangen-2.jpg" src="media/vangen-2.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:06</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Vangen</span>
+          <h3 class="pw-card__title">Vangen 2</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="vangen" style="--chip:var(--yellow)">
+        <button class="pw-card__media" type="button" data-slug="vangen-3" data-title="Vangen 3" aria-label="Speel Vangen 3 af">
+          <video muted playsinline preload="none" poster="media/vangen-3.jpg" src="media/vangen-3.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:10</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Vangen</span>
+          <h3 class="pw-card__title">Vangen 3</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="vangen" style="--chip:var(--yellow)">
+        <button class="pw-card__media" type="button" data-slug="vangen-4" data-title="Vangen 4" aria-label="Speel Vangen 4 af">
+          <video muted playsinline preload="none" poster="media/vangen-4.jpg" src="media/vangen-4.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:11</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Vangen</span>
+          <h3 class="pw-card__title">Vangen 4</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="vangen" style="--chip:var(--yellow)">
+        <button class="pw-card__media" type="button" data-slug="vangen-5" data-title="Vangen 5" aria-label="Speel Vangen 5 af">
+          <video muted playsinline preload="none" poster="media/vangen-5.jpg" src="media/vangen-5.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:08</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Vangen</span>
+          <h3 class="pw-card__title">Vangen 5</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="vangen" style="--chip:var(--yellow)">
+        <button class="pw-card__media" type="button" data-slug="vangen-trend" data-title="Vangen · TikTok trend" aria-label="Speel Vangen · TikTok trend af">
+          <video muted playsinline preload="none" poster="media/vangen-trend.jpg" src="media/vangen-trend.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:14</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Vangen</span>
+          <h3 class="pw-card__title">Vangen · TikTok trend</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="raden" style="--chip:var(--coral)">
+        <button class="pw-card__media" type="button" data-slug="raden-blind1" data-title="Blind raden 1" aria-label="Speel Blind raden 1 af">
+          <video muted playsinline preload="none" poster="media/raden-blind1.jpg" src="media/raden-blind1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:11</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Raad het</span>
+          <h3 class="pw-card__title">Blind raden 1</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="raden" style="--chip:var(--coral)">
+        <button class="pw-card__media" type="button" data-slug="raden-blind2" data-title="Blind raden 2" aria-label="Speel Blind raden 2 af">
+          <video muted playsinline preload="none" poster="media/raden-blind2.jpg" src="media/raden-blind2.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:20</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Raad het</span>
+          <h3 class="pw-card__title">Blind raden 2</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="raden" style="--chip:var(--coral)">
+        <button class="pw-card__media" type="button" data-slug="raden-kaarshouder" data-title="Raad het · kaarshouder" aria-label="Speel Raad het · kaarshouder af">
+          <video muted playsinline preload="none" poster="media/raden-kaarshouder.jpg" src="media/raden-kaarshouder.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:22</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Raad het</span>
+          <h3 class="pw-card__title">Raad het · kaarshouder</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="raden" style="--chip:var(--coral)">
+        <button class="pw-card__media" type="button" data-slug="raden-vaas" data-title="Raad het · vaas" aria-label="Speel Raad het · vaas af">
+          <video muted playsinline preload="none" poster="media/raden-vaas.jpg" src="media/raden-vaas.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:22</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Raad het</span>
+          <h3 class="pw-card__title">Raad het · vaas</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="raden" style="--chip:var(--coral)">
+        <button class="pw-card__media" type="button" data-slug="raden-lovesign" data-title="Raad het · love sign" aria-label="Speel Raad het · love sign af">
+          <video muted playsinline preload="none" poster="media/raden-lovesign.jpg" src="media/raden-lovesign.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:36</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Raad het</span>
+          <h3 class="pw-card__title">Raad het · love sign</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="raden" style="--chip:var(--coral)">
+        <button class="pw-card__media" type="button" data-slug="raden-vogel" data-title="Raad het · vogel" aria-label="Speel Raad het · vogel af">
+          <video muted playsinline preload="none" poster="media/raden-vogel.jpg" src="media/raden-vogel.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:19</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Raad het</span>
+          <h3 class="pw-card__title">Raad het · vogel</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="raden" style="--chip:var(--coral)">
+        <button class="pw-card__media" type="button" data-slug="raden-compilatie" data-title="Raad het · compilatie" aria-label="Speel Raad het · compilatie af">
+          <video muted playsinline preload="none" poster="media/raden-compilatie.jpg" src="media/raden-compilatie.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:55</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Raad het</span>
+          <h3 class="pw-card__title">Raad het · compilatie</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="raden" style="--chip:var(--coral)">
+        <button class="pw-card__media" type="button" data-slug="raden-kijker" data-title="Raad mee met de kijker" aria-label="Speel Raad mee met de kijker af">
+          <video muted playsinline preload="none" poster="media/raden-kijker.jpg" src="media/raden-kijker.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:28</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Raad het</span>
+          <h3 class="pw-card__title">Raad mee met de kijker</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="past-niet" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="past-niet-1" data-title="Past hier niet 1" aria-label="Speel Past hier niet 1 af">
+          <video muted playsinline preload="none" poster="media/past-niet-1.jpg" src="media/past-niet-1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:11</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Past hier niet</span>
+          <h3 class="pw-card__title">Past hier niet 1</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="past-niet" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="past-niet-2" data-title="Past hier niet 2" aria-label="Speel Past hier niet 2 af">
+          <video muted playsinline preload="none" poster="media/past-niet-2.jpg" src="media/past-niet-2.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:11</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Past hier niet</span>
+          <h3 class="pw-card__title">Past hier niet 2</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="past-niet" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="past-niet-3" data-title="Past hier niet 3" aria-label="Speel Past hier niet 3 af">
+          <video muted playsinline preload="none" poster="media/past-niet-3.jpg" src="media/past-niet-3.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:13</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Past hier niet</span>
+          <h3 class="pw-card__title">Past hier niet 3</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="hitte" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="hitte-1" data-title="POV: hitte · waaier" aria-label="Speel POV: hitte · waaier af">
+          <video muted playsinline preload="none" poster="media/hitte-1.jpg" src="media/hitte-1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:20</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">POV: hitte</span>
+          <h3 class="pw-card__title">POV: hitte · waaier</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="hitte" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="hitte-2" data-title="POV: hitte · stekker" aria-label="Speel POV: hitte · stekker af">
+          <video muted playsinline preload="none" poster="media/hitte-2.jpg" src="media/hitte-2.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:32</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">POV: hitte</span>
+          <h3 class="pw-card__title">POV: hitte · stekker</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="hitte" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="hitte-3" data-title="POV: hitte · ventilator" aria-label="Speel POV: hitte · ventilator af">
+          <video muted playsinline preload="none" poster="media/hitte-3.jpg" src="media/hitte-3.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:33</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">POV: hitte</span>
+          <h3 class="pw-card__title">POV: hitte · ventilator</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="hitte" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="hitte-4" data-title="POV: hitte · combi" aria-label="Speel POV: hitte · combi af">
+          <video muted playsinline preload="none" poster="media/hitte-4.jpg" src="media/hitte-4.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:31</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">POV: hitte</span>
+          <h3 class="pw-card__title">POV: hitte · combi</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="zoekmij" style="--chip:var(--lime)">
+        <button class="pw-card__media" type="button" data-slug="zoekmij-kort" data-title="Zoek mij · kort" aria-label="Speel Zoek mij · kort af">
+          <video muted playsinline preload="none" poster="media/zoekmij-kort.jpg" src="media/zoekmij-kort.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:25</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Zoek mij</span>
+          <h3 class="pw-card__title">Zoek mij · kort</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="zoekmij" style="--chip:var(--lime)">
+        <button class="pw-card__media" type="button" data-slug="zoekmij-lang" data-title="Zoek mij · lang" aria-label="Speel Zoek mij · lang af">
+          <video muted playsinline preload="none" poster="media/zoekmij-lang.jpg" src="media/zoekmij-lang.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:29</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Zoek mij</span>
+          <h3 class="pw-card__title">Zoek mij · lang</h3>
+        </div>
+      </article>
+      <article class="pw-card pw-card--photos reveal" data-group="zoekmij" style="--chip:var(--lime)">
+        <div class="pw-photos">
+          <img src="media/zoekmij-foto-1.jpg" alt="Zoek mij foto 1" loading="lazy" />
+          <img src="media/zoekmij-foto-2.jpg" alt="Zoek mij foto 2" loading="lazy" />
+          <img src="media/zoekmij-foto-3.jpg" alt="Zoek mij foto 3" loading="lazy" />
+        </div>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Zoek mij</span>
+          <h3 class="pw-card__title">Zoek mij · IG carrousel</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="irritaties" style="--chip:var(--purple)">
+        <button class="pw-card__media" type="button" data-slug="irritaties-1" data-title="Irritaties · de boer" aria-label="Speel Irritaties · de boer af">
+          <video muted playsinline preload="none" poster="media/irritaties-1.jpg" src="media/irritaties-1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:20</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Irritaties</span>
+          <h3 class="pw-card__title">Irritaties · de boer</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="irritaties" style="--chip:var(--purple)">
+        <button class="pw-card__media" type="button" data-slug="irritaties-2" data-title="Irritaties · de catwalk" aria-label="Speel Irritaties · de catwalk af">
+          <video muted playsinline preload="none" poster="media/irritaties-2.jpg" src="media/irritaties-2.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:16</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Irritaties</span>
+          <h3 class="pw-card__title">Irritaties · de catwalk</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="irritaties" style="--chip:var(--purple)">
+        <button class="pw-card__media" type="button" data-slug="irritaties-3" data-title="Irritaties · de discussie" aria-label="Speel Irritaties · de discussie af">
+          <video muted playsinline preload="none" poster="media/irritaties-3.jpg" src="media/irritaties-3.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:28</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Irritaties</span>
+          <h3 class="pw-card__title">Irritaties · de discussie</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="irritaties" style="--chip:var(--purple)">
+        <button class="pw-card__media" type="button" data-slug="irritaties-cta" data-title="Irritaties · CTA" aria-label="Speel Irritaties · CTA af">
+          <video muted playsinline preload="none" poster="media/irritaties-cta.jpg" src="media/irritaties-cta.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:10</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Irritaties</span>
+          <h3 class="pw-card__title">Irritaties · CTA</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="irritaties" style="--chip:var(--purple)">
+        <button class="pw-card__media" type="button" data-slug="irritaties-1-cta" data-title="Irritaties 1 + CTA" aria-label="Speel Irritaties 1 + CTA af">
+          <video muted playsinline preload="none" poster="media/irritaties-1-cta.jpg" src="media/irritaties-1-cta.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:30</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Irritaties</span>
+          <h3 class="pw-card__title">Irritaties 1 + CTA</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="irritaties" style="--chip:var(--purple)">
+        <button class="pw-card__media" type="button" data-slug="irritaties-2-cta" data-title="Irritaties 2 + CTA" aria-label="Speel Irritaties 2 + CTA af">
+          <video muted playsinline preload="none" poster="media/irritaties-2-cta.jpg" src="media/irritaties-2-cta.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:25</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Irritaties</span>
+          <h3 class="pw-card__title">Irritaties 2 + CTA</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" data-group="irritaties" style="--chip:var(--purple)">
+        <button class="pw-card__media" type="button" data-slug="irritaties-3-cta" data-title="Irritaties 3 + CTA" aria-label="Speel Irritaties 3 + CTA af">
+          <video muted playsinline preload="none" poster="media/irritaties-3-cta.jpg" src="media/irritaties-3-cta.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:38</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Irritaties</span>
+          <h3 class="pw-card__title">Irritaties 3 + CTA</h3>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <dialog class="pw-lightbox" id="pwLightbox">
+    <div class="pw-lightbox__inner">
+      <span class="pw-lightbox__title" id="pwLightboxTitle"></span>
+      <button class="pw-lightbox__close" id="pwLightboxClose" type="button" aria-label="Sluiten">&#10005;</button>
+      <video id="pwLightboxVideo" controls playsinline></video>
+    </div>
+  </dialog>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <span class="footer__logo">RJH</span>
+      <span class="footer__copy">&copy; 2026 Roelof Junior Haar.</span>
+      <span class="footer__back"><a href="../../index.html">Terug naar home &uarr;</a></span>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=20260708d"></script>
+  <script>
+    (function () {
+      // ── filters
+      var filters = document.querySelectorAll('.pw-filter');
+      var cards = document.querySelectorAll('.pw-card');
+      var dividers = document.querySelectorAll('.pw-divider');
+      filters.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          filters.forEach(function (b) { b.classList.remove('is-active'); });
+          btn.classList.add('is-active');
+          var f = btn.dataset.filter;
+          cards.forEach(function (c) {
+            c.classList.toggle('is-hidden', f !== 'all' && c.dataset.group !== f);
+          });
+          dividers.forEach(function (d) {
+            var camp = d.dataset.camp;
+            var visible = document.querySelectorAll('.pw-card:not(.is-hidden)');
+            var any = Array.prototype.some.call(visible, function (c) {
+              var g = c.dataset.group;
+              return groupCamp[g] === camp;
+            });
+            d.style.display = any ? '' : 'none';
+          });
+        });
+      });
+      var groupCamp = {"april": "0", "man-vs-vrouw": "1", "pov": "1", "podcast": "1", "wk": "1", "vangen": "2", "raden": "2", "past-niet": "2", "hitte": "2", "zoekmij": "2", "irritaties": "2"};
+
+      // ── hover-preview (muted) — alleen op fijne pointers
+      var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      if (finePointer) {
+        document.querySelectorAll('.pw-card__media').forEach(function (btn) {
+          var v = btn.querySelector('video');
+          if (!v) return;
+          btn.addEventListener('mouseenter', function () {
+            v.muted = true;
+            var p = v.play();
+            if (p) p.catch(function () {});
+            btn.closest('.pw-card').classList.add('is-playing');
+          });
+          btn.addEventListener('mouseleave', function () {
+            v.pause();
+            v.currentTime = 0;
+            btn.closest('.pw-card').classList.remove('is-playing');
+          });
+        });
+      }
+
+      // ── lightbox met geluid
+      var box = document.getElementById('pwLightbox');
+      var boxVideo = document.getElementById('pwLightboxVideo');
+      var boxTitle = document.getElementById('pwLightboxTitle');
+      document.querySelectorAll('.pw-card__media').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          boxVideo.src = 'media/' + btn.dataset.slug + '.mp4';
+          boxTitle.textContent = btn.dataset.title;
+          box.showModal();
+          boxVideo.muted = false;
+          var p = boxVideo.play();
+          if (p) p.catch(function () {});
+        });
+      });
+      function closeBox() {
+        boxVideo.pause();
+        boxVideo.removeAttribute('src');
+        boxVideo.load();
+        box.close();
+      }
+      document.getElementById('pwLightboxClose').addEventListener('click', closeBox);
+      box.addEventListener('click', function (e) {
+        if (e.target === box) closeBox();
+      });
+      box.addEventListener('cancel', function (e) { e.preventDefault(); closeBox(); });
+    })();
+  </script>
+</body>
+</html>

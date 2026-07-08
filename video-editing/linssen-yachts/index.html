@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Linssen Yachts — Video/Editing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../style.css?v=20260708d" />
+  <style>
+    .subpage { padding: calc(var(--nav-h) + 50px) clamp(1.5rem, 6vw, 5rem) 5rem; min-height: 100vh; }
+    .subpage__back { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text); background: var(--lime); padding: 0.4rem 0.8rem; border: var(--border-thin); border-radius: 999px; box-shadow: var(--shadow-sm); transition: transform 0.2s var(--ease-bounce), box-shadow 0.2s ease; cursor: none; margin-bottom: 3rem; }
+    .subpage__back:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px var(--text); }
+    .subpage__label { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #fff; background: #1a2741; padding: 0.3rem 0.7rem; border: var(--border-thin); border-radius: 999px; margin-bottom: 1rem; }
+    .subpage__title { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 8rem); line-height: 0.93; letter-spacing: -0.02em; margin-bottom: 1.5rem; color: var(--text); }
+    .subpage__desc { max-width: 620px; color: var(--text); opacity: 0.65; line-height: 1.8; font-size: 1rem; }
+    .pw-hero { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; margin-bottom: 3.5rem; }
+    .pw-hero__brand { background: #fff; border: var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; padding: clamp(1.5rem, 4vw, 3rem); transition: transform 0.3s var(--ease-bounce); position: relative; overflow: hidden; }
+    .pw-hero__brand:hover { transform: translate(-3px, -3px) rotate(-0.5deg); }
+    .pw-hero__brand img { width: 64%; height: auto; }
+    .pw-hero__badge { position: absolute; top: 1rem; right: 1rem; background: var(--yellow); border: var(--border-thin); border-radius: 999px; padding: 0.3rem 0.8rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; transform: rotate(4deg); }
+    .pw-stats { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.8rem; }
+    .pw-stat { background: var(--bg); border: var(--border-thin); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 0.7rem 1.1rem; text-align: center; }
+    .pw-stat b { display: block; font-family: var(--font-display); font-size: 1.5rem; line-height: 1.1; }
+    .pw-stat span { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.55; }
+
+    .pw-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.5rem; }
+    .pw-divider { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 1rem; margin-top: 1.5rem; border-bottom: var(--border); padding-bottom: 0.6rem; }
+    .pw-divider__nr { font-family: var(--font-display); font-size: 1rem; background: var(--text); color: var(--text-light); border: var(--border-thin); border-radius: 999px; padding: 0.15rem 0.7rem; }
+    .pw-divider__title { font-family: var(--font-display); font-size: clamp(1.6rem, 3.5vw, 2.6rem); letter-spacing: 0.02em; }
+    .pw-divider__count { font-size: 0.8rem; font-weight: 700; opacity: 0.45; letter-spacing: 0.08em; text-transform: uppercase; }
+    .pw-card { display: flex; flex-direction: column; gap: 0.7rem; }
+    .pw-card__media { position: relative; display: block; width: 100%; aspect-ratio: 9/16; border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; background: var(--text); padding: 0; cursor: none; transition: transform 0.25s var(--ease-bounce), box-shadow 0.25s ease; }
+    .pw-card--wide { grid-column: span 2; }
+    .pw-card--wide .pw-card__media { aspect-ratio: 16/9; }
+    .pw-card__media:hover { transform: translate(-3px, -3px); box-shadow: 8px 8px 0 var(--text); }
+    .pw-card__media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pw-card__dur { position: absolute; bottom: 0.6rem; right: 0.6rem; background: var(--bg); border: var(--border-thin); border-radius: 999px; font-size: 0.7rem; font-weight: 700; padding: 0.1rem 0.55rem; letter-spacing: 0.05em; }
+    .pw-card__play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 54px; height: 54px; display: flex; align-items: center; justify-content: center; background: var(--chip, var(--lime)); border: var(--border-thin); border-radius: 50%; font-size: 1rem; padding-left: 4px; box-shadow: var(--shadow-sm); transition: transform 0.2s var(--ease-bounce), opacity 0.2s ease; }
+    .pw-card__media:hover .pw-card__play { transform: translate(-50%, -50%) scale(1.12); }
+    .pw-card.is-playing .pw-card__play { opacity: 0; }
+    .pw-card__info { display: flex; flex-direction: column; gap: 0.35rem; align-items: flex-start; }
+    .pw-card__chip { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--chip, var(--lime)); border: var(--border-thin); border-radius: 999px; padding: 0.12rem 0.6rem; }
+    .pw-card__title { font-family: var(--font-display); font-size: 0.98rem; letter-spacing: 0.02em; line-height: 1.25; }
+    .pw-lightbox { border: none; padding: 0; background: transparent; max-width: none; max-height: none; width: 100vw; height: 100vh; display: none; align-items: center; justify-content: center; position: fixed; inset: 0; z-index: 100; }
+    .pw-lightbox[open] { display: flex; }
+    .pw-lightbox::backdrop { background: rgba(26, 26, 26, 0.85); }
+    .pw-lightbox__inner { position: relative; height: min(86vh, 900px); aspect-ratio: 9/16; }
+    .pw-lightbox__inner.is-wide { aspect-ratio: 16/9; height: auto; width: min(90vw, 1200px); }
+    .pw-lightbox__inner video { width: 100%; height: 100%; object-fit: contain; border: var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); background: #000; display: block; }
+    .pw-lightbox__title { position: absolute; top: -2.6rem; left: 0; color: var(--text-light); font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.04em; }
+    .pw-lightbox__close { position: absolute; top: -2.9rem; right: -0.4rem; background: var(--coral); border: var(--border-thin); border-radius: 999px; width: 40px; height: 40px; font-size: 1rem; font-weight: 700; cursor: none; box-shadow: var(--shadow-sm); transition: transform 0.15s var(--ease-bounce); }
+    .pw-lightbox__close:hover { transform: rotate(90deg) scale(1.08); }
+    @media (max-width: 800px) {
+      .pw-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .pw-card--wide { grid-column: 1 / -1; }
+      .pw-card__title { font-size: 0.85rem; }
+      .pw-lightbox__inner { height: auto; width: min(92vw, 420px); }
+      .pw-lightbox__inner.is-wide { width: 92vw; }
+    }
+
+    @media (max-width: 800px) { .pw-hero { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav class="nav" id="nav">
+    <a href="../../index.html" class="nav__logo">RJH</a>
+    <ul class="nav__links">
+      <li><a href="../../index.html">Home</a></li>
+      <li class="nav__item nav__item--dropdown">
+        <button class="nav__drop-btn" type="button" aria-expanded="false" aria-haspopup="true">Werk <span class="nav__caret">&#9662;</span></button>
+        <ul class="nav__dropdown">
+        <li><a href="../../brand-identity/index.html" data-accent="purple">Brand Identity</a></li>
+        <li><a href="../../visual-motion/index.html" data-accent="lime">Visual Motion</a></li>
+        <li><a href="../../video-editing/index.html" data-accent="orange" class="is-active">Video/Editing</a></li>
+        <li><a href="../../social-marketing/index.html" data-accent="coral">Social Marketing</a></li>
+        </ul>
+      </li>
+      <li><a href="../../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="subpage">
+    <a href="../index.html" class="subpage__back">&#8592; Terug naar Video/Editing</a>
+
+    <div class="pw-hero">
+      <div class="pw-hero__copy reveal">
+        <p class="subpage__label">Video/Editing / Linssen Yachts</p>
+        <h1 class="subpage__title">Linssen<br>Yachts.</h1>
+        <p class="subpage__desc">
+          Shortform-video's voor Linssen Yachts uit Maasbracht, bouwer van stalen motorjachten sinds 1949. De serie draait om het gepatenteerde Variotop-vouwdaksysteem: rustig opgebouwde edits met een cinematische toon, gemaakt om de kwaliteit en het vakmanschap voelbaar te maken.
+        </p>
+        <div class="pw-stats">
+          <div class="pw-stat"><b>4</b><span>video's</span></div>
+          <div class="pw-stat"><b>Variotop</b><span>serie</span></div>
+          <div class="pw-stat"><b>9:16 + 16:9</b><span>formaten</span></div>
+        </div>
+      </div>
+      <div class="pw-hero__brand reveal reveal--delay-1">
+        <span class="pw-hero__badge">Klantwerk</span>
+        <img src="media/ly-logo.png" alt="Linssen Yachts logo" />
+      </div>
+    </div>
+
+    <div class="pw-grid">
+      <article class="pw-card reveal" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="variotop-1" data-title="Variotop 1" aria-label="Speel Variotop 1 af">
+          <video muted playsinline preload="none" poster="media/variotop-1.jpg" src="media/variotop-1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:30</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Variotop</span>
+          <h3 class="pw-card__title">Variotop 1</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="variotop-2" data-title="Variotop 2" aria-label="Speel Variotop 2 af">
+          <video muted playsinline preload="none" poster="media/variotop-2.jpg" src="media/variotop-2.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:27</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Variotop</span>
+          <h3 class="pw-card__title">Variotop 2</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="variotop-3" data-title="Variotop 3" aria-label="Speel Variotop 3 af">
+          <video muted playsinline preload="none" poster="media/variotop-3.jpg" src="media/variotop-3.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:43</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Variotop</span>
+          <h3 class="pw-card__title">Variotop 3</h3>
+        </div>
+      </article>
+      <article class="pw-card pw-card--wide reveal" style="--chip:var(--blue)">
+        <button class="pw-card__media" type="button" data-slug="variotop-3-breed" data-title="Variotop 3 · horizontaal" aria-label="Speel Variotop 3 · horizontaal af">
+          <video muted playsinline preload="none" poster="media/variotop-3-breed.jpg" src="media/variotop-3-breed.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:43</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Variotop</span>
+          <h3 class="pw-card__title">Variotop 3 · horizontaal</h3>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <dialog class="pw-lightbox" id="pwLightbox">
+    <div class="pw-lightbox__inner">
+      <span class="pw-lightbox__title" id="pwLightboxTitle"></span>
+      <button class="pw-lightbox__close" id="pwLightboxClose" type="button" aria-label="Sluiten">&#10005;</button>
+      <video id="pwLightboxVideo" controls playsinline></video>
+    </div>
+  </dialog>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <span class="footer__logo">RJH</span>
+      <span class="footer__copy">&copy; 2026 Roelof Junior Haar.</span>
+      <span class="footer__back"><a href="../../index.html">Terug naar home &uarr;</a></span>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=20260708d"></script>
+
+  <script>
+    (function () {
+      var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      if (finePointer) {
+        document.querySelectorAll('.pw-card__media').forEach(function (btn) {
+          var v = btn.querySelector('video');
+          if (!v) return;
+          btn.addEventListener('mouseenter', function () {
+            v.muted = true;
+            var p = v.play(); if (p) p.catch(function () {});
+            btn.closest('.pw-card').classList.add('is-playing');
+          });
+          btn.addEventListener('mouseleave', function () {
+            v.pause(); v.currentTime = 0;
+            btn.closest('.pw-card').classList.remove('is-playing');
+          });
+        });
+      }
+      var box = document.getElementById('pwLightbox');
+      var boxInner = box.querySelector('.pw-lightbox__inner');
+      var boxVideo = document.getElementById('pwLightboxVideo');
+      var boxTitle = document.getElementById('pwLightboxTitle');
+      document.querySelectorAll('.pw-card__media').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          boxInner.classList.toggle('is-wide', btn.closest('.pw-card').classList.contains('pw-card--wide'));
+          boxVideo.src = 'media/' + btn.dataset.slug + '.mp4';
+          boxTitle.textContent = btn.dataset.title;
+          box.showModal();
+          boxVideo.muted = false;
+          var p = boxVideo.play(); if (p) p.catch(function () {});
+        });
+      });
+      function closeBox() { boxVideo.pause(); boxVideo.removeAttribute('src'); boxVideo.load(); box.close(); }
+      document.getElementById('pwLightboxClose').addEventListener('click', closeBox);
+      box.addEventListener('click', function (e) { if (e.target === box) closeBox(); });
+      box.addEventListener('cancel', function (e) { e.preventDefault(); closeBox(); });
+    })();
+  </script>
+
+</body>
+</html>

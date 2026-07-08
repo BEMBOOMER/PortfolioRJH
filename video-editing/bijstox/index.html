@@ -3,75 +3,353 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BijStox · Video/Editing · Roelof Junior Haar</title>
-  <meta name="description" content="Twee eventvideo's voor BijStox in Heerlen: een sfeervolle kerstshow en een energieke ladies night." />
-  <meta name="theme-color" content="#F0EEE6" />
-  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg" />
-  <script>document.documentElement.classList.add('js');</script>
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>BijStox — Roelof Junior Haar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Schibsted+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../../style.css" />
-  <script defer src="../../script.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../style.css?v=20260708d" />
+  <style>
+    .subpage { padding: calc(var(--nav-h) + 50px) clamp(1.5rem, 6vw, 5rem) 5rem; min-height: 100vh; }
+    .subpage__back { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text); background: var(--lime); padding: 0.4rem 0.8rem; border: var(--border-thin); border-radius: 999px; box-shadow: var(--shadow-sm); transition: transform 0.2s var(--ease-bounce), box-shadow 0.2s ease; cursor: none; margin-bottom: 3rem; }
+    .subpage__back:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px var(--text); }
+    .subpage__label { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text); background: var(--orange); padding: 0.3rem 0.7rem; border: var(--border-thin); border-radius: 999px; margin-bottom: 1rem; }
+    .subpage__title { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 8rem); line-height: 0.93; letter-spacing: -0.02em; margin-bottom: 1.5rem; color: var(--text); }
+    .subpage__desc { max-width: 600px; color: var(--text); opacity: 0.65; line-height: 1.8; font-size: 1rem; margin-bottom: 4rem; }
+    .videos-stack { display: flex; flex-direction: column; gap: clamp(3rem, 6vw, 5rem); max-width: 960px; }
+    .video-block { display: flex; flex-direction: column; gap: 1rem; }
+    .video-block__embed { position: relative; aspect-ratio: 16/9; width: 100%; background: var(--text); overflow: hidden; border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .video-block__embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+    .video-block__info { padding: 0 0.1rem; }
+    .video-block__title { font-family: var(--font-display); font-size: clamp(1.4rem, 2.5vw, 2rem); letter-spacing: 0.05em; color: var(--text); margin-bottom: 0.4rem; }
+    .video-block__desc { font-size: 0.85rem; color: var(--text); opacity: 0.45; line-height: 1.7; max-width: 560px; }
+    .pw-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.5rem; }
+    .pw-divider { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 1rem; margin-top: 1.5rem; border-bottom: var(--border); padding-bottom: 0.6rem; }
+    .pw-divider__nr { font-family: var(--font-display); font-size: 1rem; background: var(--text); color: var(--text-light); border: var(--border-thin); border-radius: 999px; padding: 0.15rem 0.7rem; }
+    .pw-divider__title { font-family: var(--font-display); font-size: clamp(1.6rem, 3.5vw, 2.6rem); letter-spacing: 0.02em; }
+    .pw-divider__count { font-size: 0.8rem; font-weight: 700; opacity: 0.45; letter-spacing: 0.08em; text-transform: uppercase; }
+    .pw-card { display: flex; flex-direction: column; gap: 0.7rem; }
+    .pw-card__media { position: relative; display: block; width: 100%; aspect-ratio: 9/16; border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; background: var(--text); padding: 0; cursor: none; transition: transform 0.25s var(--ease-bounce), box-shadow 0.25s ease; }
+    .pw-card--wide { grid-column: span 2; }
+    .pw-card--wide .pw-card__media { aspect-ratio: 16/9; }
+    .pw-card__media:hover { transform: translate(-3px, -3px); box-shadow: 8px 8px 0 var(--text); }
+    .pw-card__media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pw-card__dur { position: absolute; bottom: 0.6rem; right: 0.6rem; background: var(--bg); border: var(--border-thin); border-radius: 999px; font-size: 0.7rem; font-weight: 700; padding: 0.1rem 0.55rem; letter-spacing: 0.05em; }
+    .pw-card__play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 54px; height: 54px; display: flex; align-items: center; justify-content: center; background: var(--chip, var(--lime)); border: var(--border-thin); border-radius: 50%; font-size: 1rem; padding-left: 4px; box-shadow: var(--shadow-sm); transition: transform 0.2s var(--ease-bounce), opacity 0.2s ease; }
+    .pw-card__media:hover .pw-card__play { transform: translate(-50%, -50%) scale(1.12); }
+    .pw-card.is-playing .pw-card__play { opacity: 0; }
+    .pw-card__info { display: flex; flex-direction: column; gap: 0.35rem; align-items: flex-start; }
+    .pw-card__chip { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--chip, var(--lime)); border: var(--border-thin); border-radius: 999px; padding: 0.12rem 0.6rem; }
+    .pw-card__title { font-family: var(--font-display); font-size: 0.98rem; letter-spacing: 0.02em; line-height: 1.25; }
+    .pw-lightbox { border: none; padding: 0; background: transparent; max-width: none; max-height: none; width: 100vw; height: 100vh; display: none; align-items: center; justify-content: center; position: fixed; inset: 0; z-index: 100; }
+    .pw-lightbox[open] { display: flex; }
+    .pw-lightbox::backdrop { background: rgba(26, 26, 26, 0.85); }
+    .pw-lightbox__inner { position: relative; height: min(86vh, 900px); aspect-ratio: 9/16; }
+    .pw-lightbox__inner.is-wide { aspect-ratio: 16/9; height: auto; width: min(90vw, 1200px); }
+    .pw-lightbox__inner video { width: 100%; height: 100%; object-fit: contain; border: var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); background: #000; display: block; }
+    .pw-lightbox__title { position: absolute; top: -2.6rem; left: 0; color: var(--text-light); font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.04em; }
+    .pw-lightbox__close { position: absolute; top: -2.9rem; right: -0.4rem; background: var(--coral); border: var(--border-thin); border-radius: 999px; width: 40px; height: 40px; font-size: 1rem; font-weight: 700; cursor: none; box-shadow: var(--shadow-sm); transition: transform 0.15s var(--ease-bounce); }
+    .pw-lightbox__close:hover { transform: rotate(90deg) scale(1.08); }
+    @media (max-width: 800px) {
+      .pw-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .pw-card--wide { grid-column: 1 / -1; }
+      .pw-card__title { font-size: 0.85rem; }
+      .pw-lightbox__inner { height: auto; width: min(92vw, 420px); }
+      .pw-lightbox__inner.is-wide { width: 92vw; }
+    }
+
+  </style>
 </head>
 <body>
-
-  <div class="grain" aria-hidden="true"></div>
   <div class="cursor-dot" id="cursorDot"></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
-  <header class="site-nav" id="siteNav">
-    <a href="../../index.html" class="site-nav__logo">R<em>J</em>H</a>
-    <span class="site-nav__crumb">Video/Editing / <em>BijStox</em></span>
-    <a href="../index.html" class="back-pill">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-      Video/Editing
-    </a>
-  </header>
+  <nav class="nav" id="nav">
+    <a href="../../index.html" class="nav__logo">RJH</a>
+    <ul class="nav__links">
+      <li><a href="../../index.html">Home</a></li>
+      <li class="nav__item nav__item--dropdown">
+        <button class="nav__drop-btn" type="button" aria-expanded="false" aria-haspopup="true">Werk <span class="nav__caret">&#9662;</span></button>
+        <ul class="nav__dropdown">
+        <li><a href="../../brand-identity/index.html" data-accent="purple">Brand Identity</a></li>
+        <li><a href="../../visual-motion/index.html" data-accent="lime">Visual Motion</a></li>
+        <li><a href="../../video-editing/index.html" data-accent="orange" class="is-active">Video/Editing</a></li>
+        <li><a href="../../social-marketing/index.html" data-accent="coral">Social Marketing</a></li>
+        </ul>
+      </li>
+      <li><a href="../../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-  <section class="page-hero">
-    <div class="page-hero__kicker reveal"><span class="mono-label">Video/Editing / BijStox</span></div>
-    <h1 class="page-hero__title reveal">Bij<em>Stox</em></h1>
-    <p class="page-hero__desc reveal d1">
-      Twee eventvideo's voor BijStox in Heerlen. Van een sfeervolle kerstshow tot een energieke ladies night: snelle montage, duidelijke sfeer en content die direct aandacht pakt.
+  <div class="subpage">
+    <a href="../index.html" class="subpage__back">&#8592; Terug naar Video/Editing</a>
+    <p class="subpage__label">Video/Editing</p>
+    <h1 class="subpage__title">BijStox.</h1>
+    <p class="subpage__desc">
+      Eventvideo's en een wervingscampagne voor BijStox in Heerlen. Van een sfeervolle kerstshow tot veertien vacaturevideo's: snelle montage, duidelijke sfeer en content die direct aandacht pakt.
     </p>
-  </section>
 
-  <section class="page-body">
-    <span class="mono-label reveal">Video's / 2 stuks</span>
-    <div class="media-grid media-grid--wide">
-      <div class="media-block reveal">
-        <div class="yt" data-id="_BYDzynxes0" data-title="Kerstshow Stox Heerlen">
-          <img class="yt__thumb" src="https://i.ytimg.com/vi/_BYDzynxes0/hqdefault.jpg" alt="" decoding="async" />
-          <button class="yt__btn" type="button" aria-label="Speel video af: Kerstshow Stox Heerlen">
-            <span class="yt__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
-          </button>
+    <div class="pw-divider reveal">
+      <span class="pw-divider__nr">01</span>
+      <h2 class="pw-divider__title">Events</h2>
+      <span class="pw-divider__count">2 video's</span>
+    </div>
+    <div class="videos-stack" style="margin-top: 2rem;">
+      <div class="video-block reveal">
+        <div class="video-block__embed">
+          <iframe
+            src="https://www.youtube.com/embed/_BYDzynxes0"
+            title="BijStox - Kerstshow Stox Heerlen"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
         </div>
-        <h2 class="media-block__title">Kerstshow Stox Heerlen</h2>
-        <p class="media-block__desc">Eventvideo gemaakt om de warme sfeer, styling en beleving van de kerstshow krachtig neer te zetten.</p>
-        <a class="media-block__cta" href="https://www.youtube.com/watch?v=_BYDzynxes0" target="_blank" rel="noopener noreferrer">Bekijk op YouTube</a>
+        <div class="video-block__info">
+          <h3 class="video-block__title">Kerstshow Stox Heerlen</h3>
+          <p class="video-block__desc">Eventvideo gemaakt om de warme sfeer, styling en beleving van de kerstshow krachtig neer te zetten.</p>
+        </div>
       </div>
-      <div class="media-block reveal d1">
-        <div class="yt" data-id="Cdkj0vBnnWk" data-title="Ladies Night Heerlen">
-          <img class="yt__thumb" src="https://i.ytimg.com/vi/Cdkj0vBnnWk/hqdefault.jpg" alt="" decoding="async" />
-          <button class="yt__btn" type="button" aria-label="Speel video af: Ladies Night Heerlen">
-            <span class="yt__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
-          </button>
+
+      <div class="video-block reveal reveal--delay-1">
+        <div class="video-block__embed">
+          <iframe
+            src="https://www.youtube.com/embed/Cdkj0vBnnWk"
+            title="BijStox - Ladies Night Heerlen"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
         </div>
-        <h2 class="media-block__title">Ladies Night Heerlen</h2>
-        <p class="media-block__desc">Snelle en social-first edit die de energie van de avond vangt en de sfeer direct voelbaar maakt.</p>
-        <a class="media-block__cta" href="https://www.youtube.com/watch?v=Cdkj0vBnnWk" target="_blank" rel="noopener noreferrer">Bekijk op YouTube</a>
+        <div class="video-block__info">
+          <h3 class="video-block__title">Ladies Night Heerlen</h3>
+          <p class="video-block__desc">Snelle en social-first edit die de energie van de avond vangt en de sfeer direct voelbaar maakt.</p>
+        </div>
       </div>
     </div>
-  </section>
 
-  <footer class="footer footer--page">
-    <div class="footer__watermark" aria-hidden="true">BijStox</div>
-    <div class="footer__bar">
-      <span>&copy; 2026 Roelof Junior Haar</span>
-      <a href="../../index.html">Terug naar home ↑</a>
+    <div class="pw-divider reveal" style="margin-top: 4rem;">
+      <span class="pw-divider__nr">02</span>
+      <h2 class="pw-divider__title">Vacaturecampagne</h2>
+      <span class="pw-divider__count">14 video's</span>
+    </div>
+    <p class="subpage__desc" style="margin: 1.5rem 0 2.5rem;">
+      Veertien wervingsvideo's voor BijStox: korte vacature-edits waarin medewerkers zelf vertellen waarom ze er werken. Beweeg over een video voor een preview, klik voor geluid.
+    </p>
+    <div class="pw-grid">
+      <article class="pw-card reveal" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="vacature-1" data-title="Vacaturevideo 1" aria-label="Speel Vacaturevideo 1 af">
+          <video muted playsinline preload="none" poster="media/vacature-1.jpg" src="media/vacature-1.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:19</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Werving</span>
+          <h3 class="pw-card__title">Vacaturevideo 1</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="vacature-2" data-title="Vacaturevideo 2" aria-label="Speel Vacaturevideo 2 af">
+          <video muted playsinline preload="none" poster="media/vacature-2.jpg" src="media/vacature-2.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:10</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Werving</span>
+          <h3 class="pw-card__title">Vacaturevideo 2</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="vacature-3" data-title="Vacaturevideo 3" aria-label="Speel Vacaturevideo 3 af">
+          <video muted playsinline preload="none" poster="media/vacature-3.jpg" src="media/vacature-3.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:14</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Werving</span>
+          <h3 class="pw-card__title">Vacaturevideo 3</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="vacature-4" data-title="Vacaturevideo 4" aria-label="Speel Vacaturevideo 4 af">
+          <video muted playsinline preload="none" poster="media/vacature-4.jpg" src="media/vacature-4.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:27</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Werving</span>
+          <h3 class="pw-card__title">Vacaturevideo 4</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="vacature-5" data-title="Vacaturevideo 5" aria-label="Speel Vacaturevideo 5 af">
+          <video muted playsinline preload="none" poster="media/vacature-5.jpg" src="media/vacature-5.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:14</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Werving</span>
+          <h3 class="pw-card__title">Vacaturevideo 5</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="vacature-6" data-title="Vacaturevideo 6" aria-label="Speel Vacaturevideo 6 af">
+          <video muted playsinline preload="none" poster="media/vacature-6.jpg" src="media/vacature-6.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:19</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Werving</span>
+          <h3 class="pw-card__title">Vacaturevideo 6</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="vacature-7" data-title="Vacaturevideo 7" aria-label="Speel Vacaturevideo 7 af">
+          <video muted playsinline preload="none" poster="media/vacature-7.jpg" src="media/vacature-7.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:20</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Werving</span>
+          <h3 class="pw-card__title">Vacaturevideo 7</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="vacature-8" data-title="Vacaturevideo 8" aria-label="Speel Vacaturevideo 8 af">
+          <video muted playsinline preload="none" poster="media/vacature-8.jpg" src="media/vacature-8.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:43</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Werving</span>
+          <h3 class="pw-card__title">Vacaturevideo 8</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="vacature-9" data-title="Vacaturevideo 9" aria-label="Speel Vacaturevideo 9 af">
+          <video muted playsinline preload="none" poster="media/vacature-9.jpg" src="media/vacature-9.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:17</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Werving</span>
+          <h3 class="pw-card__title">Vacaturevideo 9</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="vacature-10" data-title="Vacaturevideo 10" aria-label="Speel Vacaturevideo 10 af">
+          <video muted playsinline preload="none" poster="media/vacature-10.jpg" src="media/vacature-10.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:24</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Werving</span>
+          <h3 class="pw-card__title">Vacaturevideo 10</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="vacature-11" data-title="Vacaturevideo 11" aria-label="Speel Vacaturevideo 11 af">
+          <video muted playsinline preload="none" poster="media/vacature-11.jpg" src="media/vacature-11.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:11</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Werving</span>
+          <h3 class="pw-card__title">Vacaturevideo 11</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="vacature-12" data-title="Vacaturevideo 12" aria-label="Speel Vacaturevideo 12 af">
+          <video muted playsinline preload="none" poster="media/vacature-12.jpg" src="media/vacature-12.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:11</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Werving</span>
+          <h3 class="pw-card__title">Vacaturevideo 12</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="vacature-13" data-title="Vacaturevideo 13" aria-label="Speel Vacaturevideo 13 af">
+          <video muted playsinline preload="none" poster="media/vacature-13.jpg" src="media/vacature-13.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:11</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Werving</span>
+          <h3 class="pw-card__title">Vacaturevideo 13</h3>
+        </div>
+      </article>
+      <article class="pw-card reveal" style="--chip:var(--orange)">
+        <button class="pw-card__media" type="button" data-slug="vacature-14" data-title="Vacaturevideo 14" aria-label="Speel Vacaturevideo 14 af">
+          <video muted playsinline preload="none" poster="media/vacature-14.jpg" src="media/vacature-14.mp4" tabindex="-1"></video>
+          <span class="pw-card__dur">0:10</span>
+          <span class="pw-card__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="pw-card__info">
+          <span class="pw-card__chip">Werving</span>
+          <h3 class="pw-card__title">Vacaturevideo 14</h3>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <dialog class="pw-lightbox" id="pwLightbox">
+    <div class="pw-lightbox__inner">
+      <span class="pw-lightbox__title" id="pwLightboxTitle"></span>
+      <button class="pw-lightbox__close" id="pwLightboxClose" type="button" aria-label="Sluiten">&#10005;</button>
+      <video id="pwLightboxVideo" controls playsinline></video>
+    </div>
+  </dialog>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <span class="footer__logo">RJH</span>
+      <span class="footer__copy">&copy; 2026 Roelof Junior Haar.</span>
+      <span class="footer__back"><a href="../../index.html">Terug naar home &uarr;</a></span>
     </div>
   </footer>
+
+  <script src="../../script.js?v=20260708d"></script>
+
+  <script>
+    (function () {
+      var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      if (finePointer) {
+        document.querySelectorAll('.pw-card__media').forEach(function (btn) {
+          var v = btn.querySelector('video');
+          if (!v) return;
+          btn.addEventListener('mouseenter', function () {
+            v.muted = true;
+            var p = v.play(); if (p) p.catch(function () {});
+            btn.closest('.pw-card').classList.add('is-playing');
+          });
+          btn.addEventListener('mouseleave', function () {
+            v.pause(); v.currentTime = 0;
+            btn.closest('.pw-card').classList.remove('is-playing');
+          });
+        });
+      }
+      var box = document.getElementById('pwLightbox');
+      var boxInner = box.querySelector('.pw-lightbox__inner');
+      var boxVideo = document.getElementById('pwLightboxVideo');
+      var boxTitle = document.getElementById('pwLightboxTitle');
+      document.querySelectorAll('.pw-card__media').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          boxInner.classList.toggle('is-wide', btn.closest('.pw-card').classList.contains('pw-card--wide'));
+          boxVideo.src = 'media/' + btn.dataset.slug + '.mp4';
+          boxTitle.textContent = btn.dataset.title;
+          box.showModal();
+          boxVideo.muted = false;
+          var p = boxVideo.play(); if (p) p.catch(function () {});
+        });
+      });
+      function closeBox() { boxVideo.pause(); boxVideo.removeAttribute('src'); boxVideo.load(); box.close(); }
+      document.getElementById('pwLightboxClose').addEventListener('click', closeBox);
+      box.addEventListener('click', function (e) { if (e.target === box) closeBox(); });
+      box.addEventListener('cancel', function (e) { e.preventDefault(); closeBox(); });
+    })();
+  </script>
 
 </body>
 </html>

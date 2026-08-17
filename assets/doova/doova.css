@@ -1,0 +1,119 @@
+/* ═══════════════════════════════════════════════════════════
+   DOOVA — gedeelde stijlen voor de drie Doova-casepagina's
+   (brand-identity, visual-motion, video-editing/personal-projects)
+   Elke pagina zet zelf --dv-accent op de body.
+   ═══════════════════════════════════════════════════════════ */
+
+.subpage { padding: calc(var(--nav-h) + 50px) clamp(1.5rem, 6vw, 5rem) 5rem; min-height: 100vh; }
+
+.subpage__back {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text); background: var(--dv-accent, var(--lime));
+  padding: 0.4rem 0.8rem; border: var(--border-thin); border-radius: 999px;
+  box-shadow: var(--shadow-sm); cursor: none; margin-bottom: 3rem;
+  transition: transform 0.2s var(--ease-bounce), box-shadow 0.2s ease;
+}
+.subpage__back:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px var(--text); }
+
+.subpage__label {
+  display: inline-block; font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--text);
+  background: var(--dv-accent, var(--lime)); padding: 0.3rem 0.7rem;
+  border: var(--border-thin); border-radius: 999px; margin-bottom: 1rem;
+}
+.subpage__title {
+  font-family: var(--font-display); font-size: clamp(3rem, 8vw, 8rem);
+  line-height: 0.93; letter-spacing: -0.02em; margin-bottom: 1.5rem; color: var(--text);
+}
+.subpage__desc { max-width: 640px; color: var(--text); opacity: 0.65; line-height: 1.8; font-size: 1rem; }
+
+/* ── hero: intro + feiten ─────────────────────────── */
+.dv-hero { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; margin-bottom: clamp(3rem, 7vw, 5rem); }
+.dv-hero__shot {
+  border: var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+  overflow: hidden; background: var(--bg); position: relative;
+  transition: transform 0.3s var(--ease-bounce);
+}
+.dv-hero__shot:hover { transform: translate(-3px, -3px) rotate(-0.4deg); }
+.dv-hero__shot--portrait { max-width: 320px; justify-self: center; }
+.dv-hero__shot img { display: block; width: 100%; height: auto; }
+.dv-badge {
+  position: absolute; top: 1rem; right: 1rem; background: var(--yellow);
+  border: var(--border-thin); border-radius: 999px; padding: 0.3rem 0.8rem;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  transform: rotate(4deg);
+}
+
+.dv-facts { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-top: 1.8rem; }
+.dv-fact { background: var(--bg); border: var(--border-thin); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 0.7rem 1.1rem; }
+.dv-fact b { display: block; font-family: var(--font-display); font-size: 1.15rem; line-height: 1.2; letter-spacing: 0.02em; }
+.dv-fact span { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.55; }
+
+.dv-link {
+  display: inline-flex; align-items: center; gap: 0.6rem; margin-top: 1.8rem;
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--text); color: var(--bg); padding: 0.7rem 1.3rem;
+  border: var(--border-thin); border-radius: 999px; box-shadow: var(--shadow-sm); cursor: none;
+  transition: transform 0.2s var(--ease-bounce), box-shadow 0.2s ease;
+}
+.dv-link:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--dv-accent, var(--lime)); }
+
+/* ── sectiekop ────────────────────────────────────── */
+.dv-section { margin-top: clamp(3.5rem, 8vw, 6rem); }
+.dv-head { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; border-bottom: var(--border); padding-bottom: 0.6rem; margin-bottom: 2rem; }
+.dv-head__nr { font-family: var(--font-display); font-size: 0.95rem; background: var(--dv-accent, var(--lime)); border: var(--border-thin); border-radius: 999px; padding: 0.15rem 0.7rem; }
+.dv-head__title { font-family: var(--font-display); font-size: clamp(1.6rem, 3.5vw, 2.6rem); letter-spacing: 0.02em; }
+.dv-head__note { font-size: 0.8rem; font-weight: 700; opacity: 0.45; letter-spacing: 0.06em; text-transform: uppercase; }
+
+.dv-lead { max-width: 680px; line-height: 1.85; opacity: 0.72; margin-bottom: 2rem; }
+.dv-lead + .dv-lead { margin-top: -1rem; }
+
+/* ── denkwijze-kaarten ────────────────────────────── */
+.dv-think { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
+.dv-think__card { background: var(--bg); border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.5rem; transition: transform 0.25s var(--ease-bounce), box-shadow 0.25s ease; }
+.dv-think__card:hover { transform: translate(-3px, -3px); box-shadow: 8px 8px 0 var(--text); }
+.dv-think__chip { display: inline-block; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--dv-accent, var(--lime)); border: var(--border-thin); border-radius: 999px; padding: 0.12rem 0.6rem; margin-bottom: 0.8rem; }
+.dv-think__title { font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.02em; margin-bottom: 0.5rem; }
+.dv-think__body { font-size: 0.9rem; line-height: 1.75; opacity: 0.68; }
+
+/* ── screenshots ──────────────────────────────────── */
+.dv-shots { display: grid; gap: clamp(1.5rem, 4vw, 2.5rem); }
+.dv-shots--two { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+.dv-shot { display: flex; flex-direction: column; gap: 0.8rem; }
+.dv-shot__frame { border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; background: var(--bg); transition: transform 0.25s var(--ease-bounce), box-shadow 0.25s ease; }
+.dv-shot__frame:hover { transform: translate(-3px, -3px); box-shadow: 8px 8px 0 var(--text); }
+.dv-shot__frame img { display: block; width: 100%; height: auto; }
+.dv-shot__cap { display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; }
+.dv-shot__nr { font-family: var(--font-display); font-size: 0.75rem; background: var(--dv-accent, var(--lime)); border: var(--border-thin); border-radius: 999px; padding: 0.08rem 0.55rem; }
+.dv-shot__text { font-size: 0.85rem; line-height: 1.7; opacity: 0.6; max-width: 560px; }
+
+/* ── video ────────────────────────────────────────── */
+.dv-videos { display: grid; grid-template-columns: 1.55fr 0.75fr; gap: clamp(1.5rem, 4vw, 2.5rem); align-items: start; }
+.dv-video { display: flex; flex-direction: column; gap: 0.9rem; }
+.dv-video__frame { border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; background: #0e0e12; }
+.dv-video__frame video { display: block; width: 100%; height: auto; }
+.dv-video__info { display: flex; flex-direction: column; gap: 0.35rem; }
+.dv-video__chip { align-self: flex-start; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--dv-accent, var(--lime)); border: var(--border-thin); border-radius: 999px; padding: 0.12rem 0.6rem; }
+.dv-video__title { font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.02em; }
+.dv-video__desc { font-size: 0.85rem; line-height: 1.7; opacity: 0.6; }
+
+/* ── stack-lijst ──────────────────────────────────── */
+.dv-stack { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+.dv-stack__row { background: var(--bg); border: var(--border-thin); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1rem 1.2rem; }
+.dv-stack__row b { display: block; font-family: var(--font-display); font-size: 0.9rem; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+.dv-stack__row span { font-size: 0.82rem; line-height: 1.65; opacity: 0.6; }
+
+/* ── palet ────────────────────────────────────────── */
+.dv-palette { display: flex; flex-wrap: wrap; gap: 1rem; }
+.dv-swatch { border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; width: 150px; }
+.dv-swatch__fill { height: 84px; }
+.dv-swatch__meta { background: var(--bg); border-top: var(--border-thin); padding: 0.5rem 0.7rem; }
+.dv-swatch__meta b { display: block; font-family: var(--font-display); font-size: 0.72rem; letter-spacing: 0.06em; }
+.dv-swatch__meta span { font-size: 0.68rem; opacity: 0.5; letter-spacing: 0.04em; }
+
+@media (max-width: 860px) {
+  .dv-hero { grid-template-columns: 1fr; }
+  .dv-videos { grid-template-columns: 1fr; }
+  .dv-video--vertical { max-width: 380px; }
+}

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doova — Personal Projects</title>
+  <meta name="description" content="Doova, een gratis macOS-app die ik zelf bedacht, ontwierp en bouwde. Een oneindig canvas voor alles wat bij een project hoort." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../../style.css?v=20260708d" />
+  <link rel="stylesheet" href="../../../assets/doova/doova.css?v=1" />
+  <style> body { --dv-accent: var(--blue); } .subpage__label { color: var(--text-light); } </style>
+</head>
+<body>
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav class="nav" id="nav">
+    <a href="../../../index.html" class="nav__logo">RJH</a>
+    <ul class="nav__links">
+      <li><a href="../../../index.html">Home</a></li>
+      <li class="nav__item nav__item--dropdown">
+        <button class="nav__drop-btn" type="button" aria-expanded="false" aria-haspopup="true">Werk <span class="nav__caret">&#9662;</span></button>
+        <ul class="nav__dropdown">
+        <li><a href="../../../brand-identity/index.html" data-accent="purple">Brand Identity</a></li>
+        <li><a href="../../../visual-motion/index.html" data-accent="lime">Visual Motion</a></li>
+        <li><a href="../../../video-editing/index.html" data-accent="orange" class="is-active">Video/Editing</a></li>
+        <li><a href="../../../social-marketing/index.html" data-accent="coral">Social Marketing</a></li>
+        </ul>
+      </li>
+      <li><a href="../../../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="subpage">
+    <a href="../index.html" class="subpage__back">&#8592; Personal Projects</a>
+    <p class="subpage__label">Personal Projects / Doova</p>
+    <h1 class="subpage__title">Doova.</h1>
+
+    <div class="dv-hero">
+      <div>
+        <p class="subpage__desc">
+          Een gratis app voor macOS die ik van begin tot eind zelf heb gemaakt. Idee, naam, merk, interface, code, landingspagina en promo. Doova is een oneindig canvas waar alles wat bij een project hoort naast elkaar ligt: notities, taken, moodboards, bestanden, links, kleuren en je agenda. Alles blijft lokaal op je eigen Mac staan.
+        </p>
+        <div class="dv-facts">
+          <div class="dv-fact"><b>1.0.3</b><span>Versie</span></div>
+          <div class="dv-fact"><b>macOS</b><span>Apple Silicon</span></div>
+          <div class="dv-fact"><b>Gratis</b><span>Geen account</span></div>
+          <div class="dv-fact"><b>Solo</b><span>Van idee tot release</span></div>
+        </div>
+        <a href="https://doova.space" target="_blank" rel="noopener noreferrer" class="dv-link">doova.space &#8599;</a>
+      </div>
+      <div class="dv-hero__shot reveal">
+        <span class="dv-badge">1.0</span>
+        <img src="../../../assets/doova/thumb-doova.jpg" alt="Doova, een project op het canvas" />
+      </div>
+    </div>
+
+    <section class="dv-section reveal">
+      <div class="dv-head">
+        <span class="dv-head__nr">01</span>
+        <h2 class="dv-head__title">Waarom ik hem maakte</h2>
+      </div>
+      <p class="dv-lead">
+        Bij elk project raakte ik dezelfde dingen kwijt. De briefing stond in een notitie-app, de shotlist in een takenlijst, de referentiebeelden in een map op mijn bureaublad en de deadline in mijn agenda. Vier plekken, vier keer schakelen, en na twee weken wist ik niet meer waar wat stond.
+      </p>
+      <p class="dv-lead">
+        Doova is mijn antwoord daarop. Eén canvas per project, waar je gewoon neerlegt wat je nodig hebt. Geen mappenstructuur die je vooraf moet bedenken, geen account, geen cloud. Je sleept een bestand erin en het blijft liggen waar jij het legt. Dat klinkt simpel, maar juist dat maakt dat je het echt gebruikt.
+      </p>
+      <div class="dv-think">
+        <div class="dv-think__card">
+          <span class="dv-think__chip">Uitgangspunt</span>
+          <h3 class="dv-think__title">Ruimte boven structuur</h3>
+          <p class="dv-think__body">Mensen denken in plekken, niet in mappen. Daarom is Doova een vlak waar je dingen neerlegt, en niet een boom waar je ze in stopt.</p>
+        </div>
+        <div class="dv-think__card">
+          <span class="dv-think__chip">Uitgangspunt</span>
+          <h3 class="dv-think__title">Alles lokaal</h3>
+          <p class="dv-think__body">Je data staat in leesbare JSON in je eigen map. Verplaats die map naar iCloud en je hebt synchronisatie, zonder dat Doova daar iets voor hoeft te weten.</p>
+        </div>
+        <div class="dv-think__card">
+          <span class="dv-think__chip">Uitgangspunt</span>
+          <h3 class="dv-think__title">Leeg leert niets</h3>
+          <p class="dv-think__body">Een leeg canvas verklapt geen enkele beweging. Daarom opent een nieuwe installatie op een welkomstproject dat uit dezelfde blokken bestaat die je zelf zou maken.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="dv-section reveal">
+      <div class="dv-head">
+        <span class="dv-head__nr">02</span>
+        <h2 class="dv-head__title">De app</h2>
+        <span class="dv-head__note">Twee thema's, acht accentkleuren</span>
+      </div>
+      <div class="dv-shots">
+        <figure class="dv-shot">
+          <div class="dv-shot__frame"><img src="../../../assets/doova/app-canvas.jpg" alt="Doova in het Glass-thema, licht" /></div>
+          <figcaption class="dv-shot__cap">
+            <span class="dv-shot__nr">01</span>
+            <span class="dv-shot__text">Glass, het standaardthema. Licht, doorschijnend en rustig, zodat de inhoud van je blokken het werk doet en de interface eromheen zich stilhoudt.</span>
+          </figcaption>
+        </figure>
+        <div class="dv-shots dv-shots--two">
+          <figure class="dv-shot">
+            <div class="dv-shot__frame"><img src="../../../assets/doova/app-donker.jpg" alt="Doova in het donkere Glass-thema" /></div>
+            <figcaption class="dv-shot__cap">
+              <span class="dv-shot__nr">02</span>
+              <span class="dv-shot__text">Dezelfde app in het donker, met paars accent. Het thema volgt macOS als je hem op automatisch zet.</span>
+            </figcaption>
+          </figure>
+          <figure class="dv-shot">
+            <div class="dv-shot__frame"><img src="../../../assets/doova/app-bemboe.jpg" alt="Doova in het bemboe-thema" /></div>
+            <figcaption class="dv-shot__cap">
+              <span class="dv-shot__nr">03</span>
+              <span class="dv-shot__text">Het bemboe-thema, mijn eigen huisstijl in de app. Dikkere randen, harde schaduwen en geen doorschijnendheid.</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="dv-section reveal">
+      <div class="dv-head">
+        <span class="dv-head__nr">03</span>
+        <h2 class="dv-head__title">De promo's</h2>
+        <span class="dv-head__note">Zelf geschreven, zelf gerenderd</span>
+      </div>
+      <p class="dv-lead">
+        Beide promo's zijn niet in een editor in elkaar gezet maar als HTML geschreven en frame voor frame uitgerenderd, met de echte design-tokens van de app. Daardoor is elk paneel scherp op volle resolutie en kan elk blok apart bewegen. Het sound design heb ik er daarna zelf onder gelegd.
+      </p>
+      <div class="dv-videos">
+        <div class="dv-video">
+          <div class="dv-video__frame">
+            <video controls preload="metadata" playsinline poster="../../../assets/doova/promo-16x9-poster.jpg">
+              <source src="../../../assets/doova/promo-16x9.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="dv-video__info">
+            <span class="dv-video__chip">Landingspagina</span>
+            <h3 class="dv-video__title">Doova, de rondleiding</h3>
+            <p class="dv-video__desc">De video die op doova.space staat. Donker, rustig getimed, en hij laat vooral zien hoe blokken zich gedragen als je ze aanraakt.</p>
+          </div>
+        </div>
+        <div class="dv-video dv-video--vertical">
+          <div class="dv-video__frame">
+            <video controls preload="metadata" playsinline poster="../../../assets/doova/promo-9x16-poster.jpg">
+              <source src="../../../assets/doova/promo-9x16.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="dv-video__info">
+            <span class="dv-video__chip">Social</span>
+            <h3 class="dv-video__title">Doova 1.0</h3>
+            <p class="dv-video__desc">De verticale releasepromo. Fel gradientveld eromheen, rustig glas erbinnen. Dat contrast is het hele idee.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dv-section reveal">
+      <div class="dv-head">
+        <span class="dv-head__nr">04</span>
+        <h2 class="dv-head__title">De site</h2>
+      </div>
+      <p class="dv-lead">
+        Een statische landingspagina zonder buildstap, in dezelfde taal als de app zelf. De volledige uitleg over hoe die is opgebouwd staat bij <a href="../../../brand-identity/doova/index.html" style="text-decoration: underline; font-weight: 700;">Brand Identity</a>.
+      </p>
+      <div class="dv-shots dv-shots--two">
+        <figure class="dv-shot">
+          <div class="dv-shot__frame"><img src="../../../assets/doova/site-hero.jpg" alt="De hero van doova.space" /></div>
+          <figcaption class="dv-shot__cap"><span class="dv-shot__nr">01</span><span class="dv-shot__text">De hero, met de app zelf als eerste bewijs.</span></figcaption>
+        </figure>
+        <figure class="dv-shot">
+          <div class="dv-shot__frame"><img src="../../../assets/doova/site-functies.jpg" alt="Het functieoverzicht van doova.space" /></div>
+          <figcaption class="dv-shot__cap"><span class="dv-shot__nr">02</span><span class="dv-shot__text">Twaalf functies, elk in één zin uitgelegd.</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="dv-section reveal">
+      <div class="dv-head">
+        <span class="dv-head__nr">05</span>
+        <h2 class="dv-head__title">Waar hij van gemaakt is</h2>
+      </div>
+      <div class="dv-stack">
+        <div class="dv-stack__row"><b>Tauri v2 &amp; Rust</b><span>De schil van de app. Rust bezit de datamap en schrijft de bestanden, de interface hoeft niets van je schijf te weten.</span></div>
+        <div class="dv-stack__row"><b>React &amp; TypeScript</b><span>Het canvas, de blokken en de editor. Zustand voor de state, Tiptap voor rich text.</span></div>
+        <div class="dv-stack__row"><b>macOS zelf</b><span>Dicteren, PDF- en Word-export en de menubalk-opname draaien op de ingebouwde functies van macOS. Geen audio verlaat je Mac.</span></div>
+        <div class="dv-stack__row"><b>GitHub Actions</b><span>Een tag pushen bouwt de DMG en ondertekent de update. De release blijft bewust concept tot ik hem vrijgeef.</span></div>
+      </div>
+      <a href="https://doova.space" target="_blank" rel="noopener noreferrer" class="dv-link">Bekijk doova.space &#8599;</a>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <span class="footer__logo">RJH</span>
+      <span class="footer__copy">&copy; 2026 Roelof Junior Haar.</span>
+      <span class="footer__back"><a href="../../../index.html">Terug naar home &uarr;</a></span>
+    </div>
+  </footer>
+
+  <script src="../../../script.js?v=20260708d"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doova Promo — Visual Motion</title>
+  <meta name="description" content="De promovideo's van Doova. Motion graphics die als code geschreven zijn, met de echte interface van de app als speler." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../style.css?v=20260708d" />
+  <link rel="stylesheet" href="../../assets/doova/doova.css?v=1" />
+  <style> body { --dv-accent: var(--lime); } </style>
+</head>
+<body>
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav class="nav" id="nav">
+    <a href="../../index.html" class="nav__logo">RJH</a>
+    <ul class="nav__links">
+      <li><a href="../../index.html">Home</a></li>
+      <li class="nav__item nav__item--dropdown">
+        <button class="nav__drop-btn" type="button" aria-expanded="false" aria-haspopup="true">Werk <span class="nav__caret">&#9662;</span></button>
+        <ul class="nav__dropdown">
+        <li><a href="../../brand-identity/index.html" data-accent="purple">Brand Identity</a></li>
+        <li><a href="../../visual-motion/index.html" data-accent="lime" class="is-active">Visual Motion</a></li>
+        <li><a href="../../video-editing/index.html" data-accent="orange">Video/Editing</a></li>
+        <li><a href="../../social-marketing/index.html" data-accent="coral">Social Marketing</a></li>
+        </ul>
+      </li>
+      <li><a href="../../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="subpage">
+    <a href="../index.html" class="subpage__back">&#8592; Visual Motion</a>
+    <p class="subpage__label">Visual Motion / Doova</p>
+    <h1 class="subpage__title">Doova<br>Promo.</h1>
+
+    <div class="dv-hero">
+      <div>
+        <p class="subpage__desc">
+          Twee promo's voor Doova, mijn eigen macOS-app. Niet gemonteerd in een editor, maar geschreven als HTML en frame voor frame uitgerenderd. De interface die je ziet bewegen is geen screenshot maar de echte app-opmaak, opgebouwd uit dezelfde design-tokens als het product. Daardoor is elk paneel scherp op volle resolutie en kan ieder blok apart animeren.
+        </p>
+        <div class="dv-facts">
+          <div class="dv-fact"><b>2</b><span>Formats</span></div>
+          <div class="dv-fact"><b>1080p</b><span>Volle resolutie</span></div>
+          <div class="dv-fact"><b>Code</b><span>In plaats van keyframes</span></div>
+          <div class="dv-fact"><b>Eigen</b><span>Sound design</span></div>
+        </div>
+        <a href="../../video-editing/personal-projects/doova/index.html" class="dv-link">Het hele project &#8594;</a>
+      </div>
+      <div class="dv-hero__shot dv-hero__shot--portrait reveal">
+        <span class="dv-badge">1.0</span>
+        <img src="../../assets/doova/promo-9x16-poster.jpg" alt="Kader uit de verticale Doova-promo" />
+      </div>
+    </div>
+
+    <section class="dv-section reveal">
+      <div class="dv-head">
+        <span class="dv-head__nr">01</span>
+        <h2 class="dv-head__title">De video's</h2>
+      </div>
+      <div class="dv-videos">
+        <div class="dv-video">
+          <div class="dv-video__frame">
+            <video controls preload="metadata" playsinline poster="../../assets/doova/promo-16x9-poster.jpg">
+              <source src="../../assets/doova/promo-16x9.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="dv-video__info">
+            <span class="dv-video__chip">16:9 / Landingspagina</span>
+            <h3 class="dv-video__title">Doova, de rondleiding</h3>
+            <p class="dv-video__desc">Dertig seconden op een donker vlak. Geen praatje, alleen handelingen: een blok pakken, een taak afvinken, een bestand erin slepen. Elke beweging krijgt de tijd om af te maken voordat de volgende begint.</p>
+          </div>
+        </div>
+        <div class="dv-video dv-video--vertical">
+          <div class="dv-video__frame">
+            <video controls preload="metadata" playsinline poster="../../assets/doova/promo-9x16-poster.jpg">
+              <source src="../../assets/doova/promo-9x16.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="dv-video__info">
+            <span class="dv-video__chip">9:16 / Reels</span>
+            <h3 class="dv-video__title">Doova 1.0</h3>
+            <p class="dv-video__desc">De releasepromo. Twaalf beelden, elk één functie, met een korte regel tekst die de beat zet.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dv-section reveal">
+      <div class="dv-head">
+        <span class="dv-head__nr">02</span>
+        <h2 class="dv-head__title">Hoe ik ze heb aangepakt</h2>
+      </div>
+      <div class="dv-think">
+        <div class="dv-think__card">
+          <span class="dv-think__chip">Beweging</span>
+          <h3 class="dv-think__title">Smooth boven bouncy</h3>
+          <p class="dv-think__body">Alles landt op een lange staart. Panelen komen binnen met een korte verschuiving omhoog en een fade, nooit met een stuiter. Het product is rustig, dus de beweging is dat ook.</p>
+        </div>
+        <div class="dv-think__card">
+          <span class="dv-think__chip">Camera</span>
+          <h3 class="dv-think__title">Eén beweging per beeld</h3>
+          <p class="dv-think__body">Eén push-in, één pull-back of één pan, en nooit twee tegelijk. De camera beweegt alleen als die beweging zelf iets vertelt.</p>
+        </div>
+        <div class="dv-think__card">
+          <span class="dv-think__chip">Contrast</span>
+          <h3 class="dv-think__title">Fel buiten, rustig binnen</h3>
+          <p class="dv-think__body">Buiten het appvenster een gradientveld van coral, paars en blauw. Binnen het venster alleen licht glas. Dat verschil is de hele identiteit, dus er komt nooit een videokleur over de app heen.</p>
+        </div>
+        <div class="dv-think__card">
+          <span class="dv-think__chip">Ritme</span>
+          <h3 class="dv-think__title">De tekst zet de beat</h3>
+          <p class="dv-think__body">Er is geen voice-over. In plaats daarvan komt er per beeld één korte regel binnen, en de beweging van de interface landt op diezelfde tel.</p>
+        </div>
+        <div class="dv-think__card">
+          <span class="dv-think__chip">Cursor</span>
+          <h3 class="dv-think__title">Je ziet het gebeuren</h3>
+          <p class="dv-think__body">De muis en de cursor in de tekst zijn echte spelers. Er wordt eerst geklikt of getypt, en pas daarna verschijnt het resultaat. Anders geloof je niet dat het echte software is.</p>
+        </div>
+        <div class="dv-think__card">
+          <span class="dv-think__chip">Geluid</span>
+          <h3 class="dv-think__title">Stil opgeleverd</h3>
+          <p class="dv-think__body">De render komt zonder audio uit de pijplijn, precies zodat ik er daarna zelf sound design onder kan leggen zonder tegen een bestaande muziekbed aan te werken.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <span class="footer__logo">RJH</span>
+      <span class="footer__copy">&copy; 2026 Roelof Junior Haar.</span>
+      <span class="footer__back"><a href="../../index.html">Terug naar home &uarr;</a></span>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=20260708d"></script>
+</body>
+</html>

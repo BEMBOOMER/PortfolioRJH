@@ -29,7 +29,7 @@
 .subpage__desc { max-width: 640px; color: var(--text); opacity: 0.65; line-height: 1.8; font-size: 1rem; }
 
 /* ── hero: intro + feiten ─────────────────────────── */
-.dv-hero { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; margin-bottom: clamp(3rem, 7vw, 5rem); }
+.dv-hero { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; margin-bottom: clamp(3rem, 7vw, 5rem); }
 .dv-hero__shot {
   border: var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
   overflow: hidden; background: var(--bg); position: relative;
@@ -37,7 +37,8 @@
 }
 .dv-hero__shot:hover { transform: translate(-3px, -3px) rotate(-0.4deg); }
 .dv-hero__shot--portrait { max-width: 320px; justify-self: center; }
-.dv-hero__shot img { display: block; width: 100%; height: auto; }
+.dv-hero__shot img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: cover; object-position: top; }
+.dv-hero__shot--portrait img { max-height: none; }
 .dv-badge {
   position: absolute; top: 1rem; right: 1rem; background: var(--yellow);
   border: var(--border-thin); border-radius: 999px; padding: 0.3rem 0.8rem;
@@ -78,12 +79,26 @@
 .dv-think__body { font-size: 0.9rem; line-height: 1.75; opacity: 0.68; }
 
 /* ── screenshots ──────────────────────────────────── */
-.dv-shots { display: grid; gap: clamp(1.5rem, 4vw, 2.5rem); }
-.dv-shots--two { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+.dv-shots { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(1.5rem, 4vw, 2.5rem); }
+.dv-shots .dv-shot:first-child { grid-column: 1 / -1; }
+.dv-shots .dv-shot:first-child .dv-shot__frame { aspect-ratio: 16 / 8; }
+.dv-shots .dv-shot:first-child .dv-shot__text { max-width: 720px; }
+@media (max-width: 700px) { .dv-shots { grid-template-columns: 1fr; } }
 .dv-shot { display: flex; flex-direction: column; gap: 0.8rem; }
 .dv-shot__frame { border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; background: var(--bg); transition: transform 0.25s var(--ease-bounce), box-shadow 0.25s ease; }
 .dv-shot__frame:hover { transform: translate(-3px, -3px); box-shadow: 8px 8px 0 var(--text); }
-.dv-shot__frame img { display: block; width: 100%; height: auto; }
+/* vast kader; bij hover scrolt de screenshot vanzelf naar beneden (object-position is animeerbaar) */
+.dv-shot__frame { aspect-ratio: 4 / 3; position: relative; }
+.dv-shot__frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; transition: object-position 3.2s linear; }
+.dv-shot__frame:hover img { object-position: bottom; transition-duration: 4.5s; }
+.dv-shot__frame::after {
+  content: 'hover om te scrollen'; position: absolute; right: 0.7rem; bottom: 0.7rem;
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  background: var(--bg); border: var(--border-thin); border-radius: 999px; padding: 0.15rem 0.55rem;
+  opacity: 0.85; transition: opacity 0.2s ease; pointer-events: none;
+}
+.dv-shot__frame:hover::after { opacity: 0; }
+@media (pointer: coarse) { .dv-shot__frame::after { display: none; } .dv-shot__frame { aspect-ratio: auto; } .dv-shot__frame img { height: auto; } }
 .dv-shot__cap { display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; }
 .dv-shot__nr { font-family: var(--font-display); font-size: 0.75rem; background: var(--dv-accent, var(--lime)); border: var(--border-thin); border-radius: 999px; padding: 0.08rem 0.55rem; }
 .dv-shot__text { font-size: 0.85rem; line-height: 1.7; opacity: 0.6; max-width: 560px; }

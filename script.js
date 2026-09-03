@@ -7,12 +7,13 @@
    2.  Navigation (hide on scroll down, show on scroll up)
    3.  Hero Entrance Animation
    4.  Scroll Reveal (IntersectionObserver)
-   5.  Skill Bar Animation
-   6.  Contact Form (async Formspree submission)
-   7.  Stagger Animations
-   8.  Magnetic Hover Effects
-   9.  Video Fallback Links
-   10. Init
+   5.  Contact Form (async Formspree submission)
+   6.  Stagger Animations
+   7.  Video Fallback Links
+   8.  Werk-dropdown
+   9.  3D-tilt + hero-camera
+   10. Kopieer e-mail + lokale tijd
+   11. Init
    ═══════════════════════════════════════════════════════════ */
 
 'use strict';
@@ -120,6 +121,10 @@ function initHeroAnimation() {
     setTimeout(() => {
       word.classList.add('is-visible');
     }, BASE_DELAY + i * 120);
+    // na de intrede mag de regel weer overlopen (de lime stip achter de punt)
+    setTimeout(() => {
+      word.closest('.hero__line')?.classList.add('is-open');
+    }, BASE_DELAY + i * 120 + 700);
   });
 
   // Animate labels with stagger
@@ -168,50 +173,13 @@ function initScrollReveal() {
       });
     },
     {
-      threshold: 0.12,
-      rootMargin: '0px 0px -40px 0px',
+      // threshold 0: ook secties die hoger zijn dan het scherm komen tevoorschijn
+      threshold: 0,
+      rootMargin: '0px 0px -60px 0px',
     }
   );
 
   revealEls.forEach(el => observer.observe(el));
-}
-
-/* ─────────────────────────────────────────
-   5. Skill Bar Animation
-───────────────────────────────────────── */
-function initSkillBars() {
-  const bars = document.querySelectorAll('.skill__bar');
-  if (!bars.length) return;
-
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    bars.forEach(bar => {
-      bar.style.width = `${bar.dataset.width || 0}%`;
-    });
-    return;
-  }
-
-  let animated = false;
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !animated) {
-          animated = true;
-          bars.forEach((bar, i) => {
-            const target = bar.dataset.width || '0';
-            setTimeout(() => {
-              bar.style.width = `${target}%`;
-            }, i * 150);
-          });
-          observer.disconnect();
-        }
-      });
-    },
-    { threshold: 0.4 }
-  );
-
-  const skillsContainer = document.querySelector('.skills') || document.querySelector('#about');
-  if (skillsContainer) observer.observe(skillsContainer);
 }
 
 /* ─────────────────────────────────────────
@@ -326,27 +294,6 @@ function initStaggerAnimations() {
 }
 
 /* ─────────────────────────────────────────
-   8. Parallax-light on scroll for decorative elements
-───────────────────────────────────────── */
-function initParallax() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  const hero = document.querySelector('.hero');
-  if (!hero) return;
-
-  window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    const heroHeight = hero.offsetHeight;
-
-    if (scrollY < heroHeight) {
-      const ratio = scrollY / heroHeight;
-      // Parallax on hero pseudo-elements via CSS custom property
-      hero.style.setProperty('--scroll-ratio', ratio);
-    }
-  }, { passive: true });
-}
-
-/* ─────────────────────────────────────────
    9. Video fallback links
 ───────────────────────────────────────── */
 function initVideoFallbackLinks() {
@@ -374,206 +321,6 @@ function initVideoFallbackLinks() {
     info.appendChild(link);
   });
 }
-
-/* ─────────────────────────────────────────
-   10. Snake Game
-───────────────────────────────────────── */
-function initSnakeGame() {
-  const canvas   = document.getElementById('snakeCanvas');
-  if (!canvas) return;
-
-  const ctx      = canvas.getContext('2d');
-  const GRID     = 20;
-  const SIZE     = 280;
-  canvas.width   = SIZE;
-  canvas.height  = SIZE;
-  const CELL     = SIZE / GRID; // 14px per cell
-
-  const overlay  = document.getElementById('snakeOverlay');
-  const titleEl  = document.getElementById('snakeOverlayTitle');
-  const subEl    = document.getElementById('snakeOverlaySub');
-  const startBtn = document.getElementById('snakeStartBtn');
-  const scoreEl  = document.getElementById('snakeScore');
-
-  if (!overlay || !titleEl || !subEl || !startBtn || !scoreEl) return;
-
-  const C = {
-    bg:        '#F5F0E8',
-    grid:      'rgba(26,26,26,0.05)',
-    border:    '#1A1A1A',
-    head:      '#A855F7',
-    food:      ['#FF4F81','#CCFF00','#FF6B35','#4361EE','#FFD600','#06D6A0'],
-  };
-
-  let state = 'idle';
-  let snake, dir, nextDir, food, score, gameLoop, foodColor, highScore = 0;
-
-  function resetGame() {
-    snake    = [{ x: 10, y: 10 }, { x: 9, y: 10 }, { x: 8, y: 10 }];
-    dir      = { x: 1, y: 0 };
-    nextDir  = { x: 1, y: 0 };
-    score    = 0;
-    scoreEl.textContent = '0';
-    spawnFood();
-  }
-
-  function spawnFood() {
-    let pos;
-    do {
-      pos = { x: Math.floor(Math.random() * GRID), y: Math.floor(Math.random() * GRID) };
-    } while (snake.some(s => s.x === pos.x && s.y === pos.y));
-    food      = pos;
-    foodColor = C.food[Math.floor(Math.random() * C.food.length)];
-  }
-
-  function drawCell(x, y, fill, radius) {
-    const px = x * CELL + 1.5;
-    const py = y * CELL + 1.5;
-    const sz = CELL - 3;
-    ctx.fillStyle   = fill;
-    ctx.strokeStyle = C.border;
-    ctx.lineWidth   = 1.5;
-    ctx.beginPath();
-    if (ctx.roundRect) {
-      ctx.roundRect(px, py, sz, sz, radius);
-    } else {
-      ctx.rect(px, py, sz, sz);
-    }
-    ctx.fill();
-    ctx.stroke();
-  }
-
-  function drawCanvas() {
-    ctx.fillStyle = C.bg;
-    ctx.fillRect(0, 0, SIZE, SIZE);
-
-    // Subtle grid lines
-    ctx.strokeStyle = C.grid;
-    ctx.lineWidth   = 0.5;
-    for (let i = 1; i < GRID; i++) {
-      ctx.beginPath(); ctx.moveTo(i * CELL, 0); ctx.lineTo(i * CELL, SIZE); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(0, i * CELL); ctx.lineTo(SIZE, i * CELL); ctx.stroke();
-    }
-
-    // Food
-    drawCell(food.x, food.y, foodColor, 3);
-    // Cross mark on food
-    const fx = food.x * CELL + CELL / 2;
-    const fy = food.y * CELL + CELL / 2;
-    ctx.fillStyle = C.border;
-    ctx.fillRect(fx - 1, fy - 4, 2, 8);
-    ctx.fillRect(fx - 4, fy - 1, 8, 2);
-
-    // Snake body (tail to head so head is on top)
-    for (let i = snake.length - 1; i >= 0; i--) {
-      const seg = snake[i];
-      let fill;
-      if (i === 0) {
-        fill = C.head;
-      } else {
-        const t  = Math.min(i / snake.length, 1);
-        const v  = Math.round(26 + t * 70);
-        fill = `rgb(${v},${v},${v})`;
-      }
-      drawCell(seg.x, seg.y, fill, i === 0 ? 5 : 2);
-    }
-  }
-
-  function step() {
-    dir = nextDir;
-    const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
-
-    if (head.x < 0 || head.x >= GRID || head.y < 0 || head.y >= GRID) {
-      return gameOver();
-    }
-    if (snake.slice(0, -1).some(s => s.x === head.x && s.y === head.y)) {
-      return gameOver();
-    }
-
-    snake.unshift(head);
-
-    if (head.x === food.x && head.y === food.y) {
-      score++;
-      if (score > highScore) highScore = score;
-      scoreEl.textContent = score;
-      spawnFood();
-    } else {
-      snake.pop();
-    }
-
-    drawCanvas();
-  }
-
-  function gameOver() {
-    state = 'gameover';
-    clearInterval(gameLoop);
-
-    const wrap = canvas.closest('.snake-canvas-wrap');
-    if (wrap) {
-      wrap.style.borderColor = '#FF4F81';
-      setTimeout(() => { wrap.style.borderColor = ''; }, 700);
-    }
-
-    titleEl.textContent  = 'GAME OVER';
-    subEl.textContent    = `Score: ${score}${score > 0 && score === highScore ? ' ★' : ''}`;
-    startBtn.textContent = 'OPNIEUW';
-    overlay.style.display = 'flex';
-  }
-
-  function startGame() {
-    resetGame();
-    state = 'playing';
-    overlay.style.display = 'none';
-    drawCanvas();
-    gameLoop = setInterval(step, 130);
-  }
-
-  startBtn.addEventListener('click', startGame);
-
-  // Keyboard: WASD + arrow keys
-  document.addEventListener('keydown', (e) => {
-    if (state !== 'playing') {
-      if (e.key === 'Enter') startGame();
-      return;
-    }
-    switch (e.key) {
-      case 'ArrowUp':    case 'w': case 'W': if (dir.y !== 1)  { nextDir = { x: 0, y: -1 }; e.preventDefault(); } break;
-      case 'ArrowDown':  case 's': case 'S': if (dir.y !== -1) { nextDir = { x: 0, y:  1 }; e.preventDefault(); } break;
-      case 'ArrowLeft':  case 'a': case 'A': if (dir.x !== 1)  { nextDir = { x: -1, y: 0 }; e.preventDefault(); } break;
-      case 'ArrowRight': case 'd': case 'D': if (dir.x !== -1) { nextDir = { x:  1, y: 0 }; e.preventDefault(); } break;
-    }
-  });
-
-  // D-pad buttons
-  [
-    ['snakeUp',    0, -1],
-    ['snakeDown',  0,  1],
-    ['snakeLeft', -1,  0],
-    ['snakeRight', 1,  0],
-  ].forEach(([id, dx, dy]) => {
-    const btn = document.getElementById(id);
-    if (!btn) return;
-    const move = () => {
-      if (state !== 'playing') return;
-      if (dx !== 0 && dir.x === -dx) return;
-      if (dy !== 0 && dir.y === -dy) return;
-      nextDir = { x: dx, y: dy };
-    };
-    btn.addEventListener('click', move);
-    btn.addEventListener('touchstart', (e) => { e.preventDefault(); move(); }, { passive: false });
-  });
-
-  // Render initial idle canvas
-  ctx.fillStyle = C.bg;
-  ctx.fillRect(0, 0, SIZE, SIZE);
-  ctx.strokeStyle = C.grid;
-  ctx.lineWidth   = 0.5;
-  for (let i = 1; i < GRID; i++) {
-    ctx.beginPath(); ctx.moveTo(i * CELL, 0); ctx.lineTo(i * CELL, SIZE); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(0, i * CELL); ctx.lineTo(SIZE, i * CELL); ctx.stroke();
-  }
-}
-
 
 /* ─────────────────────────────────────────
    12. Werk-dropdown (klik voor touch/keyboard, hover via CSS)
@@ -668,6 +415,49 @@ function initHero3D() {
 }
 
 /* ─────────────────────────────────────────
+   15. Klik-om-te-kopiëren op het e-mailadres
+───────────────────────────────────────── */
+function initCopyEmail() {
+  const link = document.querySelector('.contact__email');
+  if (!link || !navigator.clipboard) return;
+
+  const email = link.textContent.trim();
+  const hint = document.createElement('span');
+  hint.className = 'contact__copy-hint';
+  hint.textContent = 'klik om te kopiëren';
+  link.insertAdjacentElement('afterend', hint);
+
+  link.addEventListener('click', async (e) => {
+    e.preventDefault();
+    try {
+      await navigator.clipboard.writeText(email);
+      hint.textContent = 'gekopieerd ✓';
+      hint.classList.add('is-done');
+      setTimeout(() => {
+        hint.textContent = 'klik om te kopiëren';
+        hint.classList.remove('is-done');
+      }, 2200);
+    } catch {
+      window.location.href = link.href;
+    }
+  });
+}
+
+/* ─────────────────────────────────────────
+   16. Lokale tijd in het hero-label
+───────────────────────────────────────── */
+function initLocalTime() {
+  const el = document.getElementById('heroTime');
+  if (!el) return;
+  const fmt = new Intl.DateTimeFormat('nl-NL', {
+    hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Amsterdam',
+  });
+  const tick = () => { el.textContent = `${fmt.format(new Date())} NL`; };
+  tick();
+  setInterval(tick, 30000);
+}
+
+/* ─────────────────────────────────────────
    11. Init
 ───────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
@@ -675,13 +465,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initHeroAnimation();
   initScrollReveal();
-  initSkillBars();
   initContactForm();
   initStaggerAnimations();
-  initParallax();
   initVideoFallbackLinks();
-  initSnakeGame();
   initNavDropdown();
   initCardTilt();
   initHero3D();
+  initCopyEmail();
+  initLocalTime();
 });

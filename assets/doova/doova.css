@@ -81,15 +81,18 @@
 /* ── screenshots ──────────────────────────────────── */
 .dv-shots { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(1.5rem, 4vw, 2.5rem); }
 .dv-shots .dv-shot:first-child { grid-column: 1 / -1; }
-.dv-shots .dv-shot:first-child .dv-shot__frame { aspect-ratio: 16 / 8; }
+.dv-shots .dv-shot:first-child .dv-shot__frame img { max-height: 50cqw; }
 .dv-shots .dv-shot:first-child .dv-shot__text { max-width: 720px; }
 @media (max-width: 700px) { .dv-shots { grid-template-columns: 1fr; } }
 .dv-shot { display: flex; flex-direction: column; gap: 0.8rem; }
 .dv-shot__frame { border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; background: var(--bg); transition: transform 0.25s var(--ease-bounce), box-shadow 0.25s ease; }
 .dv-shot__frame:hover { transform: translate(-3px, -3px); box-shadow: 8px 8px 0 var(--text); }
 /* vast kader; bij hover scrolt de screenshot vanzelf naar beneden (object-position is animeerbaar) */
-.dv-shot__frame { aspect-ratio: 4 / 3; position: relative; }
-.dv-shot__frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; transition: object-position 3.2s linear; }
+.dv-shot { container-type: inline-size; }
+.dv-shot__frame { position: relative; }
+/* hoge screenshots worden afgekapt op 4:3 (en scrollen bij hover), brede/korte passen gewoon helemaal */
+.dv-shot__frame img { display: block; width: 100%; height: auto; max-height: 75cqw; object-fit: cover; object-position: top; transition: object-position 3.2s linear; }
+.dv-shot__frame--fits::after { display: none; }
 .dv-shot__frame:hover img { object-position: bottom; transition-duration: 4.5s; }
 .dv-shot__frame::after {
   content: 'hover om te scrollen'; position: absolute; right: 0.7rem; bottom: 0.7rem;
@@ -98,7 +101,7 @@
   opacity: 0.85; transition: opacity 0.2s ease; pointer-events: none;
 }
 .dv-shot__frame:hover::after { opacity: 0; }
-@media (pointer: coarse) { .dv-shot__frame::after { display: none; } .dv-shot__frame { aspect-ratio: auto; } .dv-shot__frame img { height: auto; } }
+@media (pointer: coarse) { .dv-shot__frame::after { display: none; } .dv-shot__frame img { max-height: none !important; } }
 .dv-shot__cap { display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; }
 .dv-shot__nr { font-family: var(--font-display); font-size: 0.75rem; background: var(--dv-accent, var(--lime)); border: var(--border-thin); border-radius: 999px; padding: 0.08rem 0.55rem; }
 .dv-shot__text { font-size: 0.85rem; line-height: 1.7; opacity: 0.6; max-width: 560px; }

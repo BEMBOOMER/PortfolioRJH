@@ -458,6 +458,22 @@ function initLocalTime() {
 }
 
 /* ─────────────────────────────────────────
+   17. Doova-screenshots: badge alleen als er echt iets te scrollen valt
+───────────────────────────────────────── */
+function initShotFrames() {
+  document.querySelectorAll('.dv-shot__frame').forEach((frame) => {
+    const img = frame.querySelector('img');
+    if (!img) return;
+    const check = () => {
+      if (img.naturalHeight && img.clientHeight >= img.naturalHeight * (img.clientWidth / img.naturalWidth) - 2) {
+        frame.classList.add('dv-shot__frame--fits');
+      }
+    };
+    if (img.complete) check(); else img.addEventListener('load', check, { once: true });
+  });
+}
+
+/* ─────────────────────────────────────────
    11. Init
 ───────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
@@ -473,4 +489,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initHero3D();
   initCopyEmail();
   initLocalTime();
+  initShotFrames();
 });

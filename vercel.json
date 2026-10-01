@@ -6,6 +6,16 @@
       "permanent": false
     },
     {
+      "source": "/kerf",
+      "destination": "/app-development/kerf/",
+      "permanent": false
+    },
+    {
+      "source": "/krijt",
+      "destination": "/app-development/krijt/",
+      "permanent": false
+    },
+    {
       "source": "/video-editing/personal-projects/doova/:path*",
       "destination": "/app-development/doova/",
       "permanent": true

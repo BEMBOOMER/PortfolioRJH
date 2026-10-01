@@ -419,6 +419,41 @@ function initCopyCommand() {
 }
 
 /* ─────────────────────────────────────────
+   18. Showreel bovenaan de home
+   Kiest liggend of staand op basis van het scherm, speelt stil af
+   en zet het geluid aan op verzoek.
+───────────────────────────────────────── */
+function initReel() {
+  const video = document.getElementById('reelVideo');
+  const btn   = document.getElementById('reelSound');
+  if (!video) return;
+
+  const tall   = window.matchMedia('(max-aspect-ratio: 1/1)');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function pick() {
+    const src = tall.matches ? video.dataset.srcTall : video.dataset.srcWide;
+    if (video.dataset.current === src) return;
+    video.poster = tall.matches ? video.dataset.posterTall : video.dataset.posterWide;
+    video.src = src;
+    video.dataset.current = src;
+    if (!reduce || !video.muted) video.play().catch(() => {});
+  }
+
+  pick();
+  tall.addEventListener('change', pick);
+
+  if (!btn) return;
+  const label = btn.querySelector('span');
+  btn.addEventListener('click', () => {
+    video.muted = !video.muted;
+    if (!video.muted) video.play().catch(() => {});
+    btn.setAttribute('aria-pressed', String(!video.muted));
+    label.textContent = video.muted ? 'Geluid aan' : 'Geluid uit';
+  });
+}
+
+/* ─────────────────────────────────────────
    11. Init
 ───────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
@@ -434,4 +469,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initLocalTime();
   initShotFrames();
   initCopyCommand();
+  initReel();
 });

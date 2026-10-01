@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Hanken+Grotesk:wght@400..600&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&text=R&display=block" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20261001k" />
+  <link rel="stylesheet" href="style.css?v=20261001m" />
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -48,6 +48,20 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
+
+  <section class="reel" id="reel" aria-label="Showreel van Roelof Junior Haar">
+    <video class="reel__video" id="reelVideo" muted playsinline loop preload="auto"
+      data-src-wide="assets/reel/showreel-16x9.mp4" data-poster-wide="assets/reel/poster-16x9.jpg"
+      data-src-tall="assets/reel/showreel-9x16.mp4" data-poster-tall="assets/reel/poster-9x16.jpg"></video>
+    <button class="btn btn--ghost reel__sound" id="reelSound" type="button" aria-pressed="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M11 5 6 9H3v6h3l5 4V5z"/>
+        <path class="reel__sound-on" d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/>
+        <path class="reel__sound-off" d="m16 9 5 6m0-6-5 6"/>
+      </svg>
+      <span>Geluid aan</span>
+    </button>
+  </section>
 
   <section class="hero" id="hero">
     <div class="waves" aria-hidden="true"><div class="waves__field"></div></div>
@@ -258,6 +272,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=20261001k"></script>
+  <script src="script.js?v=20261001m"></script>
 </body>
 </html>

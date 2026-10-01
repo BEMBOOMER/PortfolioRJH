@@ -665,6 +665,40 @@ h1, h2, h3 { font-weight: 700; }
 }
 
 /* ─────────────────────────────────────────
+   9b. Showreel (home, het eerste wat je ziet)
+   Liggend op desktop, staand op een telefoon; de video kiest script.js.
+───────────────────────────────────────── */
+.reel { display: none; position: relative; background: var(--night); }
+.js .reel { display: block; }
+
+.reel__video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 100svh;
+  object-fit: cover;
+  background: var(--night);
+}
+
+.reel__sound {
+  position: absolute;
+  right: var(--gutter);
+  bottom: 1.25rem;
+  z-index: 2;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.reel__sound .reel__sound-on { display: none; }
+.reel__sound[aria-pressed="true"] .reel__sound-on { display: inline; }
+.reel__sound[aria-pressed="true"] .reel__sound-off { display: none; }
+
+@media (max-aspect-ratio: 1/1) {
+  .reel__video { aspect-ratio: 9 / 16; }
+  .reel__sound { bottom: 1rem; height: 40px; padding: 0 1rem; font-size: 0.88rem; }
+}
+
+/* ─────────────────────────────────────────
    10. Hero (home)
 ───────────────────────────────────────── */
 .hero {

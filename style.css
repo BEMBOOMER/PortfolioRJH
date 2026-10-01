@@ -1848,28 +1848,61 @@ h1, h2, h3 { font-weight: 700; }
 
 .pw-divider { scroll-margin-top: calc(var(--nav-h) + 150px); }
 
-/* homepage: drie kerncijfers in de klantenkaart */
-.clients-card__stats {
-  display: grid;
-  gap: 0.65rem;
-  margin-top: 1.4rem;
-  padding-top: 1.2rem;
-  border-top: 1px solid var(--line);
+/* homepage: kerncijfers van klantwerk in een eigen blok tussen Over en Werk */
+.results { padding: 0 var(--pad-x) clamp(2.5rem, 5vw, 4rem); }
+.results__card {
+  position: relative;
+  padding: clamp(1.6rem, 3.5vw, 2.8rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
 }
-.clients-card__stats b {
+.results__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.6rem 2rem; }
+.results__head .section-label { margin-bottom: 0; }
+.results__title {
+  order: -1;
+  font-family: var(--font-display);
+  font-stretch: 112.5%;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+.results__title .dot { color: var(--accent); }
+.results__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem clamp(1.5rem, 3vw, 2.5rem);
+  margin-top: clamp(1.8rem, 3.5vw, 2.6rem);
+}
+.results__item { padding-left: 1.1rem; border-left: 1px solid var(--line-strong); }
+.results__item b {
   display: block;
   font-family: var(--font-display);
   font-stretch: 112.5%;
   font-weight: 700;
-  font-size: 1.3rem;
-  line-height: 1.1;
-  letter-spacing: -0.04em;
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
   white-space: nowrap;
-  color: var(--paper);
 }
-.clients-card__stats div { display: grid; grid-template-columns: 5.4rem 1fr; gap: 0.8rem; align-items: baseline; }
-.clients-card__stats span { font-size: 0.8rem; line-height: 1.4; color: var(--muted); }
-.clients-card__note { margin-top: 0.8rem; font-size: 0.72rem; line-height: 1.45; color: var(--faint); }
+.results__item span { display: block; max-width: 28ch; margin-top: 0.6rem; font-size: 0.95rem; line-height: 1.5; color: var(--muted); }
+.results__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem 2rem;
+  margin-top: clamp(1.8rem, 3.5vw, 2.4rem);
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line);
+}
+.results__note { font-size: 0.8rem; line-height: 1.5; color: var(--faint); }
+.results__link { font-size: 0.92rem; font-weight: 600; color: var(--paper); transition: transform var(--t-fast) var(--ease-out-expo); }
+.results__link:hover { transform: translateX(3px); }
+@media (max-width: 760px) {
+  .results__grid { grid-template-columns: 1fr; gap: 1.3rem; }
+}
 
 /* resultaten: openbare cijfers, met de bron erbij */
 .pw-results {

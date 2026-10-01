@@ -1,6 +1,17 @@
 {
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "roelofjuniorhaar.vercel.app"
+        }
+      ],
+      "destination": "https://roelofjuniorhaar.marketing/:path*",
+      "permanent": true
+    },
+    {
       "source": "/kerf.sh",
       "destination": "https://raw.githubusercontent.com/BEMBOOMER/kerf-releases/main/install.sh",
       "permanent": false

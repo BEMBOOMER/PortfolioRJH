@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://roelofjuniorhaar.marketing/sitemap.xml

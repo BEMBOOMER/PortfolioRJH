@@ -651,7 +651,9 @@ h1, h2, h3 { font-weight: 700; }
 
 :is(.glow, .project-card, .bi-card):hover::before,
 :is(.glow, .project-card, .bi-card):hover::after,
-:is(.glow, .project-card, .bi-card):focus-within::after { opacity: 1; }
+:is(.glow, .project-card, .bi-card):has(:focus-visible)::after { opacity: 1; }
+/* :focus-visible, not :focus-within: after a click or a trip back to the page the link keeps
+   focus, and the rim would stay lit while you hover another card */
 
 /* een zachte zonsondergang achter de kaart, zoals bij een opgelicht scherm */
 :is(.project-card, .bi-card):hover {

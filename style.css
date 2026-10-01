@@ -200,6 +200,7 @@ h1, h2, h3 { font-weight: 700; }
 .dv-video__chip,
 .dv-shot__frame::after,
 .dv-swatch__meta span,
+.dv-install__label,
 .pw-lightbox__title {
   font-family: var(--font-display);
   font-stretch: 125%;
@@ -2503,6 +2504,51 @@ h1, h2, h3 { font-weight: 700; }
 .dv-links--end { margin-top: clamp(3rem, 6vw, 4.5rem); }
 
 .dv-hero__shot--dark { background: #0B0B0D; }
+
+/* installatieregel onder een app-hero: één commando met een kopieerknop */
+.dv-install { margin-top: 1.8rem; max-width: 620px; }
+.dv-install__label { margin-bottom: 0.6rem; color: var(--faint); }
+.dv-install__cmd {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.3rem 0.3rem 0.3rem 1rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: rgba(10, 10, 10, 0.55);
+}
+/* een commando is code: alleen hier monospace, anders leest -fsSL niet */
+.dv-install__cmd code {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 0.76rem;
+  line-height: 1.5;
+  color: var(--paper);
+  user-select: all;
+}
+.dv-install__copy {
+  flex: none;
+  height: 36px;
+  padding: 0 0.95rem;
+  border: 0;
+  border-radius: 9px;
+  background: var(--paper);
+  color: var(--night);
+  font: 600 0.84rem var(--font-body);
+  cursor: pointer;
+  transition: transform var(--t-fast) var(--ease-out-expo), background-color var(--t-fast) ease;
+}
+.dv-install__copy:hover { transform: translateY(-1px); background: #fff; }
+.dv-install__copy.is-done { background: var(--accent); }
+.dv-install__note { margin-top: 0.75rem; max-width: 60ch; font-size: 0.84rem; line-height: 1.55; color: var(--muted); }
+.dv-install__note a { color: var(--paper); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; }
+.dv-install__note a:hover { text-decoration-color: currentColor; }
+@media (max-width: 520px) {
+  .dv-install__cmd { flex-wrap: wrap; padding: 0.8rem; }
+  .dv-install__cmd code { flex-basis: 100%; }
+}
 
 /* logo's op hun eigen ondergrond */
 .dv-wall--logos { margin-bottom: 1.6rem; }

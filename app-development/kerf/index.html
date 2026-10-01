@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Hanken+Grotesk:wght@400..600&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&text=R&display=block" rel="stylesheet" />
-  <link rel="stylesheet" href="../../style.css?v=20261001g" />
+  <link rel="stylesheet" href="../../style.css?v=20261001h" />
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body data-cat="apps">
@@ -55,8 +55,16 @@
           <div class="dv-fact"><b>1,9 MB</b><span>App</span></div>
           <div class="dv-fact"><b>0% CPU</b><span>In rust</span></div>
         </div>
+        <div class="dv-install">
+          <p class="dv-install__label">Installeren in Terminal</p>
+          <div class="dv-install__cmd">
+            <code>curl -fsSL https://roelofjuniorhaar.vercel.app/kerf.sh | bash</code>
+            <button type="button" class="dv-install__copy" data-copy="curl -fsSL https://roelofjuniorhaar.vercel.app/kerf.sh | bash">Kopieer</button>
+          </div>
+          <p class="dv-install__note">Plak deze regel in Terminal. Hij haalt Kerf van GitHub, controleert de download en zet hem in Programma's. Kerf is niet door Apple genotariseerd, dus een zip uit de browser houdt macOS de eerste keer tegen; <a href="https://github.com/BEMBOOMER/kerf-releases#toch-met-de-hand" target="_blank" rel="noopener noreferrer">zo open je hem toch</a>.</p>
+        </div>
         <div class="dv-links">
-        <a href="https://github.com/BEMBOOMER/kerf-releases/releases/latest" class="dv-link" target="_blank" rel="noopener noreferrer">Download Kerf <span class="btn__arrow" aria-hidden="true">&#8599;</span></a>
+        <a href="https://github.com/BEMBOOMER/kerf-releases#installeren" class="dv-link" target="_blank" rel="noopener noreferrer">Download en uitleg <span class="btn__arrow" aria-hidden="true">&#8599;</span></a>
         <a href="../../brand-identity/kerf/index.html" class="dv-link dv-link--ghost">Het merk <span class="btn__arrow" aria-hidden="true">&rarr;</span></a>
         </div>
       </div>
@@ -182,10 +190,11 @@
         <div class="dv-stack__row"><b>Media-helper</b><span>Sinds macOS 15.4 krijgen gewone apps geen Now Playing-info meer, dus regelt een kleine helper dat.</span></div>
         <div class="dv-stack__row"><b>Core Animation</b><span>De balkjes draaien in de render server van macOS en kosten Kerf daardoor vrijwel geen CPU.</span></div>
         <div class="dv-stack__row"><b>GitHub Releases</b><span>De app checkt de releases en controleert elke download met een SHA-256 uit de release-notities.</span></div>
+        <div class="dv-stack__row"><b>Installatiescript</b><span>Eén regel in Terminal installeert Kerf zonder de muur van Gatekeeper, en controleert controlesom en handtekening zelf.</span></div>
       </div>
     </section>
     <div class="dv-links dv-links--end reveal">
-      <a href="https://github.com/BEMBOOMER/kerf-releases/releases/latest" class="dv-link" target="_blank" rel="noopener noreferrer">Download Kerf 1.3 <span class="btn__arrow" aria-hidden="true">&#8599;</span></a>
+      <a href="https://github.com/BEMBOOMER/kerf-releases#installeren" class="dv-link" target="_blank" rel="noopener noreferrer">Download Kerf 1.3 <span class="btn__arrow" aria-hidden="true">&#8599;</span></a>
       <a href="../../brand-identity/kerf/index.html" class="dv-link dv-link--ghost">Lees over het merk <span class="btn__arrow" aria-hidden="true">&rarr;</span></a>
     </div>
   </div>
@@ -198,6 +207,6 @@
     </div>
   </footer>
 
-  <script src="../../script.js?v=20261001g"></script>
+  <script src="../../script.js?v=20261001h"></script>
 </body>
 </html>

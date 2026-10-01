@@ -395,6 +395,30 @@ function initShotFrames() {
 }
 
 /* ─────────────────────────────────────────
+   17. Kopieerknop bij een installatieregel
+───────────────────────────────────────── */
+function initCopyCommand() {
+  document.querySelectorAll('[data-copy]').forEach((btn) => {
+    const code = btn.parentElement.querySelector('code');
+    const label = btn.textContent;
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy);
+        btn.textContent = 'Gekopieerd';
+        btn.classList.add('is-done');
+        setTimeout(() => {
+          btn.textContent = label;
+          btn.classList.remove('is-done');
+        }, 2200);
+      } catch {
+        // geen klembord (http of geweigerd): selecteer de regel, dan werkt Cmd+C
+        if (code) window.getSelection().selectAllChildren(code);
+      }
+    });
+  });
+}
+
+/* ─────────────────────────────────────────
    11. Init
 ───────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
@@ -409,4 +433,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initCopyEmail();
   initLocalTime();
   initShotFrames();
+  initCopyCommand();
 });

@@ -2376,6 +2376,15 @@ h1, h2, h3 { font-weight: 700; }
   background: var(--surface);
 }
 
+/* lucht tussen opeenvolgende merkblokken (logo's, palet, letters, kaarten) */
+.dv-palette,
+.dv-type,
+.dv-wall--logos { margin-bottom: clamp(2rem, 4vw, 2.75rem); }
+.dv-section > :last-child { margin-bottom: 0; }
+
+/* geen dubbele lijn: als er direct een lijst met haarlijnen volgt, vervalt de lijn onder de kop */
+.dv-head:has(+ :is(.dv-think, .dv-features, .dv-stack)) { padding-bottom: 0; border-bottom: 0; }
+
 .dv-swatch__fill { height: 84px; }
 
 .dv-swatch__meta {

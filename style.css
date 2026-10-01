@@ -543,7 +543,8 @@ body.cursor--hover .cursor-ring {
 .btn__arrow { transition: transform var(--t-fast) var(--ease-out-expo); }
 .btn:hover .btn__arrow { transform: translateX(3px); }
 
-:is(.spot, .btn, .tool-chip, .subpage__back, .pw-filter, .dv-link, .video-block__cta,
+/* :where houdt de specificiteit op nul, zodat eigen positionering (zoals de absolute sluitknop) wint */
+:where(.spot, .btn, .tool-chip, .subpage__back, .pw-filter, .dv-link, .video-block__cta,
     .nav__links > li > a, .nav__drop-btn, .pw-lightbox__close) {
   position: relative;
   isolation: isolate;
@@ -567,8 +568,8 @@ body.cursor--hover .cursor-ring {
     .nav__links > li > a, .nav__drop-btn, .pw-lightbox__close)::before {
   inset: 0;
   z-index: -1;
-  -webkit-mask: radial-gradient(var(--spot-r, 70px) circle at var(--mx, 50%) var(--my, 50%), rgba(0, 0, 0, 0.3), transparent 72%);
-  mask: radial-gradient(var(--spot-r, 70px) circle at var(--mx, 50%) var(--my, 50%), rgba(0, 0, 0, 0.3), transparent 72%);
+  -webkit-mask: radial-gradient(var(--spot-r, 70px) circle at var(--mx, 50%) var(--my, 50%), rgba(0, 0, 0, 0.45), transparent 72%);
+  mask: radial-gradient(var(--spot-r, 70px) circle at var(--mx, 50%) var(--my, 50%), rgba(0, 0, 0, 0.45), transparent 72%);
 }
 
 /* regenboogrand: alleen het stuk rand dicht bij de muis */
@@ -576,7 +577,7 @@ body.cursor--hover .cursor-ring {
     .nav__links > li > a, .nav__drop-btn, .pw-lightbox__close)::after {
   inset: -1px;
   z-index: 2;
-  padding: 1.5px;
+  padding: 2px;
   -webkit-mask:
     radial-gradient(var(--spot-r, 70px) circle at var(--mx, 50%) var(--my, 50%), #000 30%, transparent 78%),
     linear-gradient(#000 0 0) content-box,
@@ -596,8 +597,8 @@ body.cursor--hover .cursor-ring {
 /* op het lichte vlak van de primaire knop mag de glans iets sterker */
 .btn--primary::before,
 .nav__links > li:last-child > a::before {
-  -webkit-mask-image: radial-gradient(var(--spot-r, 70px) circle at var(--mx, 50%) var(--my, 50%), rgba(0, 0, 0, 0.42), transparent 72%);
-  mask-image: radial-gradient(var(--spot-r, 70px) circle at var(--mx, 50%) var(--my, 50%), rgba(0, 0, 0, 0.42), transparent 72%);
+  -webkit-mask-image: radial-gradient(var(--spot-r, 70px) circle at var(--mx, 50%) var(--my, 50%), rgba(0, 0, 0, 0.55), transparent 72%);
+  mask-image: radial-gradient(var(--spot-r, 70px) circle at var(--mx, 50%) var(--my, 50%), rgba(0, 0, 0, 0.55), transparent 72%);
 }
 
 /* ─────────────────────────────────────────
@@ -868,7 +869,7 @@ body.cursor--hover .cursor-ring {
 }
 
 .tool-chip {
-  --spot-r: 52px;
+  --spot-r: 60px;
   padding: 0.48rem 0.9rem;
   border: 1px solid var(--line-strong);
   border-radius: 999px;
@@ -2151,7 +2152,7 @@ body.cursor--hover .cursor-ring {
 }
 
 .dv-link:hover { transform: translateY(-2px); background: #fff; }
-.dv-link::before { -webkit-mask-image: radial-gradient(64px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 0, 0, 0.42), transparent 72%); mask-image: radial-gradient(64px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 0, 0, 0.42), transparent 72%); }
+.dv-link::before { -webkit-mask-image: radial-gradient(64px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 0, 0, 0.55), transparent 72%); mask-image: radial-gradient(64px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 0, 0, 0.55), transparent 72%); }
 
 .dv-link--ghost {
   background: rgba(10, 10, 10, 0.4);

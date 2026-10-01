@@ -87,16 +87,17 @@ KRIJT staat niet in de Play Store. Je installeert de APK zelf vanaf GitHub, en v
 
 Alle app-schermen zijn echte screenshots van de webversie van 0.3.0 (390 × 844 op 3x), gevuld met de voorbeelddata die in de app zit. De naam Roelof is in de setup ingevuld; de training is een testsessie op de geplande Push A, niet opgeslagen.
 
-- `thumb.jpg`: Uitsnede van de productpagina: de kop, de downloadknop en de training als technische tekening, met maatlijnen van 390 bij 844.
+- `thumb.jpg`: De opening van de productpagina: de kop in Bricolage 800 met één oranje punt, de downloadknop en de training in een vlak grafiet toestel.
 - `icon.png`: Het app-icoon, 512 px. Het turfteken in krijtwit op grafiet, met dezelfde lijndikte als de stam van de letter.
-- `site-full.jpg`: De hele productpagina op 1440 px breed. Eén pagina, opgebouwd als een logboek: per sectie een label, een kop en een liniaal van 1px eronder.
-- `site-01-hero.jpg`: De opening. Eén zin over wat KRIJT is, een oranje downloadknop en een oranje punt als enige signalen, en de telefoon uitgemeten als op een tekening.
-- `site-02-training.jpg`: Het trainingsscherm als technische tekening, met genummerde verwijzers naar de kolom VORIGE, de oranje streep, het numpad en de knop Klaar.
-- `site-03-functies.jpg`: De functies als kasboek: drie kaarten voor loggen, plannen en voortgang, met rechts per regel een voorbeeld in de notatie van de app.
-- `site-04-schermen.jpg`: Acht echte schermen op millimeterpapier, van de eerste begroeting tot het donkere thema.
-- `site-05-installeren.jpg`: Eerlijk over sideloaden: drie stappen, hoe updates binnenkomen en waarom Android kan waarschuwen.
-- `site-06-privacy.jpg`: Lokaal, offline, export en wissen, elk in één zin.
-- `site-07-over.jpg`: Wie het maakt, met het icoon en de downloadknop als afsluiter.
+- `site-full.jpg`: De hele productpagina op 1440 px breed. Eén idee per sectie, echte schermen op ware grootte en verder vooral krijtwit.
+- `site-01-hero.jpg`: De opening: één zin over wat KRIJT is en de training als enige beeld. Oranje zit alleen in de downloadknop en de punt achter de kop.
+- `site-02-vandaag.jpg`: Openen en trainen. Het scherm Vandaag naast twee korte alinea's, zonder labels of opsommingen.
+- `site-03-plan.jpg`: De weekplanning, gespiegeld ten opzichte van de rij erboven, zodat tekst en scherm elkaar rustig afwisselen.
+- `site-04-voortgang.jpg`: Voortgang per oefening. De lijn van de geschatte max spreekt voor zich, de tekst zegt alleen wat je ziet.
+- `site-05-functies.jpg`: De overige functies in twaalf korte regels, in drie kolommen met haarlijnen. Eén tekstmaat: de naam in grafiet, de uitleg in grijs.
+- `site-06-installeren.jpg`: Eerlijk over sideloaden: links wat het is en wat het vraagt, rechts vier stappen van downloaden tot bijwerken.
+- `site-07-privacy.jpg`: Privacy in één blok: alles staat op je telefoon, en de app gaat alleen online om naar een nieuwe versie te vragen.
+- `site-08-over.jpg`: Wie het maakt, met het app-icoon als afsluiter. De footer houdt het bij een versienummer.
 - `app-01-training.jpg`: Het belangrijkste scherm. Links in grijs wat je vorige keer deed, de oranje streep wijst je volgende set aan, en een nieuw zwaarste gewicht krijgt het turfteken terwijl de rust aftelt.
 - `app-02-vandaag.jpg`: Vandaag laat zien wat er gepland staat, de week als zeven hokjes en de knop Start training in de duimzone. De gestippelde balk zegt eerlijk dat je naar voorbeelddata kijkt.
 - `app-03-voortgang.jpg`: Bankdrukken over twaalf weken: de geschatte max als lijn, de zwaarste sets als stippen en een duidelijke dip in de deloadweek. Assen en cijfers in Martian Mono, het grid op millimeterpapier.

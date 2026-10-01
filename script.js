@@ -30,35 +30,44 @@ function initCursor() {
 
   let mouseX = -100, mouseY = -100;
   let ringX  = -100, ringY  = -100;
+  let running = false;
 
-  document.addEventListener('pointermove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    dot.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
-  }, { passive: true });
-
-  const LERP = 0.12;
+  // de ring loopt snel bij (geen zweverig nasleepeffect) en de loop stopt zodra hij stilstaat
+  const LERP = 0.38;
 
   function animateRing() {
     ringX += (mouseX - ringX) * LERP;
     ringY += (mouseY - ringY) * LERP;
-    ring.style.transform = `translate(calc(${ringX}px - 50%), calc(${ringY}px - 50%))`;
-    requestAnimationFrame(animateRing);
+    ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+    if (Math.abs(mouseX - ringX) > 0.2 || Math.abs(mouseY - ringY) > 0.2) {
+      requestAnimationFrame(animateRing);
+    } else {
+      running = false;
+    }
   }
-  animateRing();
+
+  document.addEventListener('pointermove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+    if (!running) {
+      running = true;
+      requestAnimationFrame(animateRing);
+    }
+  }, { passive: true });
 
   const interactiveSelector = 'a, button, [role="button"], input, textarea, label, .project-card';
+  let hovering = false;
 
-  document.addEventListener('mouseover', (e) => {
-    if (e.target.closest(interactiveSelector)) {
-      document.body.classList.add('cursor--hover');
+  // hover-status op de cursor zelf zetten: een class op body laat de hele pagina opnieuw stylen
+  document.addEventListener('pointerover', (e) => {
+    const on = !!e.target.closest(interactiveSelector);
+    if (on !== hovering) {
+      hovering = on;
+      dot.classList.toggle('is-hover', on);
+      ring.classList.toggle('is-hover', on);
     }
-  });
-  document.addEventListener('mouseout', (e) => {
-    if (e.target.closest(interactiveSelector)) {
-      document.body.classList.remove('cursor--hover');
-    }
-  });
+  }, { passive: true });
 
   document.addEventListener('mouseleave', () => {
     dot.style.opacity  = '0';
@@ -285,7 +294,7 @@ function initNavDropdown() {
    Houd deze selector gelijk aan de lijsten in style.css (sectie 8 en 9).
 ───────────────────────────────────────── */
 const LIGHT_SELECTOR = [
-  '.glow', '.project-card', '.bi-card', '.dv-think__card', '.dv-stack__row', '.pw-stat', '.dv-fact',
+  '.glow', '.project-card', '.bi-card',
   '.spot', '.btn', '.tool-chip', '.subpage__back', '.pw-filter', '.dv-link', '.video-block__cta',
   '.nav__links > li > a', '.nav__drop-btn', '.pw-lightbox__close',
 ].join(', ');
@@ -312,6 +321,18 @@ function initLight() {
       }
     });
   }, { passive: true });
+}
+
+/* ─────────────────────────────────────────
+   Golven en zonnen staan stil zodra ze buiten beeld zijn
+───────────────────────────────────────── */
+function initPauseOffscreen() {
+  const els = document.querySelectorAll('.waves, .page-showcase__art');
+  if (!els.length || !('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => entry.target.classList.toggle('is-paused', !entry.isIntersecting));
+  }, { rootMargin: '100px 0px' });
+  els.forEach((el) => io.observe(el));
 }
 
 /* ─────────────────────────────────────────
@@ -384,6 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initVideoFallbackLinks();
   initNavDropdown();
   initLight();
+  initPauseOffscreen();
   initCopyEmail();
   initLocalTime();
   initShotFrames();

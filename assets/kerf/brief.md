@@ -77,15 +77,17 @@ Het merk volgt dezelfde gedachte als de app: één snede die de notch volgt. De 
 
 Alle app-beelden zijn gerenderd uit de echte SwiftUI-views van Kerf, met voorbeeldinhoud: het nummer "Avondrood" van "Naad" en de hoes zijn verzonnen, de shelf bevat Kerfs eigen logobladen, en batterij (86%) en volume (62%) zijn vaste voorbeeldwaarden.
 
-- `thumb.jpg`: de kop van de productsite, met de lime snede die bovenin de notch volgt en de vijf balkjes als enige decoratie. Eén zin en één knop: meer heeft de eerste indruk niet nodig.
+- `thumb.jpg`: de kop van de productsite, met de lime snede die bovenin de notch volgt en de vijf balkjes als enige decoratie. Eén zin, één knop: meer heeft de eerste indruk niet nodig.
 - `icon.png`: het app-icoon op het macOS-raster. Notch, snede en geluid in één tegel, vlak gehouden zodat macOS er zelf glas en schaduw overheen kan leggen.
-- `site-full.jpg`: de hele productsite op 1440 px breed, van kop tot voet. Eén lange, rustige pagina in de kleur Nacht, met de snede als terugkerende lijn.
-- `site-01-hero.jpg`: kop en hero. De kopbalk is de notch: een zwarte rand met een uitsparing, en de lime lijn eronder is de snede uit het logo. Daaronder hangt de echte open notch in een donker scherm.
-- `site-02-functies.jpg`: negen functies, elk in één zin, met een gekleurd balkje uit het logo als markering. Daaronder drie getallen die laten zien hoe licht de app is.
-- `site-03-schermen.jpg`: de toestanden van de notch naast elkaar, van slepen tot laden. Elk beeld hangt aan de bovenrand, zoals de notch op je scherm, zodat je ziet hoe weinig ruimte Kerf echt inneemt.
-- `site-04-installeren.jpg`: de installatie in vier stappen, eerlijk over de ad-hoc handtekening en de Toegankelijkheid-vraag. Liever vooraf uitleggen dan dat iemand vastloopt op een melding van macOS.
-- `site-05-download.jpg`: het downloadblok met versie, datum en wat er nieuw is. Het icoon staat hier in de versie met de dunne lichte rand, zodat de zwarte notch niet wegvalt op zwart.
-- `site-06-over.jpg`: over de maker en de naam. Kerf betekent snede, en dat verhaal staat naast het symbool zelf.
+- `site-full.jpg`: de hele productsite op 1440 px breed, van kop tot voet. Eén idee per sectie, veel ruimte en de echte app op groot formaat.
+- `site-01-hero.jpg`: de kopbalk is de notch: een zwarte rand met een uitsparing, met de lime snede uit het logo eronder. Daaronder hangt de echte open notch groot in een rustig, donker scherm.
+- `site-02-muziek.jpg`: de eerste functie in één beeld: de dichte notch met hoesje, balkjes en een nieuw nummer eronder. Kop links en uitleg rechts houden elke rij in hetzelfde ritme.
+- `site-03-shelf.jpg`: slepen naar de notch, met de twee dropvakken groot genoeg om de tekst te lezen. Bewaren of meteen versturen is de enige keuze die je hoeft te maken.
+- `site-04-hud.jpg`: de volume-HUD als derde rij: een smal balkje onder de notch in plaats van de pop-up van macOS. De lege ruimte eromheen laat zien hoe weinig Kerf inneemt.
+- `site-05-functies.jpg`: de rest in één compacte lijst van zes regels, elk met een naam en één zin. Geen kaartjes of iconen, alleen dunne lijnen.
+- `site-06-installeren.jpg`: installeren in vier stappen, eerlijk over de ad-hoc handtekening en de vraag om Toegankelijkheid. Liever vooraf uitleggen dan dat iemand vastloopt op een melding van macOS.
+- `site-07-download.jpg`: het downloadblok met versie, wat er nieuw is en de knop. Het icoon staat hier in de versie met de dunne lichte rand, zodat de zwarte notch niet wegvalt op zwart.
+- `site-08-over.jpg`: over de maker en de naam, in twee kolommen met dezelfde lijn als de rest van de pagina. Kerf betekent snede, en dat verhaal sluit de pagina af.
 - `app-01-open.png`: de open notch, met speler en volume links en shelf en AirDrop rechts. Alles wat je dagelijks aanraakt staat in één rij van 620 punten breed, en de voortgangsbalk neemt de kleur van de hoes over.
 - `app-02-music.png`: de dichte notch terwijl er muziek speelt: hoesje links, vier balkjes rechts. De vorm wordt maar 42 punten per kant breder, net genoeg om te laten zien dat er iets speelt.
 - `app-03-nieuw-nummer.png`: een nieuw nummer verschijnt kort onder de notch, met titel en artiest die apart afkappen. Na een paar seconden schuift de vorm weer terug.

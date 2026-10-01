@@ -63,7 +63,7 @@ Naast het ontwerp is er een werkende testversie voor Android: scannen, zoeken in
 - Anton en JetBrains Mono via @expo-google-fonts; de 31 iconen als eigen PNG-set.
 - Testversie als APK via GitHub Actions; tests met Jest (185 tests in 13 suites volgens PR #4).
 - Gebouwd in vier rondes met Claude Code, naar mijn concept, huisstijl en schermroute; ik testte de APK op mijn telefoon en stuurde per ronde bij.
-- Productsite: statische HTML, CSS en een klein script, zonder framework, met de letters lokaal.
+- Productsite: statische HTML, CSS en een klein script, zonder framework, met de letters lokaal. Eén hero, de naam, drie uitgelichte schermen, een korte lijst, met bron, privacy en over.
 
 ## Feiten
 
@@ -81,14 +81,16 @@ Naast het ontwerp is er een werkende testversie voor Android: scannen, zoeken in
 
 ## Screens
 
-- `site-full.jpg`: de hele productsite op 1440 px breed, van slogan tot colofon, in de huisstijl van de app zelf.
-- `site-01-hero.jpg`: de slogan Je ziet wat je eet. in Anton, met Thuis in licht en donker ernaast. Een kleine etikettabel vat de belofte samen: op je telefoon, geen account, licht en donker.
-- `site-02-naam.jpg`: de naam uitgelegd, PER100 als per honderd. Het app-logo op Kool Zwart, met de teal strepen in de nullen.
-- `site-03-functies.jpg`: de functies als etikettabel. Tien regels met de eigen lijn-iconen, de naam in Anton en één zin per functie.
-- `site-04-schermen.jpg`: zes echte schermen in een rustig raster, elk met een label en één zin.
-- `site-05-met-bron.jpg`: de vijf bronwoorden in blauw op het donkere vlak met de schuine strepen, en daaronder de open databronnen met hun licentie.
-- `site-06-zonder-oordeel.jpg`: drie ontwerpregels als omlijnde kaarten, met de lijndikte van de tegels in de app.
-- `site-07-privacy-en-over.jpg`: privacy zonder kleine lettertjes, eerlijk over ML Kit, en wie de app maakte.
+- `site-full.jpg`: de hele productsite op 1440 px breed. Rustig opgebouwd: één hero, de naam, drie uitgelichte schermen, een korte lijst, de bron, privacy en wie het maakte.
+- `site-01-hero.jpg`: de slogan Je ziet wat je eet. groot in Anton, met één echt scherm ernaast: Thuis met 1.090 kcal en de bronregel eronder.
+- `site-02-naam.jpg`: de naam uitgelegd op Kool Zwart. PER100, uitgesproken als per honderd, de eenheid van elk etiket, naast het app-logo met de teal strepen in de nullen.
+- `site-03-de-bron-staat-eronder.jpg`: het productscherm groot naast één alinea. De belofte van de app in één beeld: onder elk getal het bronwoord in blauw.
+- `site-04-typ-wat-je-at.jpg`: een gewone zin wordt een maaltijd. Het scherm staat hier rechts, zodat de pagina afwisselt zonder drukker te worden.
+- `site-05-je-dag-als-etiket.jpg`: het Dagetiket, de dag als voedingswaardetabel. Het idee achter de naam in één scherm.
+- `site-06-en-verder.jpg`: de overige functies als korte lijst in twee kolommen, elk met een eigen lijn-icoon uit de app.
+- `site-07-met-bron.jpg`: het donkere vlak met de schuine strepen, zoals het getalvlak in de app. De vijf bronwoorden in Bron Blauw en de databronnen in gewone taal.
+- `site-08-privacy.jpg`: alles blijft op de telefoon, in drie punten, en eerlijk over wat ML Kit van Google doet.
+- `site-09-over.jpg`: wie het maakte, met het donkere app-icoon, en de colofon met de regel dat dit geen officiële app van Upfront is.
 - `app-01-thuis.png`: Thuis. Eén groot getal is het beeld: 1.090 kcal op het donkere getalvlak, eiwit en koolhydraten kleiner ernaast, en de bronregel in Bron Blauw eronder. Zoek en Scan als twee grote tegels.
 - `app-02-product.png`: een product als etikettabel. Per 100 gram en per 250 gram naast elkaar, rechts uitgelijnde tabelcijfers, en onder elke regel de bron.
 - `app-03-bron-van-een-getal.png`: de bron van één getal, op één tik. Het getal groot, het bronwoord in blauw en in gewone taal waar het vandaan komt, tot de naam in de tabel aan toe.

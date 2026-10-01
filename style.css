@@ -2310,6 +2310,11 @@ h1, h2, h3 { font-weight: 700; }
   gap: 0.9rem;
 }
 
+/* one promo: wide on its own, or a portrait video with the text beside it */
+.dv-videos--single { grid-template-columns: 1fr; }
+.dv-videos--side { grid-template-columns: minmax(0, 360px) minmax(0, 1fr); align-items: end; }
+.dv-videos--side .dv-video__info { max-width: 34ch; padding-bottom: 0.4rem; }
+
 .dv-video__frame {
   overflow: hidden;
   border: 1px solid var(--line);
@@ -2507,7 +2512,8 @@ h1, h2, h3 { font-weight: 700; }
 
 @media (max-width: 860px) {
   .dv-hero,
-  .dv-videos { grid-template-columns: 1fr; }
+  .dv-videos,
+  .dv-videos--side { grid-template-columns: 1fr; }
   .dv-video--vertical { max-width: 380px; }
   .dv-shots--three { grid-template-columns: repeat(2, 1fr); }
   .dv-wall { columns: 2; }

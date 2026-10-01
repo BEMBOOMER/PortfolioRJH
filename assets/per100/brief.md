@@ -82,7 +82,7 @@ Naast het ontwerp is er een werkende testversie voor Android: scannen, zoeken in
 ## Screens
 
 - `site-full.jpg`: de hele productsite op 1440 px breed. Rustig opgebouwd: één hero, de naam, drie uitgelichte schermen, een korte lijst, de bron, privacy en wie het maakte.
-- `site-01-hero.jpg`: de slogan Je ziet wat je eet. groot in Anton, met één echt scherm ernaast: Thuis met 1.090 kcal en de bronregel eronder.
+- `site-01-hero.jpg`: de slogan Zie wat je eet. groot in Anton, met één echt scherm ernaast: Thuis met 1.090 kcal en de bronregel eronder.
 - `site-02-naam.jpg`: de naam uitgelegd op Kool Zwart. PER100, uitgesproken als per honderd, de eenheid van elk etiket, naast het app-logo met de teal strepen in de nullen.
 - `site-03-de-bron-staat-eronder.jpg`: het productscherm groot naast één alinea. De belofte van de app in één beeld: onder elk getal het bronwoord in blauw.
 - `site-04-typ-wat-je-at.jpg`: een gewone zin wordt een maaltijd. Het scherm staat hier rechts, zodat de pagina afwisselt zonder drukker te worden.

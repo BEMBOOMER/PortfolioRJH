@@ -39,7 +39,7 @@ Naast het ontwerp is er een werkende testversie voor Android: scannen, zoeken in
 
 ## Merk
 
-- **Naam**: PER100, uitgesproken als "per honderd": de eenheid van elk etiket, waar de voedingswaarde per 100 gram of 100 milliliter staat. Slogan: Je ziet wat je eet.
+- **Naam**: PER100, uitgesproken als "per honderd": de eenheid van elk etiket, waar de voedingswaarde per 100 gram of 100 milliliter staat. Slogan: Zie wat je eet.
 - **Logo en icoon**: mijn eigen ontwerp in twee vormen. Het woordmerk zet PER100 in een vlak, met "by Upfront" eronder. Het app-logo stapelt PER boven 100 op een tegel. In beide zitten schuine teal strepen in de nullen. Het app-icoon is afgeleid van het app-logo, in een lichte en een donkere variant.
 - **Palet**: vier kleuren, niet meer.
   - Zilver Wit `#E8EFF5`: kalm, het papier van het etiket. Achtergrond in licht.

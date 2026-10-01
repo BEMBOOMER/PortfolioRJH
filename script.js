@@ -1,19 +1,19 @@
 /* ═══════════════════════════════════════════════════════════
    ROELOF JUNIOR HAAR — PORTFOLIO
-   script.js — NEO-BRUTALISM REBRAND
+   script.js · huisstijl "Golven" (2026-10)
 
    TABLE OF CONTENTS
    1.  Custom Cursor
    2.  Navigation (hide on scroll down, show on scroll up)
-   3.  Hero Entrance Animation
-   4.  Scroll Reveal (IntersectionObserver)
-   5.  Contact Form (async Formspree submission)
-   6.  Stagger Animations
-   7.  Video Fallback Links
-   8.  Werk-dropdown
-   9.  3D-tilt + hero-camera
-   10. Kopieer e-mail + lokale tijd
-   11. Init
+   3.  Scroll Reveal (IntersectionObserver)
+   4.  Contact Form (async Formspree submission)
+   5.  Video Fallback Links
+   6.  Werk-dropdown
+   7.  Glow-kaarten (licht volgt de muis)
+   8.  Kopieer e-mail + lokale tijd
+   9.  Init
+
+   De hero-intrede zit volledig in CSS (geen JS nodig).
    ═══════════════════════════════════════════════════════════ */
 
 'use strict';
@@ -107,51 +107,6 @@ function initNav() {
 }
 
 /* ─────────────────────────────────────────
-   3. Hero Entrance Animation
-───────────────────────────────────────── */
-function initHeroAnimation() {
-  const words  = document.querySelectorAll('.hero__word');
-  const role   = document.querySelector('.hero__role');
-  const scroll = document.querySelector('.hero__scroll');
-  const labels = document.querySelectorAll('.hero__label');
-
-  const BASE_DELAY = 120;
-
-  words.forEach((word, i) => {
-    setTimeout(() => {
-      word.classList.add('is-visible');
-    }, BASE_DELAY + i * 120);
-    // na de intrede mag de regel weer overlopen (de lime stip achter de punt)
-    setTimeout(() => {
-      word.closest('.hero__line')?.classList.add('is-open');
-    }, BASE_DELAY + i * 120 + 700);
-  });
-
-  // Animate labels with stagger
-  labels.forEach((label, i) => {
-    label.style.opacity = '0';
-    label.style.transform = 'scale(0.8)';
-    label.style.transition = 'opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-    setTimeout(() => {
-      label.style.opacity = '1';
-      label.style.transform = 'scale(1)';
-    }, 400 + i * 100);
-  });
-
-  if (role) {
-    setTimeout(() => {
-      role.classList.add('is-visible');
-    }, BASE_DELAY + words.length * 120 + 200);
-  }
-
-  if (scroll) {
-    setTimeout(() => {
-      scroll.classList.add('is-visible');
-    }, BASE_DELAY + words.length * 120 + 620);
-  }
-}
-
-/* ─────────────────────────────────────────
    4. Scroll Reveal (IntersectionObserver)
 ───────────────────────────────────────── */
 function initScrollReveal() {
@@ -192,6 +147,8 @@ function initContactForm() {
 
   if (!form || !btn || !status) return;
 
+  const idleLabel = btn.innerHTML;
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -214,7 +171,7 @@ function initContactForm() {
     }
 
     btn.disabled    = true;
-    btn.textContent = 'VERSTUREN...';
+    btn.textContent = 'Versturen...';
     setStatus('', 'clear');
 
     try {
@@ -225,12 +182,12 @@ function initContactForm() {
       });
 
       if (response.ok) {
-        btn.textContent = 'VERSTUURD ✓';
+        btn.textContent = 'Verstuurd ✓';
         setStatus("Bedankt! Ik neem snel contact op.", 'success');
         form.reset();
 
         setTimeout(() => {
-          btn.textContent = 'STUUR BERICHT →';
+          btn.innerHTML = idleLabel;
           btn.disabled    = false;
           setStatus('', 'clear');
         }, 6000);
@@ -240,14 +197,14 @@ function initContactForm() {
         const msg  = (data?.errors || []).map(err => err.message).join(', ')
           || 'Er ging iets mis. Probeer het opnieuw.';
         setStatus(msg, 'error');
-        btn.textContent = 'STUUR BERICHT →';
+        btn.innerHTML = idleLabel;
         btn.disabled    = false;
       }
 
     } catch (err) {
       console.error('Form error:', err);
       setStatus('Netwerkfout. Controleer je verbinding.', 'error');
-      btn.textContent = 'STUUR BERICHT →';
+      btn.innerHTML = idleLabel;
       btn.disabled    = false;
     }
   });
@@ -260,37 +217,9 @@ function initContactForm() {
 
   function setStatus(msg, type) {
     status.textContent = msg;
-    if (type === 'error')   status.style.color = '#FF4F81';
-    if (type === 'success') status.style.color = '#06D6A0';
-    if (type === 'clear')   status.style.color = '';
+    status.classList.toggle('form-status--error', type === 'error');
+    status.classList.toggle('form-status--success', type === 'success');
   }
-}
-
-/* ─────────────────────────────────────────
-   7. Stagger Card Animations
-───────────────────────────────────────── */
-function initStaggerAnimations() {
-  const cards = document.querySelectorAll('.project-card');
-  if (!cards.length) return;
-
-  cards.forEach((card, i) => {
-    // Random slight rotation for brutalist feel
-    const rotation = (Math.random() - 0.5) * 2;
-    card.style.transform = `rotate(${rotation}deg)`;
-
-    card.addEventListener('mouseenter', () => {
-      card.style.transform = 'rotate(0deg) translate(-4px, -4px)';
-    });
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = `rotate(${rotation}deg)`;
-    });
-  });
-
-  // Stagger section labels
-  const sectionLabels = document.querySelectorAll('.section-label');
-  sectionLabels.forEach((label, i) => {
-    label.style.animationDelay = `${i * 0.5}s`;
-  });
 }
 
 /* ─────────────────────────────────────────
@@ -351,67 +280,18 @@ function initNavDropdown() {
 }
 
 /* ─────────────────────────────────────────
-   13. 3D-tilt op projectkaarten
+   Glow-kaarten: zet --mx/--my zodat het licht de muis volgt
 ───────────────────────────────────────── */
-function initCardTilt() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+function initGlow() {
   if (window.matchMedia('(pointer: coarse)').matches) return;
 
-  document.querySelectorAll('.project-card__link').forEach((link) => {
-    link.classList.add('tilt-3d');
-    let raf = null;
-
-    link.addEventListener('mousemove', (e) => {
-      const r = link.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width - 0.5;
-      const py = (e.clientY - r.top) / r.height - 0.5;
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        link.style.transform = `rotateY(${px * 10}deg) rotateX(${py * -10}deg)`;
-        raf = null;
-      });
-    });
-    link.addEventListener('mouseleave', () => {
-      if (raf) { cancelAnimationFrame(raf); raf = null; }
-      link.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
-      link.style.transform = 'rotateY(0deg) rotateX(0deg)';
-      setTimeout(() => { link.style.transition = ''; }, 400);
-    });
+  document.querySelectorAll('.glow').forEach((card) => {
+    card.addEventListener('pointermove', (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      card.style.setProperty('--my', `${e.clientY - r.top}px`);
+    }, { passive: true });
   });
-}
-
-/* ─────────────────────────────────────────
-   14. 3D hero-camera parallax (volgt de muis)
-───────────────────────────────────────── */
-function initHero3D() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if (window.matchMedia('(pointer: coarse)').matches) return;
-
-  const scene = document.querySelector('.hero__camera-float');
-  const hero = document.querySelector('.hero');
-  if (!scene || !hero) return;
-
-  // de CSS-drift-animatie overschrijft inline transforms — uitzetten,
-  // de zweef-beweging zit nu in de JS-loop zelf
-  scene.style.animation = 'none';
-
-  let tx = 0, ty = 0, cx = 0, cy = 0;
-
-  hero.addEventListener('pointermove', (e) => {
-    const r = hero.getBoundingClientRect();
-    tx = ((e.clientX - r.left) / r.width - 0.5) * 18;
-    ty = ((e.clientY - r.top) / r.height - 0.5) * -18;
-  }, { passive: true });
-  hero.addEventListener('pointerleave', () => { tx = 0; ty = 0; });
-
-  (function loop(t) {
-    cx += (tx - cx) * 0.09;
-    cy += (ty - cy) * 0.09;
-    const bobY = Math.sin((t || 0) / 1400) * 2.2;
-    const bobX = Math.cos((t || 0) / 1900) * 1.4;
-    scene.style.transform = `translateY(${bobY * 3}px) rotateY(${cx + bobX}deg) rotateX(${cy + bobY}deg)`;
-    requestAnimationFrame(loop);
-  })(0);
 }
 
 /* ─────────────────────────────────────────
@@ -479,14 +359,11 @@ function initShotFrames() {
 document.addEventListener('DOMContentLoaded', () => {
   initCursor();
   initNav();
-  initHeroAnimation();
   initScrollReveal();
   initContactForm();
-  initStaggerAnimations();
   initVideoFallbackLinks();
   initNavDropdown();
-  initCardTilt();
-  initHero3D();
+  initGlow();
   initCopyEmail();
   initLocalTime();
   initShotFrames();

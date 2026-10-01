@@ -4,12 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Roelof Junior Haar | Designer &amp; creative coder</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%23A855F7%27 stroke=%27%231A1A1A%27 stroke-width=%276%27/%3E%3Ctext x=%2732%27 y=%2745%27 font-family=%27Archivo Black,Arial Black,sans-serif%27 font-size=%2738%27 font-weight=%27900%27 text-anchor=%27middle%27 fill=%27%231A1A1A%27%3ER%3C/text%3E%3C/svg%3E" />
   <meta name="description" content="Portfolio van Roelof Junior Haar. Ik ontwerp en bouw sites, apps en AI-systemen, en maak video en motion die blijft hangen." />
+  <meta name="theme-color" content="#0A0A0A" />
+  <link rel="icon" type="image/png" href="assets/brand/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20260903b" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&text=R&display=block" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=20261001a" />
+  <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
@@ -17,16 +21,19 @@
   <div class="cursor-ring" id="cursorRing"></div>
 
   <nav class="nav" id="nav">
-    <a href="index.html" class="nav__logo">RJH</a>
+    <a href="index.html" class="nav__logo" aria-label="Roelof Junior Haar, naar home">
+      <span class="logo-mark" aria-hidden="true">R</span>
+      <span class="nav__name">Roelof Junior Haar</span>
+    </a>
     <ul class="nav__links">
       <li><a href="#over">Over</a></li>
       <li class="nav__item nav__item--dropdown">
         <button class="nav__drop-btn" type="button" aria-expanded="false" aria-haspopup="true">Werk <span class="nav__caret">&#9662;</span></button>
         <ul class="nav__dropdown">
-        <li><a href="brand-identity/index.html" data-accent="purple">Brand Identity</a></li>
-        <li><a href="visual-motion/index.html" data-accent="lime">Visual Motion</a></li>
-        <li><a href="video-editing/index.html" data-accent="orange">Video/Editing</a></li>
-        <li><a href="social-marketing/index.html" data-accent="coral">Social Marketing</a></li>
+          <li><a href="brand-identity/index.html" data-accent="pink">Brand Identity</a></li>
+          <li><a href="visual-motion/index.html" data-accent="blue">Visual Motion</a></li>
+          <li><a href="video-editing/index.html" data-accent="orange">Video/Editing</a></li>
+          <li><a href="social-marketing/index.html" data-accent="yellow">Social Marketing</a></li>
         </ul>
       </li>
       <li><a href="#contact">Contact</a></li>
@@ -34,71 +41,50 @@
   </nav>
 
   <section class="hero" id="hero">
-    <div class="hero__label hero__label--tl">
+    <div class="waves" aria-hidden="true"><div class="waves__field"></div></div>
+
+    <div class="hero__label hero__label--tl hero__fade" style="--i: 4">
       <span>Portfolio</span>
       <span>2026</span>
     </div>
-    <div class="hero__label hero__label--tr">
+    <div class="hero__label hero__label--tr hero__fade" style="--i: 5">
       <span>Vol. 01</span>
       <span>Geselecteerd werk</span>
     </div>
-    <div class="hero__label hero__label--bl">
+
+    <div class="hero__content">
+      <p class="hero__badge hero__fade" style="--i: 0">
+        <span class="hero__badge-dot" aria-hidden="true"></span>
+        Beschikbaar voor freelance
+      </p>
+      <h1 class="hero__name">
+        <span class="hero__line"><span class="hero__word" style="--i: 0">Roelof Junior</span></span>
+        <span class="hero__line"><span class="hero__word" style="--i: 1">Haar<span class="hero__period">.</span></span></span>
+      </h1>
+      <p class="hero__role hero__fade" style="--i: 2">
+        <span>Designer &amp; creative coder</span><span class="hero__role-sep">&middot;</span><span>Sites, apps, video &amp; motion</span>
+      </p>
+      <div class="hero__ctas hero__fade" style="--i: 3">
+        <a href="#werk" class="btn btn--primary">Bekijk werk <span class="btn__arrow" aria-hidden="true">&rarr;</span></a>
+        <a href="https://www.instagram.com/bemooks/?hl=en" target="_blank" rel="noopener noreferrer" class="btn btn--ghost" aria-label="Volg op Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+          </svg>
+          @bemooks
+        </a>
+      </div>
+    </div>
+
+    <div class="hero__label hero__label--bl hero__fade" style="--i: 6">
       <span>Lokale tijd</span>
       <span id="heroTime">Nederland</span>
     </div>
-    <div class="hero__label hero__label--br">
-      <span>Beschikbaar</span>
-      <span>voor freelance</span>
+    <div class="hero__label hero__label--br hero__fade" style="--i: 7">
+      <span>Nederland</span>
+      <span>&amp; remote</span>
     </div>
-
-    <div class="hero__camera-scene" aria-hidden="true">
-      <div class="hero__camera-float">
-        <div class="hero-camera">
-          <div class="hero-camera__body"></div>
-          <div class="hero-camera__body-accent"></div>
-          <div class="hero-camera__top"></div>
-          <div class="hero-camera__handle"></div>
-          <div class="hero-camera__viewfinder"></div>
-          <div class="hero-camera__grip"></div>
-          <div class="hero-camera__button hero-camera__button--one"></div>
-          <div class="hero-camera__button hero-camera__button--two"></div>
-          <div class="hero-camera__lens-barrel">
-            <div class="hero-camera__lens-ring hero-camera__lens-ring--outer"></div>
-            <div class="hero-camera__lens-ring hero-camera__lens-ring--mid"></div>
-            <div class="hero-camera__lens-ring hero-camera__lens-ring--inner"></div>
-            <div class="hero-camera__lens-core"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="hero__name">
-      <div class="hero__line hero__line--1">
-        <span class="hero__word">ROELOF</span>
-      </div>
-      <div class="hero__line hero__line--2">
-        <span class="hero__word">JUNIOR</span>
-      </div>
-      <div class="hero__line hero__line--3">
-        <span class="hero__word">HAAR<span class="hero__period">.</span></span>
-      </div>
-    </div>
-
-    <div class="hero__role">
-      <span>Designer &amp; creative coder</span>
-      <span class="hero__role-sep">&middot;</span>
-      <span>Sites, apps, video &amp; motion</span>
-    </div>
-
-    <a href="https://www.instagram.com/bemooks/?hl=en" target="_blank" rel="noopener noreferrer" class="ig-btn" aria-label="Volg op Instagram">
-      <svg class="ig-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-        <circle cx="12" cy="12" r="4"/>
-        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
-      </svg>
-      <span>@bemooks</span>
-    </a>
-
   </section>
 
   <div class="skills-band" aria-label="Vaardigheden">
@@ -123,7 +109,7 @@
           Wat mij drijft is het verhaal achter het beeld. Een goed ontwerp, een goede video of een goed stuk software hoeft niet fancy te zijn, het moet gewoon kloppen. En als het klopt, blijft het hangen.
         </p>
         <div class="skills">
-          <p class="section-label" style="margin-bottom:1.2rem;">Waar ik mee werk</p>
+          <p class="section-label">Waar ik mee werk</p>
           <div class="tool-chips">
             <span class="tool-chip tool-chip--main">Creative Coding</span>
             <span class="tool-chip tool-chip--main">AI-systemen</span>
@@ -135,15 +121,15 @@
       </div>
 
       <div class="about__photo reveal reveal--delay-1">
-        <div class="about__portrait-card">
+        <div class="about__portrait-card glow">
           <img src="assets/thumbs/roelof-image Large.jpeg" alt="Portret van Roelof Junior Haar" class="about__portrait" />
         </div>
       </div>
 
       <div class="about__game reveal reveal--delay-2">
-        <div class="clients-card">
+        <div class="clients-card glow">
           <div class="clients-card__header">
-            <span class="clients-card__title">KLANTEN &amp; PROJECTEN</span>
+            <span class="clients-card__title">Klanten &amp; projecten</span>
             <span class="clients-card__count">2025 &ndash; 2026</span>
           </div>
           <ul class="clients-card__list">
@@ -158,7 +144,7 @@
           <p class="clients-card__foot">Shortform, events en campagnes voor merken in heel Limburg en daarbuiten.</p>
         </div>
       </div>
-</div>
+    </div>
   </section>
 
   <section class="work" id="werk">
@@ -167,56 +153,56 @@
       <h2 class="work__heading">Mijn werk</h2>
     </div>
 
-    <div class="work__grid work__grid--4">
+    <div class="work__grid">
 
-      <article class="project-card reveal">
+      <article class="project-card glow reveal">
         <a href="brand-identity/index.html" class="project-card__link">
           <div class="project-card__img">
             <img src="assets/thumbs/brand-identity.png" alt="Brand Identity" />
-            <div class="project-card__overlay"><span>Bekijk werk</span></div>
           </div>
           <div class="project-card__info">
             <h3 class="project-card__title">Brand Identity</h3>
             <p class="project-card__tags">Ontwerp / Merkidentiteit / Print</p>
+            <span class="project-card__arrow" aria-hidden="true">&rarr;</span>
           </div>
         </a>
       </article>
 
-      <article class="project-card reveal reveal--delay-1">
+      <article class="project-card glow reveal reveal--delay-1">
         <a href="visual-motion/index.html" class="project-card__link">
           <div class="project-card__img">
             <img src="assets/thumbs/visual-motion.avif" alt="Visual Motion" />
-            <div class="project-card__overlay"><span>Bekijk werk</span></div>
           </div>
           <div class="project-card__info">
             <h3 class="project-card__title">Visual Motion</h3>
             <p class="project-card__tags">After Effects / Motion Graphics</p>
+            <span class="project-card__arrow" aria-hidden="true">&rarr;</span>
           </div>
         </a>
       </article>
 
-      <article class="project-card reveal reveal--delay-2">
+      <article class="project-card glow reveal">
         <a href="video-editing/index.html" class="project-card__link">
           <div class="project-card__img">
             <img src="assets/thumbs/classic-hits.png" alt="Video/Editing" />
-            <div class="project-card__overlay"><span>Bekijk werk</span></div>
           </div>
           <div class="project-card__info">
             <h3 class="project-card__title">Video/Editing</h3>
             <p class="project-card__tags">Video/Editing / Storytelling</p>
+            <span class="project-card__arrow" aria-hidden="true">&rarr;</span>
           </div>
         </a>
       </article>
 
-      <article class="project-card reveal reveal--delay-3">
+      <article class="project-card glow reveal reveal--delay-1">
         <a href="social-marketing/index.html" class="project-card__link">
           <div class="project-card__img">
             <img src="assets/thumbs/zet-m-op Large.jpeg" alt="Social Marketing" />
-            <div class="project-card__overlay"><span>Bekijk werk</span></div>
           </div>
           <div class="project-card__info">
             <h3 class="project-card__title">Social Marketing</h3>
             <p class="project-card__tags">Social Ads / Content / Campagne</p>
+            <span class="project-card__arrow" aria-hidden="true">&rarr;</span>
           </div>
         </a>
       </article>
@@ -225,9 +211,11 @@
   </section>
 
   <section class="contact" id="contact">
+    <div class="waves" aria-hidden="true"><div class="waves__field"></div></div>
+
     <div class="contact__grid">
       <div class="contact__left reveal">
-        <p class="section-label section-label--dark">03 / Contact</p>
+        <p class="section-label">03 / Contact</p>
         <h2 class="contact__heading">Samenwerken?</h2>
         <a href="mailto:bemooks@gmail.com" class="contact__email">bemooks@gmail.com</a>
         <div class="contact__meta">
@@ -236,7 +224,7 @@
         </div>
       </div>
       <div class="contact__right reveal reveal--delay-1">
-        <form class="contact-form" id="contactForm" action="https://formspree.io/f/xaqlozww" method="POST" novalidate>
+        <form class="contact-form glow" id="contactForm" action="https://formspree.io/f/xaqlozww" method="POST" novalidate>
           <div class="form-field">
             <label for="name" class="form-label">Naam</label>
             <input type="text" id="name" name="name" class="form-input" placeholder="Jouw naam" required autocomplete="name" />
@@ -249,7 +237,7 @@
             <label for="message" class="form-label">Bericht</label>
             <textarea id="message" name="message" class="form-input form-textarea" placeholder="Vertel me over jouw project..." required rows="5"></textarea>
           </div>
-          <button type="submit" class="form-btn" id="formBtn">Stuur bericht &rarr;</button>
+          <button type="submit" class="btn btn--primary form-btn" id="formBtn">Stuur bericht <span class="btn__arrow" aria-hidden="true">&rarr;</span></button>
           <p class="form-status" id="formStatus" aria-live="polite"></p>
         </form>
       </div>
@@ -258,12 +246,12 @@
 
   <footer class="footer">
     <div class="footer__inner">
-      <span class="footer__logo">RJH</span>
+      <span class="footer__logo"><span class="logo-mark" aria-hidden="true">R</span></span>
       <span class="footer__copy">&copy; 2026 Roelof Junior Haar. Alle rechten voorbehouden.</span>
       <span class="footer__back"><a href="#hero">Terug naar boven &uarr;</a></span>
     </div>
   </footer>
 
-  <script src="script.js?v=20260903b"></script>
+  <script src="script.js?v=20261001a"></script>
 </body>
 </html>

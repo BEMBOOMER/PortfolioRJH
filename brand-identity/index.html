@@ -3,57 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Brand Identity — Roelof Junior Haar</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%23A855F7%27 stroke=%27%231A1A1A%27 stroke-width=%276%27/%3E%3Ctext x=%2732%27 y=%2745%27 font-family=%27Archivo Black,Arial Black,sans-serif%27 font-size=%2738%27 font-weight=%27900%27 text-anchor=%27middle%27 fill=%27%231A1A1A%27%3ER%3C/text%3E%3C/svg%3E" />
-  <meta name="description" content="Brand Identity werk van Roelof Junior Haar. Ontwerp dat klopt en blijft hangen." />
+  <title>Brand Identity | Roelof Junior Haar</title>
+  <meta name="description" content="Merkidentiteiten van Roelof Junior Haar: van naam en logo tot site, merch en social." />
+  <meta name="theme-color" content="#0A0A0A" />
+  <link rel="icon" type="image/png" href="../assets/brand/favicon.png" />
+  <link rel="apple-touch-icon" href="../assets/brand/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../style-legacy.css?v=20260903b" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Hanken+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&text=R&display=block" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css?v=20261001c" />
+  <script>document.documentElement.classList.add('js');</script>
 </head>
-<body>
-
+<body data-cat="brand">
   <div class="cursor-dot" id="cursorDot"></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
   <nav class="nav" id="nav">
-    <a href="../index.html" class="nav__logo">RJH</a>
+    <a href="../index.html" class="nav__logo" aria-label="Roelof Junior Haar, naar home">
+      <span class="logo-mark" aria-hidden="true">R</span>
+      <span class="nav__name">Roelof Junior Haar</span>
+    </a>
     <ul class="nav__links">
-      <li><a href="../index.html">Home</a></li>
+      <li><a href="../index.html#over">Over</a></li>
       <li class="nav__item nav__item--dropdown">
         <button class="nav__drop-btn" type="button" aria-expanded="false" aria-haspopup="true">Werk <span class="nav__caret">&#9662;</span></button>
         <ul class="nav__dropdown">
-        <li><a href="../brand-identity/index.html" data-accent="purple" class="is-active">Brand Identity</a></li>
-        <li><a href="../visual-motion/index.html" data-accent="lime">Visual Motion</a></li>
-        <li><a href="../video-editing/index.html" data-accent="orange">Video/Editing</a></li>
-        <li><a href="../social-marketing/index.html" data-accent="coral">Social Marketing</a></li>
+          <li><a href="../brand-identity/index.html" data-accent="pink" class="is-active">Brand Identity</a></li>
+          <li><a href="../video-marketing/index.html" data-accent="orange">Video Marketing</a></li>
+          <li><a href="../app-development/index.html" data-accent="blue">App Development</a></li>
         </ul>
       </li>
       <li><a href="../index.html#contact">Contact</a></li>
     </ul>
   </nav>
 
-  <section class="bi-hero reveal">
-    <div class="page-showcase">
+  <div class="subpage">
+    <a href="../index.html#werk" class="subpage__back">&larr; Home</a>
+    <div class="page-showcase reveal">
       <div class="page-showcase__copy">
-        <p class="bi-hero__label">01 / Brand Identity</p>
-        <h1 class="bi-hero__title">BRAND<br>IDENTITY</h1>
-        <p class="bi-hero__desc">
+        <p class="subpage__label">Werk · Brand Identity</p>
+        <h1 class="subpage__title">Brand<br>Identity<span class="subpage__dot">.</span></h1>
+        <p class="subpage__desc">
           Ik geloof dat elk merk een karakter heeft. Mijn taak is om dat karakter zichtbaar te maken, in een logo, een flyer of een heel visueel systeem. Het moet herkenbaar zijn, het moet kloppen, en het moet blijven hangen.
         </p>
       </div>
       <div class="page-showcase__art page-showcase__art--brand" aria-hidden="true">
         <div class="brand-orbit brand-orbit--one"></div>
         <div class="brand-orbit brand-orbit--two"></div>
-        <div class="brand-chip brand-chip--main">BRAND</div>
-        <div class="brand-chip brand-chip--sub">IDENTITY</div>
+        <div class="brand-chip brand-chip--main">Brand</div>
+        <div class="brand-chip brand-chip--sub">Identity</div>
       </div>
     </div>
-  </section>
 
-  <section class="bi-projects">
-    <p class="bi-projects__label reveal">Projecten binnen Brand Identity</p>
-
+    <p class="subpage__label subpage-section-label reveal">Projecten</p>
+    <div class="bi-list">
     <a href="doova/index.html" class="bi-card reveal">
       <div class="bi-card__img">
         <img src="../assets/doova/thumb-doova.jpg" alt="Doova landingspagina" />
@@ -62,31 +66,64 @@
       </div>
       <div class="bi-card__info">
         <span class="bi-card__title">Doova</span>
-        <span class="bi-card__arrow">&#8594;</span>
+        <span class="bi-card__arrow" aria-hidden="true">&rarr;</span>
       </div>
     </a>
-
+    <a href="kerf/index.html" class="bi-card reveal">
+      <div class="bi-card__img">
+        <img src="../assets/kerf/site-01-hero.jpg" alt="Kerf, de hero van de site" />
+        <img src="../assets/kerf/app-01-open.png" alt="De open notch van Kerf" />
+        <img src="../assets/kerf/site-03-schermen.jpg" alt="De schermen op de Kerf-site" />
+      </div>
+      <div class="bi-card__info">
+        <span class="bi-card__title">Kerf</span>
+        <span class="bi-card__arrow" aria-hidden="true">&rarr;</span>
+      </div>
+    </a>
+    <a href="per100/index.html" class="bi-card reveal">
+      <div class="bi-card__img">
+        <img src="../assets/per100/site-01-hero.jpg" alt="PER100, de hero van de site" />
+        <img src="../assets/per100/site-03-functies.jpg" alt="De functies als etikettabel" />
+        <img src="../assets/per100/site-05-met-bron.jpg" alt="Met bron, op de PER100-site" />
+      </div>
+      <div class="bi-card__info">
+        <span class="bi-card__title">PER100</span>
+        <span class="bi-card__arrow" aria-hidden="true">&rarr;</span>
+      </div>
+    </a>
+    <a href="wiesse-oet-zuus/index.html" class="bi-card reveal">
+      <div class="bi-card__img">
+        <img src="../assets/woz/card-1.jpg" alt="WIESSE OET ZUUS stickers" />
+        <img src="../assets/woz/card-2.jpg" alt="WIESSE OET ZUUS personages" />
+        <img src="../assets/woz/card-3.jpg" alt="WIESSE OET ZUUS merch" />
+      </div>
+      <div class="bi-card__info">
+        <span class="bi-card__title">WIESSE OET ZUUS</span>
+        <span class="bi-card__arrow" aria-hidden="true">&rarr;</span>
+      </div>
+    </a>
     <a href="special-for-you/index.html" class="bi-card reveal">
       <div class="bi-card__img">
-        <img src="special-for-you/Flyer-01%20Large.jpeg" alt="Special For You" loading="lazy" />
-        <img src="special-for-you/A3%20Large.jpeg" alt="Special For You poster" loading="lazy" />
-        <img src="special-for-you/Social%20Media-01%20Large.jpeg" alt="Special For You social" loading="lazy" />
+        <img src="special-for-you/Flyer-01%20Large.jpeg" alt="Special For You flyer" />
+        <img src="special-for-you/A3%20Large.jpeg" alt="Special For You poster" />
+        <img src="special-for-you/Social%20Media-01%20Large.jpeg" alt="Special For You social" />
       </div>
       <div class="bi-card__info">
         <span class="bi-card__title">Special For You</span>
-        <span class="bi-card__arrow">&#8594;</span>
+        <span class="bi-card__arrow" aria-hidden="true">&rarr;</span>
       </div>
     </a>
-  </section>
+    </div>
+  </div>
 
   <footer class="footer">
     <div class="footer__inner">
-      <span class="footer__logo">RJH</span>
-      <span class="footer__copy">&copy; 2026 Roelof Junior Haar.</span>
-      <span class="footer__back"><a href="../index.html">Terug naar home &uarr;</a></span>
+      <a href="../index.html" class="footer__logo" aria-label="Naar home"><span class="logo-mark" aria-hidden="true">R</span></a>
+      <span class="footer__copy">&copy; 2026 Roelof Junior Haar</span>
+      <span class="footer__back"><a href="#">Terug naar boven &uarr;</a></span>
     </div>
   </footer>
 
-  <script src="../script.js?v=20260903b"></script>
+  <script src="../script.js?v=20261001c"></script>
 </body>
 </html>

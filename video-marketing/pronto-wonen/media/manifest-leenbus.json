@@ -1,0 +1,62 @@
+[
+ {
+  "slug": "leenbus-v1",
+  "duration": 21.0,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/CB Klant/Pronto_Bank_Gratis_Bus/FINAL/Finals_Bus/V1.mp4"
+ },
+ {
+  "slug": "leenbus-v2-1",
+  "duration": 24.8,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/CB Klant/Pronto_Bank_Gratis_Bus/FINAL/Finals_Bus/V2.1.mp4"
+ },
+ {
+  "slug": "leenbus-v2-2-1",
+  "duration": 17.1,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/CB Klant/Pronto_Bank_Gratis_Bus/FINAL/V2/V2.2_1.mp4"
+ },
+ {
+  "slug": "leenbus-v2-2-2",
+  "duration": 18.0,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/CB Klant/Pronto_Bank_Gratis_Bus/FINAL/V2/V2.2_2.mp4"
+ },
+ {
+  "slug": "leenbus-v2-3",
+  "duration": 20.4,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/CB Klant/Pronto_Bank_Gratis_Bus/FINAL/Finals_Bus/V2.3.mp4"
+ },
+ {
+  "slug": "leenbus-v3",
+  "duration": 26.6,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/CB Klant/Pronto_Bank_Gratis_Bus/FINAL/Finals_Bus/V3.mp4"
+ },
+ {
+  "slug": "leenbus-v3-1",
+  "duration": 26.6,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/CB Klant/Pronto_Bank_Gratis_Bus/FINAL/V3/V3.1.mp4"
+ },
+ {
+  "slug": "leenbus-v4",
+  "duration": 24.7,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/CB Klant/Pronto_Bank_Gratis_Bus/FINAL/Finals_Bus/V4.mp4"
+ },
+ {
+  "slug": "leenbus-v5",
+  "duration": 6.9,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/CB Klant/Pronto_Bank_Gratis_Bus/FINAL/V5/V5.mp4"
+ },
+ {
+  "slug": "leenbus-v11",
+  "duration": 18.5,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/CB Klant/Pronto_Bank_Gratis_Bus/FINAL/V11/V11.mp4"
+ }
+]

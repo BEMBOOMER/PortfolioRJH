@@ -1,0 +1,135 @@
+[
+ {
+  "slug": "aflevering-1",
+  "duration": 29.5,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/WOZ/SERIE/FINAL/Aflevering 1.mp4",
+  "group": "serie"
+ },
+ {
+  "slug": "aflevering-2",
+  "duration": 31.3,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/WOZ/SERIE/FINAL/Aflevering 2.mp4",
+  "group": "serie"
+ },
+ {
+  "slug": "aflevering-3",
+  "duration": 30.3,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/WOZ/SERIE/FINAL/Aflevering 3.mp4",
+  "group": "serie"
+ },
+ {
+  "slug": "aflevering-4",
+  "duration": 28.3,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/WOZ/SERIE/FINAL/Aflevering 4.mp4",
+  "group": "serie"
+ },
+ {
+  "slug": "aflevering-5",
+  "duration": 25.8,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/WOZ/SERIE/FINAL/Aflevering 5.mp4",
+  "group": "serie"
+ },
+ {
+  "slug": "aflevering-6",
+  "duration": 29.2,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/WOZ/SERIE/FINAL/Aflevering 6.mp4",
+  "group": "serie"
+ },
+ {
+  "slug": "aflevering-7",
+  "duration": 28.7,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/WOZ/SERIE/FINAL/Aflevering 7.mp4",
+  "group": "serie"
+ },
+ {
+  "slug": "aflevering-8",
+  "duration": 27.4,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/WOZ/SERIE/FINAL/Aflevering 8.mp4",
+  "group": "serie"
+ },
+ {
+  "slug": "aflevering-9",
+  "duration": 28.7,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/WOZ/SERIE/FINAL/Aflevering 9.mp4",
+  "group": "serie"
+ },
+ {
+  "slug": "aflevering-10",
+  "duration": 29.6,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/WOZ/SERIE/FINAL/Aflevering 10.mp4",
+  "group": "serie"
+ },
+ {
+  "slug": "aflevering-11",
+  "duration": 29.9,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/WOZ/SERIE/FINAL/Aflevering 11.mp4",
+  "group": "serie"
+ },
+ {
+  "slug": "aflevering-12",
+  "duration": 28.1,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/WOZ/SERIE/FINAL/Aflevering 12.mp4",
+  "group": "serie"
+ },
+ {
+  "slug": "short-beppie-wasmachine",
+  "duration": 16.3,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/WOZ/SERIE/FINAL/Short - Beppie wasmachine.mp4",
+  "group": "shorts"
+ },
+ {
+  "slug": "short-fatmin-koelkast",
+  "duration": 15.1,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/WOZ/SERIE/FINAL/Short - Fatmin koelkast.mp4",
+  "group": "shorts"
+ },
+ {
+  "slug": "short-otto-binnenspiegel",
+  "duration": 16.8,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/WOZ/SERIE/FINAL/Short - Otto binnenspiegel.mp4",
+  "group": "shorts"
+ },
+ {
+  "slug": "short-penny-achterruit",
+  "duration": 16.3,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/WOZ/SERIE/FINAL/Short - Penny achterruit.mp4",
+  "group": "shorts"
+ },
+ {
+  "slug": "winactie",
+  "duration": 59.7,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/WOZ/vids /260212_WOZ_Winactie/FINAL/260213_WOZ_Winactie.mov",
+  "group": "acties"
+ },
+ {
+  "slug": "stickeractie",
+  "duration": 14.6,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/WOZ/260204_WOZ_6plus1/FINAL/260204_WOZ_Sticker_Actie.mov",
+  "group": "acties"
+ },
+ {
+  "slug": "ties",
+  "duration": 15.0,
+  "wide": false,
+  "source": "/Volumes/04_Roelof/WOZ/vids /260209_WOZ_Ties/FINAL/260209_WOZ_Ties_Final_reel.mov",
+  "group": "acties"
+ }
+]

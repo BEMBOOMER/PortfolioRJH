@@ -9,7 +9,7 @@
    4.  Contact Form (async Formspree submission)
    5.  Video Fallback Links
    6.  Werk-dropdown
-   7.  Glow-kaarten (licht volgt de muis)
+   7.  Licht dat de muis volgt (kaarten + regenboogknoppen)
    8.  Kopieer e-mail + lokale tijd
    9.  Init
 
@@ -280,18 +280,38 @@ function initNavDropdown() {
 }
 
 /* ─────────────────────────────────────────
-   Glow-kaarten: zet --mx/--my zodat het licht de muis volgt
+   Licht dat de muis volgt: glow-kaarten en de regenboog-spot op knoppen.
+   Eén listener voor de hele pagina; elke lichtbron in de keten krijgt --mx/--my.
+   Houd deze selector gelijk aan de lijsten in style.css (sectie 8 en 9).
 ───────────────────────────────────────── */
-function initGlow() {
+const LIGHT_SELECTOR = [
+  '.glow', '.project-card', '.bi-card', '.dv-think__card', '.dv-stack__row', '.pw-stat', '.dv-fact',
+  '.spot', '.btn', '.tool-chip', '.subpage__back', '.pw-filter', '.dv-link', '.video-block__cta',
+  '.nav__links > li > a', '.nav__drop-btn', '.pw-lightbox__close',
+].join(', ');
+
+function initLight() {
   if (window.matchMedia('(pointer: coarse)').matches) return;
 
-  document.querySelectorAll('.glow').forEach((card) => {
-    card.addEventListener('pointermove', (e) => {
-      const r = card.getBoundingClientRect();
-      card.style.setProperty('--mx', `${e.clientX - r.left}px`);
-      card.style.setProperty('--my', `${e.clientY - r.top}px`);
-    }, { passive: true });
-  });
+  let last = null;
+  let scheduled = false;
+
+  document.addEventListener('pointermove', (e) => {
+    last = e;
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(() => {
+      scheduled = false;
+      const ev = last;
+      let el = ev.target instanceof Element ? ev.target.closest(LIGHT_SELECTOR) : null;
+      while (el) {
+        const r = el.getBoundingClientRect();
+        el.style.setProperty('--mx', `${ev.clientX - r.left}px`);
+        el.style.setProperty('--my', `${ev.clientY - r.top}px`);
+        el = el.parentElement ? el.parentElement.closest(LIGHT_SELECTOR) : null;
+      }
+    });
+  }, { passive: true });
 }
 
 /* ─────────────────────────────────────────
@@ -363,7 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   initVideoFallbackLinks();
   initNavDropdown();
-  initGlow();
+  initLight();
   initCopyEmail();
   initLocalTime();
   initShotFrames();

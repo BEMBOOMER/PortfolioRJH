@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kerf | App Development | Roelof Junior Haar</title>
+  <meta name="description" content="Kerf, een lichte notch-app voor macOS van Roelof Junior Haar: muziek, shelf, AirDrop, batterij en een eigen HUD." />
+  <meta name="theme-color" content="#0A0A0A" />
+  <link rel="icon" type="image/png" href="../../assets/brand/favicon.png" />
+  <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Hanken+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&text=R&display=block" rel="stylesheet" />
+  <link rel="stylesheet" href="../../style.css?v=20261001c" />
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body data-cat="apps">
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav class="nav" id="nav">
+    <a href="../../index.html" class="nav__logo" aria-label="Roelof Junior Haar, naar home">
+      <span class="logo-mark" aria-hidden="true">R</span>
+      <span class="nav__name">Roelof Junior Haar</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="../../index.html#over">Over</a></li>
+      <li class="nav__item nav__item--dropdown">
+        <button class="nav__drop-btn" type="button" aria-expanded="false" aria-haspopup="true">Werk <span class="nav__caret">&#9662;</span></button>
+        <ul class="nav__dropdown">
+          <li><a href="../../brand-identity/index.html" data-accent="pink">Brand Identity</a></li>
+          <li><a href="../../video-marketing/index.html" data-accent="orange">Video Marketing</a></li>
+          <li><a href="../../app-development/index.html" data-accent="blue" class="is-active">App Development</a></li>
+        </ul>
+      </li>
+      <li><a href="../../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="subpage">
+    <div class="waves waves--horizon" aria-hidden="true"><div class="waves__field"></div></div>
+    <a href="../index.html" class="subpage__back">&larr; App Development</a>
+    <p class="subpage__label">App Development · Kerf</p>
+    <h1 class="subpage__title">Kerf<span class="subpage__dot">.</span></h1>
+
+    <div class="dv-hero">
+      <div>
+        <p class="subpage__desc">
+          Kerf maakt van de notch van je MacBook een kleine, levende strook. Speelt er muziek, dan staan hoesje en balkjes ernaast. Sleep je een bestand naar boven, dan bewaar je het of AirDrop je het meteen. Druk je op een volumetoets, dan verschijnt er een rustig balkje in plaats van de pop-up van macOS. In rust zie je niks: zwart op zwart.
+        </p>
+        <div class="dv-facts">
+          <div class="dv-fact"><b>1.3</b><span>Versie</span></div>
+          <div class="dv-fact"><b>macOS 14+</b><span>Apple silicon</span></div>
+          <div class="dv-fact"><b>1,9 MB</b><span>App</span></div>
+          <div class="dv-fact"><b>0% CPU</b><span>In rust</span></div>
+        </div>
+        <div class="dv-links">
+        <a href="https://github.com/BEMBOOMER/kerf-releases/releases/latest" class="dv-link" target="_blank" rel="noopener noreferrer">Download Kerf <span class="btn__arrow" aria-hidden="true">&#8599;</span></a>
+        <a href="../../brand-identity/kerf/index.html" class="dv-link dv-link--ghost">Het merk <span class="btn__arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+      <div class="dv-hero__shot dv-hero__shot--dark"><img src="../../assets/kerf/app-01-open.png" alt="De open notch van Kerf met speler, shelf en AirDrop" /></div>
+    </div>
+    <section class="dv-section reveal">
+      <div class="dv-head">
+        <span class="dv-head__nr">01</span>
+        <h2 class="dv-head__title">Waarom ik hem maakte</h2>
+      </div>
+      <p class="dv-lead">
+        Kerf is de vervanger die ik zelf wilde hebben voor Boring Notch: een kleinere scope en strenge eisen aan gewicht. Hij is op 29 september 2026 ontstaan, en dezelfde dag volgden de releases 1.1 tot en met 1.3, met een eigen updater, het logo en een volumeschuif.
+      </p>
+      <div class="dv-think">
+        <div class="dv-think__card">
+          <span class="dv-think__chip">Keuze</span>
+          <h3 class="dv-think__title">Kleiner dan het origineel</h3>
+          <p class="dv-think__body">Ik gebruikte Boring Notch, maar wilde alleen wat ik echt elke dag aanraak. Agenda, webcam-spiegel, timers en een Dock-icoon gingen er bewust uit. Elke functie moest haar plek in die 185 bij 32 punten verdienen.</p>
+        </div>
+        <div class="dv-think__card">
+          <span class="dv-think__chip">Eis</span>
+          <h3 class="dv-think__title">Licht</h3>
+          <p class="dv-think__body">De grenzen stonden vooraf vast: een kleine app, rond de 60 MB geheugen en in rust vrijwel 0% CPU. Daarom bewaart de shelf alleen verwijzingen en tekent Core Animation de balkjes.</p>
+        </div>
+        <div class="dv-think__card">
+          <span class="dv-think__chip">Gedrag</span>
+          <h3 class="dv-think__title">Nooit in de weg</h3>
+          <p class="dv-think__body">Een notch-app zit op de drukste plek van je scherm. Menubalk-iconen en titelbalken blijven klikbaar, een tab langs de bovenkant slepen opent niets en snel langs de notch bewegen laat hem dicht.</p>
+        </div>
+        <div class="dv-think__card">
+          <span class="dv-think__chip">Rechten</span>
+          <h3 class="dv-think__title">Eerlijk vragen</h3>
+          <p class="dv-think__body">Toegankelijkheid is alleen nodig voor de HUD, de rest werkt ook zonder. De updater vraagt eerst en controleert controlesom, versie en handtekening voordat hij iets wisselt.</p>
+        </div>
+      </div>
+    </section>
+    <section class="dv-section reveal">
+      <div class="dv-head">
+        <span class="dv-head__nr">02</span>
+        <h2 class="dv-head__title">Wat hij doet</h2>
+      </div>
+      <div class="dv-features">
+        <div class="dv-feature"><b>Muziek</b><span>Speelt er iets in Spotify, Muziek of de browser, dan staan hoesje en balkjes naast de notch, in de kleur van de hoes.</span></div>
+        <div class="dv-feature"><b>Doorspoelen</b><span>In de open notch sleep je over de voortgangsbalk, met vorige, pauze, volgende en een volumeschuif eronder.</span></div>
+        <div class="dv-feature"><b>Skippen met een swipe</b><span>Twee vingers opzij over de notch: naar links is het volgende nummer, naar rechts het vorige.</span></div>
+        <div class="dv-feature"><b>Shelf</b><span>Bestanden die je naar de notch sleept blijven klaarstaan als verwijzing, zonder kopie en zonder extra schijfruimte.</span></div>
+        <div class="dv-feature"><b>AirDrop</b><span>Laat iets op het AirDrop-vak vallen en het gaat meteen weg; één klik stuurt de hele shelf.</span></div>
+        <div class="dv-feature"><b>Batterij</b><span>Lader erin geeft een batterijtje dat groen volloopt, en bij 20 en 10 procent komt een korte melding.</span></div>
+        <div class="dv-feature"><b>Volume en helderheid</b><span>Een eigen balkje onder de notch vervangt de pop-up van macOS, met dezelfde 16 stappen.</span></div>
+        <div class="dv-feature"><b>Nieuw nummer</b><span>Bij elk nieuw nummer staan titel en artiest even onder de notch, daarna is het weer stil.</span></div>
+        <div class="dv-feature"><b>Updates</b><span>Kerf kijkt ongeveer één keer per dag of er een nieuwe versie is en installeert pas als jij klikt.</span></div>
+      </div>
+    </section>
+    <section class="dv-section reveal">
+      <div class="dv-head">
+        <span class="dv-head__nr">03</span>
+        <h2 class="dv-head__title">Hoe hij eruitziet</h2>
+        <span class="dv-head__note">Echte renders</span>
+      </div>
+      <p class="dv-lead">
+        Alle beelden zijn gerenderd uit de echte SwiftUI-views van de app, met voorbeeldinhoud: het nummer en de hoes zijn verzonnen, batterij en volume staan op een vaste waarde.
+      </p>
+      <div class="dv-shots">
+        <figure class="dv-shot">
+          <div class="dv-shot__frame dv-shot__frame--fits"><img src="../../assets/kerf/app-01-open.png" alt="De open notch" /></div>
+          <figcaption class="dv-shot__cap"><span class="dv-shot__nr">01</span><span class="dv-shot__text">De open notch: speler en volume links, shelf en AirDrop rechts. Alles wat je dagelijks aanraakt staat in één rij, en de voortgangsbalk neemt de kleur van de hoes over.</span></figcaption>
+        </figure>
+        <figure class="dv-shot">
+          <div class="dv-shot__frame dv-shot__frame--fits"><img src="../../assets/kerf/app-02-music.png" alt="De dichte notch met muziek" /></div>
+          <figcaption class="dv-shot__cap"><span class="dv-shot__nr">02</span><span class="dv-shot__text">Dicht, terwijl er muziek speelt. De vorm wordt maar 42 punten per kant breder, net genoeg om te laten zien dat er iets speelt.</span></figcaption>
+        </figure>
+        <figure class="dv-shot">
+          <div class="dv-shot__frame dv-shot__frame--fits"><img src="../../assets/kerf/app-03-nieuw-nummer.png" alt="Een nieuw nummer onder de notch" /></div>
+          <figcaption class="dv-shot__cap"><span class="dv-shot__nr">03</span><span class="dv-shot__text">Een nieuw nummer verschijnt kort onder de notch. Na een paar seconden schuift de vorm weer terug.</span></figcaption>
+        </figure>
+        <figure class="dv-shot">
+          <div class="dv-shot__frame dv-shot__frame--fits"><img src="../../assets/kerf/app-04-slepen.png" alt="Twee dropvakken tijdens het slepen" /></div>
+          <figcaption class="dv-shot__cap"><span class="dv-shot__nr">04</span><span class="dv-shot__text">Twee vakken zodra je iets naar boven sleept: bewaren of meteen versturen.</span></figcaption>
+        </figure>
+        <figure class="dv-shot">
+          <div class="dv-shot__frame dv-shot__frame--fits"><img src="../../assets/kerf/app-05-volume-hud.png" alt="De eigen volume-HUD" /></div>
+          <figcaption class="dv-shot__cap"><span class="dv-shot__nr">05</span><span class="dv-shot__text">De eigen volume-HUD, op de plek waar je toch al kijkt in plaats van midden in beeld.</span></figcaption>
+        </figure>
+        <figure class="dv-shot">
+          <div class="dv-shot__frame dv-shot__frame--fits"><img src="../../assets/kerf/app-06-laden.png" alt="Een batterijtje dat volloopt" /></div>
+          <figcaption class="dv-shot__cap"><span class="dv-shot__nr">06</span><span class="dv-shot__text">Lader erin: een batterijtje met bliksem loopt groen vol. Drie seconden zichtbaar en dan weer weg.</span></figcaption>
+        </figure>
+      </div>
+    </section>
+    <section class="dv-section reveal">
+      <div class="dv-head">
+        <span class="dv-head__nr">04</span>
+        <h2 class="dv-head__title">Waar hij van gemaakt is</h2>
+      </div>
+      <div class="dv-stack">
+        <div class="dv-stack__row"><b>Swift en SwiftPM</b><span>Een Swift-package zonder Xcode-project, gebouwd met één script dat de app samenstelt en ondertekent.</span></div>
+        <div class="dv-stack__row"><b>AppKit met SwiftUI</b><span>Een randloos paneel boven de menubalk. Het paneel verandert nooit van grootte, alleen de zwarte vorm animeert.</span></div>
+        <div class="dv-stack__row"><b>KerfCore</b><span>Alle pure logica, van afspeelpositie tot updates, staat los van de interface en is gedekt met tests.</span></div>
+        <div class="dv-stack__row"><b>Media-helper</b><span>Sinds macOS 15.4 krijgen gewone apps geen Now Playing-info meer, dus regelt een kleine helper dat.</span></div>
+        <div class="dv-stack__row"><b>Core Animation</b><span>De balkjes draaien in de render server van macOS en kosten Kerf daardoor vrijwel geen CPU.</span></div>
+        <div class="dv-stack__row"><b>GitHub Releases</b><span>De app checkt de releases en controleert elke download met een SHA-256 uit de release-notities.</span></div>
+      </div>
+    </section>
+    <div class="dv-links dv-links--end reveal">
+      <a href="https://github.com/BEMBOOMER/kerf-releases/releases/latest" class="dv-link" target="_blank" rel="noopener noreferrer">Download Kerf 1.3 <span class="btn__arrow" aria-hidden="true">&#8599;</span></a>
+      <a href="../../brand-identity/kerf/index.html" class="dv-link dv-link--ghost">Lees over het merk <span class="btn__arrow" aria-hidden="true">&rarr;</span></a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <a href="../../index.html" class="footer__logo" aria-label="Naar home"><span class="logo-mark" aria-hidden="true">R</span></a>
+      <span class="footer__copy">&copy; 2026 Roelof Junior Haar</span>
+      <span class="footer__back"><a href="#">Terug naar boven &uarr;</a></span>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=20261001c"></script>
+</body>
+</html>

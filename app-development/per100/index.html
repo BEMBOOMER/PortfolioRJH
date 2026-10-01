@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PER100 | App Development | Roelof Junior Haar</title>
+  <meta name="description" content="PER100, een calorie- en eiwittracker met een bron onder elk getal. Examenproject van Roelof Junior Haar voor Upfront." />
+  <meta name="theme-color" content="#0A0A0A" />
+  <link rel="icon" type="image/png" href="../../assets/brand/favicon.png" />
+  <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Hanken+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&text=R&display=block" rel="stylesheet" />
+  <link rel="stylesheet" href="../../style.css?v=20261001c" />
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body data-cat="apps">
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav class="nav" id="nav">
+    <a href="../../index.html" class="nav__logo" aria-label="Roelof Junior Haar, naar home">
+      <span class="logo-mark" aria-hidden="true">R</span>
+      <span class="nav__name">Roelof Junior Haar</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="../../index.html#over">Over</a></li>
+      <li class="nav__item nav__item--dropdown">
+        <button class="nav__drop-btn" type="button" aria-expanded="false" aria-haspopup="true">Werk <span class="nav__caret">&#9662;</span></button>
+        <ul class="nav__dropdown">
+          <li><a href="../../brand-identity/index.html" data-accent="pink">Brand Identity</a></li>
+          <li><a href="../../video-marketing/index.html" data-accent="orange">Video Marketing</a></li>
+          <li><a href="../../app-development/index.html" data-accent="blue" class="is-active">App Development</a></li>
+        </ul>
+      </li>
+      <li><a href="../../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="subpage">
+    <div class="waves waves--horizon" aria-hidden="true"><div class="waves__field"></div></div>
+    <a href="../index.html" class="subpage__back">&larr; App Development</a>
+    <p class="subpage__label">App Development · PER100</p>
+    <h1 class="subpage__title">PER100<span class="subpage__dot">.</span></h1>
+
+    <div class="dv-hero">
+      <div>
+        <p class="subpage__desc">
+          Een calorie- en eiwittracker die onder elk getal zet waar het vandaan komt, en verder niets van je vindt. Je scant een product, zoekt het op of typt gewoon wat je at. Onder elk getal staat de bron: het etiket, Open Food Facts of een voedingstabel. Rekent de app zelf iets uit, dan staat dat er ook bij.
+        </p>
+        <div class="dv-facts">
+          <div class="dv-fact"><b>Examen</b><span>Mediavormgeving</span></div>
+          <div class="dv-fact"><b>Upfront</b><span>Opdrachtgever</span></div>
+          <div class="dv-fact"><b>Android</b><span>Testversie</span></div>
+          <div class="dv-fact"><b>11.000+</b><span>Producten</span></div>
+        </div>
+        <div class="dv-links">
+        <a href="../../brand-identity/per100/index.html" class="dv-link">Het merk <span class="btn__arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+      <div class="dv-hero__shot dv-hero__shot--portrait"><img src="../../assets/per100/app-01-thuis.png" alt="Het Thuis-scherm van PER100" /></div>
+    </div>
+    <section class="dv-section reveal">
+      <div class="dv-head">
+        <span class="dv-head__nr">01</span>
+        <h2 class="dv-head__title">Denkwijze</h2>
+      </div>
+      <p class="dv-lead">
+        Ik maakte PER100 als examenproject Mediavormgeving, met Upfront als opdrachtgever: het sportvoedingsmerk dat alles wat je moet weten op de voorkant van de verpakking zet. PER100 doet dat voor alles wat je eet.
+      </p>
+      <div class="dv-think">
+        <div class="dv-think__card">
+          <span class="dv-think__chip">Bron</span>
+          <h3 class="dv-think__title">Een getal zonder bron is een gok</h3>
+          <p class="dv-think__body">In mijn enquête onder 24 mensen scoorde de bron van een getal een 4,2 van 5, en het vertrouwen in hun huidige app een 3,0. Daarom zie je de bron in plaats van dat je hem leest: een blauw woord onder elk getal.</p>
+        </div>
+        <div class="dv-think__card">
+          <span class="dv-think__chip">Rust</span>
+          <h3 class="dv-think__title">Ontworpen voor wie gevoelig is voor cijfers</h3>
+          <p class="dv-think__body">Geen rood en geen groen, geen reeksen of badges, alleen een neutrale telling. Een doel bestaat alleen als je het zelf invult. Wat voor die gebruiker veilig is, is voor de rest gewoon rustig.</p>
+        </div>
+        <div class="dv-think__card">
+          <span class="dv-think__chip">Moeite</span>
+          <h3 class="dv-think__title">Camera eerst</h3>
+          <p class="dv-think__body">Van de mensen die stopten met bijhouden, deden 9 van de 12 dat door de moeite. Dus staan barcode en etiket voorop, is zoeken de uitweg en kun je typen zoals je praat.</p>
+        </div>
+        <div class="dv-think__card">
+          <span class="dv-think__chip">Bewust niet</span>
+          <h3 class="dv-think__title">Geen account, geen server</h3>
+          <p class="dv-think__body">Geen verplicht account, geen analytics, geen gewichtslog en geen gezondheidsclaims. En geen Upfront-huisstijl: PER100 kreeg vier eigen kleuren, eigen letters en een eigen iconenset.</p>
+        </div>
+      </div>
+    </section>
+    <section class="dv-section reveal">
+      <div class="dv-head">
+        <span class="dv-head__nr">02</span>
+        <h2 class="dv-head__title">Wat het doet</h2>
+      </div>
+      <div class="dv-features">
+        <div class="dv-feature"><b>Scan</b><span>De barcode scannen, of een foto van het etiket maken en de telefoon de voedingswaarde laten lezen.</span></div>
+        <div class="dv-feature"><b>Zoek</b><span>Op naam zoeken in ruim 11.000 producten uit voedingstabellen, ook zonder verbinding, en online in Open Food Facts.</span></div>
+        <div class="dv-feature"><b>Typ wat je at</b><span>Een zin als "2 boterhammen met kaas en een glas melk" wordt een maaltijd, met elke standaardmaat als schatting gemarkeerd.</span></div>
+        <div class="dv-feature"><b>Bron bij elk getal</b><span>Onder elk getal één woord in blauw, en op één tik de uitleg en de som als het berekend is.</span></div>
+        <div class="dv-feature"><b>Je eerste getal</b><span>Bij de start kies je wat groot op Thuis staat: proteïne, calorieën, koolhydraten, vet of ingrediënten.</span></div>
+        <div class="dv-feature"><b>Agenda</b><span>Elke dag terugkijken, aanvullen of vooruit plannen, en een regel of dag verplaatsen of kopiëren.</span></div>
+        <div class="dv-feature"><b>Week</b><span>Zeven dagen als tabel, met het gemiddelde van alleen de dagen die je bijhield.</span></div>
+        <div class="dv-feature"><b>Vitamines en mineralen</b><span>Negentien stoffen per product en per dag, met het percentage van de referentie-inname zoals op een etiket.</span></div>
+        <div class="dv-feature"><b>Dagetiket</b><span>Je hele dag als één voedingswaardetabel, om te delen als afbeelding.</span></div>
+        <div class="dv-feature"><b>Licht en donker</b><span>Elk scherm in allebei, en op Android ook het app-icoon op je beginscherm.</span></div>
+      </div>
+    </section>
+    <section class="dv-section reveal">
+      <div class="dv-head">
+        <span class="dv-head__nr">03</span>
+        <h2 class="dv-head__title">Hoe het eruitziet</h2>
+        <span class="dv-head__note">Testversie</span>
+      </div>
+      <div class="dv-phones">
+        <figure class="dv-shot">
+          <div class="dv-shot__frame dv-shot__frame--fits"><img src="../../assets/per100/app-01-thuis.png" alt="Thuis" /></div>
+          <figcaption class="dv-shot__cap"><span class="dv-shot__nr">01</span><span class="dv-shot__text">Thuis. Eén groot getal is het beeld, met de bronregel in blauw eronder.</span></figcaption>
+        </figure>
+        <figure class="dv-shot">
+          <div class="dv-shot__frame dv-shot__frame--fits"><img src="../../assets/per100/app-02-product.png" alt="Een product" /></div>
+          <figcaption class="dv-shot__cap"><span class="dv-shot__nr">02</span><span class="dv-shot__text">Een product als etikettabel, per 100 gram en per portie naast elkaar.</span></figcaption>
+        </figure>
+        <figure class="dv-shot">
+          <div class="dv-shot__frame dv-shot__frame--fits"><img src="../../assets/per100/app-03-bron-van-een-getal.png" alt="De bron van een getal" /></div>
+          <figcaption class="dv-shot__cap"><span class="dv-shot__nr">03</span><span class="dv-shot__text">De bron van één getal, op één tik, in gewone taal.</span></figcaption>
+        </figure>
+        <figure class="dv-shot">
+          <div class="dv-shot__frame dv-shot__frame--fits"><img src="../../assets/per100/app-04-typ-wat-je-at.png" alt="Typ wat je at" /></div>
+          <figcaption class="dv-shot__cap"><span class="dv-shot__nr">04</span><span class="dv-shot__text">Een gewone zin wordt een maaltijd, elke schatting gemarkeerd.</span></figcaption>
+        </figure>
+        <figure class="dv-shot">
+          <div class="dv-shot__frame dv-shot__frame--fits"><img src="../../assets/per100/app-05-dagetiket.png" alt="Het dagetiket" /></div>
+          <figcaption class="dv-shot__cap"><span class="dv-shot__nr">05</span><span class="dv-shot__text">De dag als voedingswaardetabel. Het idee achter de naam in één scherm.</span></figcaption>
+        </figure>
+        <figure class="dv-shot">
+          <div class="dv-shot__frame dv-shot__frame--fits"><img src="../../assets/per100/app-06-thuis-donker.png" alt="Thuis in donker" /></div>
+          <figcaption class="dv-shot__cap"><span class="dv-shot__nr">06</span><span class="dv-shot__text">Donker is een omkering, geen tweede ontwerp.</span></figcaption>
+        </figure>
+      </div>
+    </section>
+    <section class="dv-section reveal">
+      <div class="dv-head">
+        <span class="dv-head__nr">04</span>
+        <h2 class="dv-head__title">Waar het van gemaakt is</h2>
+      </div>
+      <div class="dv-stack">
+        <div class="dv-stack__row"><b>Expo en React Native</b><span>Eén codebasis in TypeScript, met de schermen als bestanden via Expo Router.</span></div>
+        <div class="dv-stack__row"><b>Op het toestel</b><span>Alles staat in een lokale database, per getal met de bron, de berekening en wanneer.</span></div>
+        <div class="dv-stack__row"><b>Camera en ML Kit</b><span>Barcodes met controlecijfer, en etiketten lezen op de telefoon zelf.</span></div>
+        <div class="dv-stack__row"><b>Open data</b><span>Ciqual van ANSES, USDA FoodData Central en Open Food Facts, met hun licentie erbij.</span></div>
+        <div class="dv-stack__row"><b>EU 1169/2011</b><span>Energie, zout en referentie-innames gerekend zoals de etiketwetgeving het voorschrijft.</span></div>
+        <div class="dv-stack__row"><b>Testversie</b><span>Een APK die bij elke ronde automatisch gebouwd wordt, getest op mijn eigen telefoon.</span></div>
+      </div>
+    </section>
+    <div class="dv-links dv-links--end reveal">
+      <a href="../../brand-identity/per100/index.html" class="dv-link">Lees over het merk <span class="btn__arrow" aria-hidden="true">&rarr;</span></a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <a href="../../index.html" class="footer__logo" aria-label="Naar home"><span class="logo-mark" aria-hidden="true">R</span></a>
+      <span class="footer__copy">&copy; 2026 Roelof Junior Haar</span>
+      <span class="footer__back"><a href="#">Terug naar boven &uarr;</a></span>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=20261001c"></script>
+</body>
+</html>

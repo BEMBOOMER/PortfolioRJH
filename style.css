@@ -1831,10 +1831,79 @@ h1, h2, h3 { font-weight: 700; }
   padding: 0.5rem;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: rgba(16, 16, 16, 0.72);
+  background: rgba(12, 12, 12, 0.94);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   backdrop-filter: blur(18px) saturate(140%);
 }
+
+/* .subpage > * krijgt position: relative; de balk moet sticky blijven, anders schuift top hem over de inhoud */
+.subpage > .pw-filters { position: sticky; z-index: 20; }
+
+/* op de telefoon één rij die opzij scrolt, anders bedekt de balk half het scherm */
+@media (max-width: 760px) {
+  .pw-filters { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .pw-filters::-webkit-scrollbar { display: none; }
+  .pw-filter { flex: none; }
+}
+
+.pw-divider { scroll-margin-top: calc(var(--nav-h) + 150px); }
+
+/* homepage: drie kerncijfers in de klantenkaart */
+.clients-card__stats {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 1.4rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line);
+}
+.clients-card__stats b {
+  display: block;
+  font-family: var(--font-display);
+  font-stretch: 112.5%;
+  font-weight: 700;
+  font-size: 1.3rem;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  color: var(--paper);
+}
+.clients-card__stats div { display: grid; grid-template-columns: 5.4rem 1fr; gap: 0.8rem; align-items: baseline; }
+.clients-card__stats span { font-size: 0.8rem; line-height: 1.4; color: var(--muted); }
+.clients-card__note { margin-top: 0.8rem; font-size: 0.72rem; line-height: 1.45; color: var(--faint); }
+
+/* resultaten: openbare cijfers, met de bron erbij */
+.pw-results {
+  margin: clamp(2.5rem, 6vw, 4rem) 0;
+  padding: clamp(1.4rem, 3vw, 2.2rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: rgba(18, 18, 18, 0.6);
+}
+.pw-results .subpage__label { margin-bottom: 1rem; }
+.pw-results__title {
+  margin-bottom: 1.8rem;
+  font-family: var(--font-display);
+  font-stretch: 112.5%;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+.pw-results__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.4rem 1.6rem; }
+.pw-result { padding-left: 1rem; border-left: 1px solid var(--line-strong); }
+.pw-result b {
+  display: block;
+  font-family: var(--font-display);
+  font-stretch: 112.5%;
+  font-weight: 700;
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+.pw-result span { display: block; margin-top: 0.45rem; font-size: 0.9rem; line-height: 1.5; color: var(--muted); }
+.pw-results__note { margin-top: 1.5rem; max-width: 72ch; font-size: 0.8rem; line-height: 1.55; color: var(--faint); }
+@media (max-width: 860px) { .pw-results__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .pw-results__grid { grid-template-columns: 1fr; } }
 
 /* het gekleurde stipje zit in de achtergrond, zodat de spot-pseudo's vrij blijven */
 .pw-filter {

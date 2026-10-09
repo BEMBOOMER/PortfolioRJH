@@ -668,6 +668,267 @@ function setupPhotoLine(root) {
 }
 
 /* ─────────────────────────────────────────
+   Plannen: kalender + tijden uit /api/slots, boeken via /api/book.
+   De afspraak komt in Roelofs Google Agenda; Google mailt de uitnodiging.
+   Werkt de API niet, dan valt de kaart terug op mail en het contactformulier.
+───────────────────────────────────────── */
+function initBooking() {
+  const card = document.getElementById('booking');
+  if (!card) return;
+
+  const grid = card.querySelector('.cal__grid');
+  const monthEl = card.querySelector('.cal__month');
+  const [prevBtn, nextBtn] = card.querySelectorAll('.cal__nav');
+  const dayEl = document.getElementById('bookDay');
+  const slotsEl = document.getElementById('bookSlots');
+  const form = document.getElementById('bookForm');
+  const pickedEl = document.getElementById('bookPicked');
+  const btn = document.getElementById('bookBtn');
+  const status = document.getElementById('bookStatus');
+  const doneEl = document.getElementById('bookDone');
+  const doneText = document.getElementById('bookDoneText');
+  const btnLabel = btn.innerHTML;
+
+  const TYPES = {
+    kennismaking: { label: 'Kennismaking', minutes: 30, how: 'videocall' },
+    bellen: { label: 'Belafspraak', minutes: 15, how: 'telefoon' },
+    sessie: { label: 'Projectsessie', minutes: 60, how: 'videocall' },
+  };
+
+  const pad = (n) => String(n).padStart(2, '0');
+  const iso = (y, m, d) => `${y}-${pad(m + 1)}-${pad(d)}`;
+  const parts = (s) => s.split('-').map(Number);
+  const fmt = (s, opts) => {
+    const [y, m, d] = parts(s);
+    return new Intl.DateTimeFormat('nl-NL', { timeZone: 'UTC', ...opts }).format(new Date(Date.UTC(y, m - 1, d)));
+  };
+  const addMin = (t, min) => {
+    const [h, m] = t.split(':').map(Number);
+    const total = h * 60 + m + min;
+    return `${pad(Math.floor(total / 60))}:${pad(total % 60)}`;
+  };
+
+  const now = new Date();
+  const todayIso = iso(now.getFullYear(), now.getMonth(), now.getDate());
+  const firstMonth = { y: now.getFullYear(), m: now.getMonth() };
+
+  const state = { type: 'kennismaking', y: firstMonth.y, m: firstMonth.m, date: null, time: null, days: {}, lastDay: null, autoAdvanced: false };
+  const cache = new Map();
+  let req = 0;
+
+  function setState(name) { card.dataset.state = name; }
+  card.dataset.type = state.type;
+
+  async function load() {
+    const id = ++req;
+    const from = iso(state.y, state.m, 1);
+    const to = iso(state.y, state.m, new Date(state.y, state.m + 1, 0).getDate());
+    const key = `${state.type}:${from}`;
+    grid.classList.add('is-loading');
+    try {
+      let data = cache.get(key);
+      if (!data) {
+        const res = await fetch(`/api/slots?type=${state.type}&from=${from}&to=${to}`, { headers: { Accept: 'application/json' } });
+        if (!res.ok) throw new Error(String(res.status));
+        data = await res.json();
+        cache.set(key, data);
+      }
+      if (id !== req) return;
+      state.days = data.days || {};
+      state.lastDay = data.lastDay || null;
+
+      // geen plek meer deze maand: één keer doorschuiven naar de volgende
+      if (!Object.keys(state.days).length && !state.autoAdvanced && state.y === firstMonth.y && state.m === firstMonth.m) {
+        state.autoAdvanced = true;
+        shiftMonth(1);
+        return;
+      }
+      if (!state.date || !state.days[state.date]) state.date = Object.keys(state.days).sort()[0] || null;
+      renderMonth();
+      renderSlots();
+    } catch (err) {
+      if (id === req) setState('off');
+    } finally {
+      if (id === req) grid.classList.remove('is-loading');
+    }
+  }
+
+  function renderMonth() {
+    monthEl.textContent = new Intl.DateTimeFormat('nl-NL', { month: 'long', year: 'numeric' }).format(new Date(state.y, state.m, 1));
+    const lead = (new Date(state.y, state.m, 1).getDay() + 6) % 7;
+    const count = new Date(state.y, state.m + 1, 0).getDate();
+    const cells = [];
+    for (let i = 0; i < lead; i++) cells.push('<span class="cal__day is-outside" aria-hidden="true"></span>');
+    for (let d = 1; d <= count; d++) {
+      const date = iso(state.y, state.m, d);
+      const open = !!state.days[date];
+      const cls = ['cal__day', open && 'is-open', date === todayIso && 'is-today', date === state.date && 'is-selected'].filter(Boolean).join(' ');
+      const label = fmt(date, { weekday: 'long', day: 'numeric', month: 'long' }) + (open ? '' : ', niet beschikbaar');
+      cells.push(`<button type="button" class="${cls}" data-date="${date}" aria-label="${label}" ${open ? '' : 'disabled'} ${date === state.date ? 'aria-pressed="true"' : ''}>${d}</button>`);
+    }
+    grid.innerHTML = cells.join('');
+    grid.classList.remove('is-in');
+    void grid.offsetWidth;
+    grid.classList.add('is-in');
+
+    prevBtn.disabled = state.y === firstMonth.y && state.m === firstMonth.m;
+    if (state.lastDay) {
+      const [ly, lm] = parts(state.lastDay);
+      nextBtn.disabled = state.y > ly || (state.y === ly && state.m >= lm - 1);
+    }
+  }
+
+  function renderSlots() {
+    if (!state.date) {
+      dayEl.textContent = 'Geen plek meer deze maand';
+      dayEl.classList.add('is-empty');
+      slotsEl.innerHTML = '';
+      return;
+    }
+    dayEl.classList.remove('is-empty');
+    dayEl.textContent = fmt(state.date, { weekday: 'long', day: 'numeric', month: 'long' });
+    slotsEl.innerHTML = state.days[state.date]
+      .map((t, i) => `<button type="button" class="book__slot${t === state.time ? ' is-picked' : ''}" data-time="${t}" style="--n:${i}">${t}</button>`)
+      .join('');
+  }
+
+  function shiftMonth(dir) {
+    const d = new Date(state.y, state.m + dir, 1);
+    state.y = d.getFullYear();
+    state.m = d.getMonth();
+    state.date = null;
+    load();
+  }
+
+  function pick(time) {
+    state.time = time;
+    renderSlots();
+    const t = TYPES[state.type];
+    pickedEl.innerHTML = '';
+    pickedEl.append(`${fmt(state.date, { weekday: 'long', day: 'numeric', month: 'long' })}, ${time} tot ${addMin(time, t.minutes)}`);
+    const sub = document.createElement('span');
+    sub.textContent = `${t.label} · ${t.minutes} min · ${t.how}`;
+    pickedEl.append(sub);
+    setState('form');
+    status.textContent = '';
+    form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    setTimeout(() => form.querySelector('#bName').focus({ preventScroll: true }), 350);
+  }
+
+  prevBtn.addEventListener('click', () => shiftMonth(-1));
+  nextBtn.addEventListener('click', () => shiftMonth(1));
+
+  grid.addEventListener('click', (e) => {
+    const b = e.target.closest('.cal__day.is-open');
+    if (!b) return;
+    state.date = b.dataset.date;
+    state.time = null;
+    setState('pick');
+    renderMonth();
+    renderSlots();
+  });
+
+  slotsEl.addEventListener('click', (e) => {
+    const b = e.target.closest('.book__slot');
+    if (b) pick(b.dataset.time);
+  });
+
+  card.querySelectorAll('input[name="bookType"]').forEach((r) => {
+    r.addEventListener('change', () => {
+      state.type = r.value;
+      card.dataset.type = r.value;
+      state.time = null;
+      setState('pick');
+      load();
+    });
+  });
+
+  document.getElementById('bookChange').addEventListener('click', () => {
+    state.time = null;
+    setState('pick');
+    renderSlots();
+    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  function say(msg, kind) {
+    status.textContent = msg;
+    status.className = 'form-status' + (kind ? ` form-status--${kind}` : '');
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(form));
+    const t = TYPES[state.type];
+
+    if (!data.name.trim() || !data.email.trim() || !data.message.trim()) return say('Vul je naam, e-mail en een korte toelichting in.', 'error');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) return say('Vul een geldig e-mailadres in.', 'error');
+    if (state.type === 'bellen' && !/^[+0-9 ()-]{8,}$/.test((data.phone || '').trim())) return say('Vul een telefoonnummer in waarop ik je kan bellen.', 'error');
+
+    btn.disabled = true;
+    btn.textContent = 'Inplannen...';
+    say('');
+
+    try {
+      const res = await fetch('/api/book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ ...data, type: state.type, date: state.date, time: state.time }),
+      });
+      const out = await res.json().catch(() => ({}));
+
+      if (res.status === 409) {
+        cache.clear();
+        say('Dit moment is net vergeven. Kies een ander tijdstip.', 'error');
+        state.time = null;
+        setState('pick');
+        load();
+        return;
+      }
+      if (!res.ok || !out.ok) throw new Error(out.error || String(res.status));
+
+      const when = `${fmt(state.date, { weekday: 'long', day: 'numeric', month: 'long' })} om ${state.time}`;
+      doneText.textContent = state.type === 'bellen'
+        ? `Je belafspraak staat op ${when}. Ik bel je op ${data.phone.trim()}. De bevestiging is onderweg naar ${data.email.trim()}.`
+        : `Je ${t.label.toLowerCase()} staat op ${when}. De uitnodiging met de link naar Google Meet is onderweg naar ${data.email.trim()}.`;
+      setState('done');
+      doneEl.focus({ preventScroll: true });
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // seintje in Roelofs inbox via hetzelfde Formspree-formulier als contact
+      const contact = document.getElementById('contactForm');
+      if (contact) {
+        const note = new FormData();
+        note.append('name', data.name);
+        note.append('email', data.email);
+        note.append('_subject', `Nieuwe afspraak: ${t.label}, ${when}`);
+        const lines = [`${t.label} (${t.minutes} min) op ${when}`];
+        if (data.company) lines.push(`Bedrijf: ${data.company}`);
+        if (data.phone) lines.push(`Telefoon: ${data.phone}`);
+        if (data.topic) lines.push(`Onderwerp: ${data.topic}`);
+        lines.push('', data.message);
+        note.append('message', lines.join('\n'));
+        fetch(contact.action, { method: 'POST', body: note, headers: { Accept: 'application/json' } }).catch(() => {});
+      }
+    } catch (err) {
+      say('Inplannen lukte niet. Probeer het nog eens of mail me op bemooks@gmail.com.', 'error');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = btnLabel;
+    }
+  });
+
+  // pas laden als de sectie in de buurt komt: scheelt een API-call voor wie alleen het werk bekijkt
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((en) => en.isIntersecting)) { io.disconnect(); load(); }
+    }, { rootMargin: '600px 0px' });
+    io.observe(card);
+  } else {
+    load();
+  }
+}
+
+/* ─────────────────────────────────────────
    11. Init
 ───────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
@@ -685,4 +946,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initCopyCommand();
   initReel();
   initPhotoLine();
+  initBooking();
 });

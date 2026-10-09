@@ -56,7 +56,7 @@ function initCursor() {
     }
   }, { passive: true });
 
-  const interactiveSelector = 'a, button, [role="button"], input, textarea, label, .project-card';
+  const interactiveSelector = 'a, button, [role="button"], input, textarea, label, .project-card, .pl__card';
   let hovering = false;
 
   // hover-status op de cursor zelf zetten: een class op body laat de hele pagina opnieuw stylen
@@ -296,7 +296,7 @@ function initNavDropdown() {
 const LIGHT_SELECTOR = [
   '.glow', '.project-card', '.bi-card',
   '.spot', '.btn', '.tool-chip', '.subpage__back', '.pw-filter', '.dv-link', '.video-block__cta',
-  '.nav__links > li > a', '.nav__drop-btn', '.pw-lightbox__close',
+  '.nav__links > li > a', '.nav__drop-btn', '.pw-lightbox__close', '.pl__btn',
 ].join(', ');
 
 function initLight() {
@@ -454,6 +454,220 @@ function initReel() {
 }
 
 /* ─────────────────────────────────────────
+   Fotolijn: polaroids aan een doorhangende draad.
+   Sleep de lijn (of gebruik de pijlen) en de afdrukken schuiven mee,
+   slingeren aan hun knijper en veren terug. De middelste is de actieve;
+   klik die nog een keer en hij opent groot.
+───────────────────────────────────────── */
+function initPhotoLine() {
+  document.querySelectorAll('.pl').forEach(setupPhotoLine);
+}
+
+function setupPhotoLine(root) {
+  const cards = [...root.querySelectorAll('.pl__card')];
+  const n = cards.length;
+  if (!n) return;
+
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const path = root.querySelector('.pl__string path');
+  const cap = root.querySelector('.pl__cap');
+  const titleEl = root.querySelector('.pl__title');
+  const subEl = root.querySelector('.pl__sub');
+  const countEl = root.querySelector('.pl__count b');
+  const srEl = root.querySelector('.pl__sr');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const autoplay = reduce ? 0 : Number(root.dataset.autoplay || 0);
+  const SAG = 46;
+
+  root.classList.add('is-live');
+
+  const S = { off: 0, vel: 0, target: 0, a: new Array(n).fill(0), w: new Array(n).fill(0) };
+  let W = 1200, H = 700, cw = 280, spacing = 300;
+  let active = -1;
+  let drag = null;
+  let lastTouch = 0;
+
+  const nearestAt = (off) => clamp(Math.round(off / spacing), 0, n - 1);
+  const goTo = (i) => { S.target = clamp(i, 0, n - 1) * spacing; };
+  const step = (dir) => { lastTouch = performance.now(); goTo(active + dir); };
+
+  function setActive(i) {
+    if (i === active) return;
+    active = i;
+    cards.forEach((c, k) => {
+      c.classList.toggle('is-on', k === i);
+      c.setAttribute('aria-hidden', k === i ? 'false' : 'true');
+    });
+    const c = cards[i];
+    titleEl.textContent = c.dataset.title || '';
+    subEl.textContent = c.dataset.caption || '';
+    countEl.textContent = String(i + 1);
+    srEl.textContent = `Foto ${i + 1} van ${n}: ${c.dataset.title || ''}`;
+    cap.classList.remove('is-in');
+    void cap.offsetWidth; // animatie opnieuw starten
+    cap.classList.add('is-in');
+  }
+
+  function measure() {
+    const r = root.getBoundingClientRect();
+    W = r.width;
+    H = r.height;
+    cw = Math.round(Math.max(170, Math.min(300, W * 0.6, H * 0.42)));
+    spacing = cw * 1.08;
+    root.style.setProperty('--pl-cw', `${cw}px`);
+    const i = Math.max(0, active);
+    S.off = S.target = i * spacing;
+  }
+
+  new ResizeObserver(measure).observe(root);
+  measure();
+  setActive(0);
+
+  // de simulatie schrijft elk frame rechtstreeks naar de DOM
+  let raf = 0;
+  let visible = true;
+  let prev = performance.now();
+
+  function frame(now) {
+    raf = 0;
+    if (!visible) return;
+    const dt = Math.min(0.033, (now - prev) / 1000);
+    prev = now;
+    const y0 = Math.max(36, H * 0.12);
+
+    let lineVel;
+    if (drag && drag.moved) {
+      lineVel = drag.v * 1000;
+    } else {
+      // kritisch gedempte veer naar de actieve afdruk
+      const before = S.off;
+      const k = 70, c = 2 * Math.sqrt(k);
+      S.vel += (k * (S.target - S.off) - c * S.vel) * dt;
+      S.off += S.vel * dt;
+      lineVel = -(S.off - before) / Math.max(dt, 1e-3);
+    }
+
+    const g = reduce ? 0 : 1;
+    const near = nearestAt(S.off);
+
+    for (let i = 0; i < n; i++) {
+      const el = cards[i];
+      const x = W / 2 + i * spacing - S.off;
+      if (x < -cw * 1.5 || x > W + cw * 1.5) {
+        el.style.visibility = 'hidden';
+        continue;
+      }
+      el.style.visibility = 'visible';
+      // de afdruk blijft achter bij de beweging, zwaartekracht trekt hem terug
+      const w = S.w[i] + (-38 * S.a[i] - 4.2 * S.w[i] + lineVel * 0.0034 * g) * dt;
+      let a = clamp(S.a[i] + w * dt, -0.6, 0.6);
+      S.w[i] = w;
+      if (g) a += Math.sin(now / 1300 + i * 1.7) * 0.0009; // een licht briesje
+      S.a[i] = a;
+      const t = clamp(x / W, 0, 1);
+      const y = y0 + 4 * SAG * t * (1 - t) - 6;
+      el.style.transform = `translate(${(x - cw / 2).toFixed(1)}px, ${y.toFixed(1)}px) rotate(${a.toFixed(4)}rad)`;
+      el.style.zIndex = String(i === near ? n + 1 : n - Math.abs(i - near));
+    }
+
+    path.setAttribute('d', `M0 ${y0} Q${W / 2} ${y0 + 2 * SAG} ${W} ${y0}`);
+    setActive(near);
+    raf = requestAnimationFrame(frame);
+  }
+
+  new IntersectionObserver(([e]) => {
+    visible = e.isIntersecting;
+    if (visible && !raf) {
+      prev = performance.now();
+      raf = requestAnimationFrame(frame);
+    }
+  }).observe(root);
+
+  // autoplay; wacht zolang iemand aan het slepen of klikken is
+  if (autoplay && n > 1) {
+    setInterval(() => {
+      if (document.hidden || drag || performance.now() - lastTouch < autoplay) return;
+      goTo(active >= n - 1 ? 0 : active + 1);
+    }, autoplay);
+  }
+
+  // groot bekijken
+  const box = document.getElementById('plLightbox');
+  const boxImg = box && box.querySelector('img');
+  const boxTitle = box && box.querySelector('.pw-lightbox__title');
+  function openPhoto(i) {
+    if (!box || typeof box.showModal !== 'function') return;
+    const c = cards[i];
+    const img = c.querySelector('img');
+    boxImg.src = c.dataset.full || img.src;
+    boxImg.alt = img.alt;
+    boxTitle.textContent = c.dataset.title || '';
+    box.showModal();
+  }
+  if (box) {
+    box.querySelector('.pw-lightbox__close').addEventListener('click', () => box.close());
+    box.addEventListener('click', (e) => { if (e.target === box) box.close(); });
+  }
+
+  root.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.pl__bar')) return;
+    lastTouch = performance.now();
+    drag = { x: e.clientX, off: S.off, lx: e.clientX, lt: e.timeStamp, v: 0, moved: false };
+  });
+
+  root.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x;
+    if (!drag.moved && Math.abs(dx) > 5) {
+      drag.moved = true;
+      root.setPointerCapture(e.pointerId);
+    }
+    if (!drag.moved) return;
+    const dt = Math.max(1, e.timeStamp - drag.lt);
+    drag.v = 0.7 * ((e.clientX - drag.lx) / dt) + 0.3 * drag.v;
+    drag.lx = e.clientX;
+    drag.lt = e.timeStamp;
+    const max = (n - 1) * spacing;
+    let off = drag.off - dx;
+    if (off < 0) off *= 0.35;
+    if (off > max) off = max + (off - max) * 0.35;
+    S.off = off;
+  });
+
+  function end(e) {
+    const d = drag;
+    drag = null;
+    lastTouch = performance.now();
+    if (!d) return;
+    if (d.moved) {
+      S.vel = -d.v * 1000;
+      goTo(nearestAt(S.off - d.v * 180));
+      return;
+    }
+    if (e.type !== 'pointerup') return;
+    const card = e.target.closest('.pl__card');
+    if (!card) return;
+    const i = cards.indexOf(card);
+    if (i === active) openPhoto(i);
+    else goTo(i);
+  }
+  root.addEventListener('pointerup', end);
+  root.addEventListener('pointercancel', end);
+
+  root.querySelector('.pl__btn--prev').addEventListener('click', () => step(-1));
+  root.querySelector('.pl__btn--next').addEventListener('click', () => step(1));
+
+  root.addEventListener('keydown', (e) => {
+    if (e.target !== root) return;
+    if (e.key === 'ArrowRight') step(1);
+    else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'Enter') openPhoto(active);
+    else return;
+    e.preventDefault();
+  });
+}
+
+/* ─────────────────────────────────────────
    11. Init
 ───────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
@@ -470,4 +684,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initShotFrames();
   initCopyCommand();
   initReel();
+  initPhotoLine();
 });

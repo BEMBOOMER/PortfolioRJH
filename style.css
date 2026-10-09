@@ -547,15 +547,15 @@ h1, h2, h3 { font-weight: 700; }
 
 /* :where houdt de specificiteit op nul, zodat eigen positionering (zoals de absolute sluitknop) wint */
 :where(.spot, .btn, .tool-chip, .subpage__back, .pw-filter, .dv-link, .video-block__cta,
-    .nav__links > li > a, .nav__drop-btn, .pw-lightbox__close) {
+    .nav__links > li > a, .nav__drop-btn, .pw-lightbox__close, .pl__btn) {
   position: relative;
   isolation: isolate;
 }
 
 :is(.spot, .btn, .tool-chip, .subpage__back, .pw-filter, .dv-link, .video-block__cta,
-    .nav__links > li > a, .nav__drop-btn, .pw-lightbox__close)::before,
+    .nav__links > li > a, .nav__drop-btn, .pw-lightbox__close, .pl__btn)::before,
 :is(.spot, .btn, .tool-chip, .subpage__back, .pw-filter, .dv-link, .video-block__cta,
-    .nav__links > li > a, .nav__drop-btn, .pw-lightbox__close)::after {
+    .nav__links > li > a, .nav__drop-btn, .pw-lightbox__close, .pl__btn)::after {
   content: '';
   position: absolute;
   border-radius: inherit;
@@ -567,7 +567,7 @@ h1, h2, h3 { font-weight: 700; }
 
 /* zachte regenboogglans in het vlak, achter de tekst */
 :is(.spot, .btn, .tool-chip, .subpage__back, .pw-filter, .dv-link, .video-block__cta,
-    .nav__links > li > a, .nav__drop-btn, .pw-lightbox__close)::before {
+    .nav__links > li > a, .nav__drop-btn, .pw-lightbox__close, .pl__btn)::before {
   inset: 0;
   z-index: -1;
   -webkit-mask: radial-gradient(var(--spot-r, 70px) circle at var(--mx, 50%) var(--my, 50%), rgba(0, 0, 0, 0.45), transparent 72%);
@@ -576,7 +576,7 @@ h1, h2, h3 { font-weight: 700; }
 
 /* regenboogrand: alleen het stuk rand dicht bij de muis */
 :is(.spot, .btn, .tool-chip, .subpage__back, .pw-filter, .dv-link, .video-block__cta,
-    .nav__links > li > a, .nav__drop-btn, .pw-lightbox__close)::after {
+    .nav__links > li > a, .nav__drop-btn, .pw-lightbox__close, .pl__btn)::after {
   inset: -1px;
   z-index: 2;
   padding: 2px;
@@ -592,9 +592,9 @@ h1, h2, h3 { font-weight: 700; }
 }
 
 :is(.spot, .btn, .tool-chip, .subpage__back, .pw-filter, .dv-link, .video-block__cta,
-    .nav__links > li > a, .nav__drop-btn, .pw-lightbox__close):hover::before,
+    .nav__links > li > a, .nav__drop-btn, .pw-lightbox__close, .pl__btn):hover::before,
 :is(.spot, .btn, .tool-chip, .subpage__back, .pw-filter, .dv-link, .video-block__cta,
-    .nav__links > li > a, .nav__drop-btn, .pw-lightbox__close):hover::after { opacity: 1; }
+    .nav__links > li > a, .nav__drop-btn, .pw-lightbox__close, .pl__btn):hover::after { opacity: 1; }
 
 /* op het lichte vlak van de primaire knop mag de glans iets sterker */
 .btn--primary::before,
@@ -2739,6 +2739,248 @@ h1, h2, h3 { font-weight: 700; }
 
 @media (max-width: 480px) {
   .dv-wall { columns: 1; }
+}
+
+/* ─────────────────────────────────────────
+   21c. Fotolijn: polaroids aan een doorhangende draad (Artum)
+   Zonder JS een gewone rij om horizontaal door te scrollen;
+   met JS (.is-live) hangen ze aan de draad en slingeren ze mee.
+───────────────────────────────────────── */
+.pl {
+  --pl-cw: 280px;
+  position: relative;
+  margin: clamp(2.5rem, 6vw, 4.5rem) calc(var(--pad-x) * -1) 0;
+  border-block: 1px solid var(--line);
+  background:
+    radial-gradient(60% 70% at 50% 0%, rgba(41, 121, 255, 0.07), transparent 70%),
+    linear-gradient(180deg, rgba(245, 240, 232, 0.02), transparent 60%);
+  outline: none;
+}
+
+.pl:focus-visible { box-shadow: inset 0 0 0 2px var(--pink); }
+
+.pl__track {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  padding: 2.5rem var(--pad-x) 7rem;
+  scroll-snap-type: x mandatory;
+}
+
+.pl__card {
+  flex: 0 0 var(--pl-cw);
+  width: var(--pl-cw);
+  margin: 0;
+  scroll-snap-align: center;
+}
+
+.pl__string { display: none; }
+
+.pl.is-live {
+  height: clamp(540px, 76svh, 740px);
+  overflow: hidden;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.pl.is-live .pl__track { display: block; padding: 0; overflow: visible; }
+
+.pl.is-live .pl__string {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.pl.is-live .pl__card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 50% 0;
+  will-change: transform;
+  visibility: hidden;
+}
+
+/* de afdruk: papier in de huisstijlkleur, zachte schaduw, geen harde offset */
+.pl__print {
+  margin-top: 12px;
+  padding: 10px 10px 0;
+  background: var(--paper);
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 26px 44px -22px rgba(0, 0, 0, 0.9);
+  transition: transform var(--t) var(--ease-out-expo), filter var(--t) ease, box-shadow var(--t) ease;
+}
+
+.pl.is-live .pl__card:not(.is-on) .pl__print {
+  transform: scale(0.9);
+  filter: saturate(0.6) brightness(0.72);
+}
+
+.pl.is-live .pl__card.is-on .pl__print {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 30px 80px -28px rgba(255, 128, 171, 0.45);
+}
+
+.pl__shot {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #d9d4cb;
+}
+
+.pl__shot img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.pl__note {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 600;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.72);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* knijper in een golftoon, per afdruk een andere */
+.pl__peg {
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 10px;
+  height: 26px;
+  margin-left: -5px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--peg), color-mix(in srgb, var(--peg) 55%, #fff) 45%, var(--peg));
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+}
+
+.pl.is-live .pl__peg { display: block; }
+.pl__card:nth-child(4n + 1) { --peg: var(--blue); }
+.pl__card:nth-child(4n + 2) { --peg: var(--pink); }
+.pl__card:nth-child(4n + 3) { --peg: var(--orange); }
+.pl__card:nth-child(4n + 4) { --peg: var(--yellow); }
+
+.pl__bar {
+  display: none;
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  bottom: clamp(1.25rem, 4vh, 2.25rem);
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+.pl.is-live .pl__bar { display: flex; }
+
+.pl__cap { flex: 1; min-width: 0; overflow: hidden; padding-bottom: 0.15em; }
+.pl__cap > * { display: block; }
+.pl__cap.is-in > * { animation: plIn 0.5s var(--ease-out-expo) both; }
+
+.pl__title {
+  font-family: var(--font-display);
+  font-stretch: 112.5%;
+  font-weight: 700;
+  font-size: clamp(1.15rem, 2.2vw, 1.6rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pl__sub {
+  margin-top: 0.3rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.pl__count {
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 600;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+.pl__count b { color: var(--paper); font-weight: 600; }
+
+.pl__btn {
+  --spot-r: 34px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: rgba(18, 18, 18, 0.55);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(150%);
+  color: var(--paper);
+  transition: transform var(--t-fast) var(--ease-out-expo);
+}
+
+.pl__btn:hover { transform: translateY(-2px); }
+.pl__btn svg { width: 16px; height: 16px; }
+
+.pl__hint {
+  margin-top: 1rem;
+  color: var(--faint);
+}
+
+.pl__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@keyframes plIn {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+
+@media (max-width: 560px) {
+  .pl.is-live { height: 560px; }
+  .pl__count { display: none; }
+  .pl__sub { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+}
+
+/* foto groot bekijken: dezelfde lightbox als bij de video's */
+.pw-lightbox__inner--photo { height: auto; aspect-ratio: auto; }
+
+.pw-lightbox__inner--photo img {
+  display: block;
+  max-width: min(92vw, 1200px);
+  max-height: 84vh;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  box-shadow: 0 40px 120px -30px rgba(255, 128, 171, 0.3);
 }
 
 /* ─────────────────────────────────────────

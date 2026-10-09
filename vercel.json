@@ -33,22 +33,27 @@
     },
     {
       "source": "/video-editing/personal-projects/:path*",
-      "destination": "/video-marketing/",
+      "destination": "/visual-marketing/",
       "permanent": true
     },
     {
       "source": "/video-marketing/personal-projects/:path*",
-      "destination": "/video-marketing/",
+      "destination": "/visual-marketing/",
+      "permanent": true
+    },
+    {
+      "source": "/video-marketing/:path*",
+      "destination": "/visual-marketing/:path*",
       "permanent": true
     },
     {
       "source": "/video-editing/:path*",
-      "destination": "/video-marketing/:path*",
+      "destination": "/visual-marketing/:path*",
       "permanent": true
     },
     {
       "source": "/social-marketing/:path*",
-      "destination": "/video-marketing/:path*",
+      "destination": "/visual-marketing/:path*",
       "permanent": true
     },
     {
@@ -58,12 +63,12 @@
     },
     {
       "source": "/visual-motion/zet-m-op-motion-ad/:path*",
-      "destination": "/video-marketing/zet-m-op/",
+      "destination": "/visual-marketing/zet-m-op/",
       "permanent": true
     },
     {
       "source": "/visual-motion/zet-m-op-verhaal-promo/:path*",
-      "destination": "/video-marketing/zet-m-op/",
+      "destination": "/visual-marketing/zet-m-op/",
       "permanent": true
     },
     {

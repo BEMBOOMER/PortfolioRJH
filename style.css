@@ -3103,3 +3103,17 @@ h1, h2, h3 { font-weight: 700; }
   .page-showcase__art::before { animation: none; }
   .js .reveal { opacity: 1; transform: none; }
 }
+
+/* Privacy: rustige leestekst */
+.privacy { max-width: 64ch; }
+.privacy h2 {
+  margin: 2.2rem 0 0.6rem;
+  font-family: var(--font-display);
+  font-stretch: 112.5%;
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+}
+.privacy p:not(.subpage__desc) { line-height: 1.75; color: var(--muted); }
+.privacy a { color: var(--paper); background: var(--spectrum) left bottom / 100% 1px no-repeat; }
+.privacy__date { margin-top: 2.5rem; font-size: 0.85rem; color: var(--faint) !important; }

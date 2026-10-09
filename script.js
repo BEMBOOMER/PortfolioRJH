@@ -485,6 +485,7 @@ function setupPhotoLine(root) {
   let W = 1200, H = 700, cw = 280, spacing = 300;
   let active = -1;
   let drag = null;
+  const wheel = { active: false, v: 0, t: 0, timer: 0 };
   let lastTouch = 0;
 
   const nearestAt = (off) => clamp(Math.round(off / spacing), 0, n - 1);
@@ -538,6 +539,9 @@ function setupPhotoLine(root) {
     let lineVel;
     if (drag && drag.moved) {
       lineVel = drag.v * 1000;
+    } else if (wheel.active) {
+      lineVel = -wheel.v * 1000;
+      wheel.v *= 0.85;
     } else {
       // kritisch gedempte veer naar de actieve afdruk
       const before = S.off;
@@ -608,6 +612,31 @@ function setupPhotoLine(root) {
     box.querySelector('.pw-lightbox__close').addEventListener('click', () => box.close());
     box.addEventListener('click', (e) => { if (e.target === box) box.close(); });
   }
+
+  // horizontaal swipen met twee vingers op het trackpad (of shift + scrollwiel)
+  root.addEventListener('wheel', (e) => {
+    const dx = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : (e.shiftKey ? e.deltaY : 0);
+    if (!dx) return; // verticaal scrollen blijft gewoon de pagina scrollen
+    e.preventDefault();
+    const step = e.deltaMode === 1 ? dx * 16 : dx;
+    const max = (n - 1) * spacing;
+    let off = S.off + step;
+    if (off < 0) off = S.off + step * 0.25;
+    if (off > max) off = S.off + step * 0.25;
+    S.off = clamp(off, -spacing * 0.4, max + spacing * 0.4);
+    S.vel = 0;
+    const now = performance.now();
+    wheel.v = 0.6 * (step / Math.max(8, now - (wheel.t || now - 16))) + 0.4 * wheel.v;
+    wheel.t = now;
+    wheel.active = true;
+    lastTouch = now;
+    clearTimeout(wheel.timer);
+    wheel.timer = setTimeout(() => {
+      wheel.active = false;
+      wheel.t = 0;
+      goTo(nearestAt(S.off));
+    }, 140);
+  }, { passive: false });
 
   root.addEventListener('pointerdown', (e) => {
     if (e.target.closest('.pl__bar')) return;

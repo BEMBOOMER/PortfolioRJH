@@ -32,7 +32,17 @@
       "permanent": true
     },
     {
+      "source": "/video-editing/personal-projects/doova/:path(.*)",
+      "destination": "/app-development/doova/",
+      "permanent": true
+    },
+    {
       "source": "/video-editing/personal-projects/:path*",
+      "destination": "/visual-marketing/",
+      "permanent": true
+    },
+    {
+      "source": "/video-editing/personal-projects/:path(.*)",
       "destination": "/visual-marketing/",
       "permanent": true
     },
@@ -42,8 +52,18 @@
       "permanent": true
     },
     {
+      "source": "/video-marketing/personal-projects/:path(.*)",
+      "destination": "/visual-marketing/",
+      "permanent": true
+    },
+    {
       "source": "/video-marketing/:path*",
       "destination": "/visual-marketing/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/video-marketing/:path(.*)",
+      "destination": "/visual-marketing/:path",
       "permanent": true
     },
     {
@@ -52,12 +72,27 @@
       "permanent": true
     },
     {
+      "source": "/video-editing/:path(.*)",
+      "destination": "/visual-marketing/:path",
+      "permanent": true
+    },
+    {
       "source": "/social-marketing/:path*",
       "destination": "/visual-marketing/:path*",
       "permanent": true
     },
     {
+      "source": "/social-marketing/:path(.*)",
+      "destination": "/visual-marketing/:path",
+      "permanent": true
+    },
+    {
       "source": "/visual-motion/doova/:path*",
+      "destination": "/app-development/doova/",
+      "permanent": true
+    },
+    {
+      "source": "/visual-motion/doova/:path(.*)",
       "destination": "/app-development/doova/",
       "permanent": true
     },
@@ -67,12 +102,27 @@
       "permanent": true
     },
     {
+      "source": "/visual-motion/zet-m-op-motion-ad/:path(.*)",
+      "destination": "/visual-marketing/zet-m-op/",
+      "permanent": true
+    },
+    {
       "source": "/visual-motion/zet-m-op-verhaal-promo/:path*",
       "destination": "/visual-marketing/zet-m-op/",
       "permanent": true
     },
     {
+      "source": "/visual-motion/zet-m-op-verhaal-promo/:path(.*)",
+      "destination": "/visual-marketing/zet-m-op/",
+      "permanent": true
+    },
+    {
       "source": "/visual-motion/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/visual-motion/:path(.*)",
       "destination": "/",
       "permanent": true
     }

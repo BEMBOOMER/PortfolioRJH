@@ -1,14 +1,22 @@
 // One-off: get a Google refresh token for the booking API.
 // Run locally (never deployed):
-//   GOOGLE_CLIENT_ID=... GOOGLE_CLIENT_SECRET=... node scripts/google-calendar-token.mjs
+//   node scripts/google-calendar-token.mjs ~/Downloads/client_secret_....json
 // Sign in with the Google account whose calendar should receive the bookings,
 // then copy the printed refresh token into Vercel as GOOGLE_REFRESH_TOKEN.
 import http from 'node:http';
 import { exec } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 
-const { GOOGLE_CLIENT_ID: id, GOOGLE_CLIENT_SECRET: secret } = process.env;
+// Either pass the client JSON that Google lets you download, or set the env vars.
+let { GOOGLE_CLIENT_ID: id, GOOGLE_CLIENT_SECRET: secret } = process.env;
+if (process.argv[2]) {
+  const j = JSON.parse(readFileSync(process.argv[2], 'utf8'));
+  const c = j.installed || j.web || j;
+  id = c.client_id;
+  secret = c.client_secret;
+}
 if (!id || !secret) {
-  console.error('Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET first.');
+  console.error('Usage: node scripts/google-calendar-token.mjs ~/Downloads/client_secret_....json');
   process.exit(1);
 }
 
@@ -31,7 +39,12 @@ const server = http.createServer(async (req, res) => {
   });
   const j = await r.json();
   res.end(j.refresh_token ? 'Done, you can close this tab and go back to the terminal.' : 'No refresh token received, see terminal.');
-  console.log(j.refresh_token ? `\nGOOGLE_REFRESH_TOKEN=${j.refresh_token}\n` : j);
+  if (j.refresh_token) {
+    // a ready-to-paste .env block: Vercel splits it into three variables when pasted into the Key field
+    console.log(`\nPaste this into Vercel > Settings > Environment Variables:\n\nGOOGLE_CLIENT_ID=${id}\nGOOGLE_CLIENT_SECRET=${secret}\nGOOGLE_REFRESH_TOKEN=${j.refresh_token}\n`);
+  } else {
+    console.log(j);
+  }
   server.close();
 });
 

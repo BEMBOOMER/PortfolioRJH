@@ -239,6 +239,7 @@ h1, h2, h3 { font-weight: 700; }
 .hero__name,
 .about__heading,
 .work__heading,
+.book__title,
 .contact__heading,
 .subpage__title {
   font-family: var(--font-display);
@@ -1188,6 +1189,364 @@ h1, h2, h3 { font-weight: 700; }
 
 .form-status--error   { color: var(--pink); }
 .form-status--success { color: var(--yellow); }
+
+/* ─────────────────────────────────────────
+   14b. Plannen: kies een moment, het staat meteen in de agenda
+───────────────────────────────────────── */
+.book {
+  padding: clamp(1rem, 3vw, 2rem) var(--pad-x) clamp(5rem, 10vw, 8rem);
+}
+
+.book__head { max-width: 62ch; margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem); }
+.book__head .section-label { margin-bottom: 1rem; }
+
+.book__title {
+  font-size: clamp(2.1rem, 3.9vw, 3.4rem);
+  line-height: 1.02;
+}
+
+.book__title .dot,
+.book__done-title .dot { color: var(--pink); }
+
+.book__lead {
+  margin-top: 1rem;
+  font-size: 1.04rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.book__card { padding: clamp(1.1rem, 2.6vw, 2rem); }
+
+.book__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.book__col { min-width: 0; margin: 0; padding: 0; border: 0; }
+
+.book__step {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  padding: 0;
+  color: var(--muted);
+}
+
+.book__step span {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  font-size: 0.62rem;
+  letter-spacing: 0;
+  color: var(--paper);
+}
+
+/* 1. soort gesprek */
+.book__types { display: flex; flex-direction: column; gap: 0.6rem; }
+
+.book-type { position: relative; display: block; }
+
+.book-type input,
+.chip input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.book-type__body {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(245, 240, 232, 0.02);
+  transition: border-color var(--t-fast) ease, background-color var(--t-fast) ease;
+}
+
+.book-type__body b {
+  font-family: var(--font-display);
+  font-stretch: 112.5%;
+  font-weight: 700;
+  font-size: 1.02rem;
+  letter-spacing: -0.02em;
+}
+
+.book-type__body > span { font-size: 0.82rem; color: var(--sky); }
+.book-type__body em { font-style: normal; font-size: 0.86rem; color: var(--faint); }
+
+.book-type:hover .book-type__body { border-color: var(--line-strong); }
+
+.book-type input:checked + .book-type__body {
+  border-color: rgba(255, 128, 171, 0.55);
+  background: rgba(255, 128, 171, 0.06);
+  box-shadow: 0 0 0 3px rgba(255, 128, 171, 0.1);
+}
+
+.book-type input:focus-visible + .book-type__body,
+.chip input:focus-visible + span { outline: 2px solid var(--pink); outline-offset: 2px; }
+
+/* 2. kalender */
+.cal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.cal__month {
+  font-family: var(--font-display);
+  font-stretch: 112.5%;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+  text-transform: capitalize;
+}
+
+.cal__nav {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--muted);
+  transition: color var(--t-fast) ease, border-color var(--t-fast) ease, opacity var(--t-fast) ease;
+}
+
+.cal__nav:hover { color: var(--paper); border-color: var(--line-strong); }
+.cal__nav:disabled { opacity: 0.25; pointer-events: none; }
+.cal__nav svg { width: 14px; height: 14px; }
+
+.cal__week,
+.cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.cal__week span {
+  padding: 0.35rem 0;
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--faint);
+}
+
+.cal__grid { transition: opacity 0.2s ease; }
+.cal__grid.is-loading { opacity: 0.4; }
+.cal__grid.is-in { animation: calIn 0.35s var(--ease-out-expo) both; }
+
+.cal__day {
+  position: relative;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  color: rgba(245, 240, 232, 0.22);
+  pointer-events: none;
+  transition: background-color var(--t-fast) ease, color var(--t-fast) ease;
+}
+
+.cal__day.is-outside { visibility: hidden; }
+
+.cal__day.is-open {
+  color: var(--paper);
+  pointer-events: auto;
+}
+
+/* een stipje in de golftonen: hier kun je boeken */
+.cal__day.is-open::after {
+  content: '';
+  position: absolute;
+  bottom: 14%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--sky);
+}
+
+.cal__day.is-open:hover { background: rgba(245, 240, 232, 0.07); }
+.cal__day.is-today { box-shadow: inset 0 0 0 1px var(--line-strong); }
+
+.cal__day.is-selected,
+.cal__day.is-selected:hover {
+  background: var(--paper);
+  color: var(--night);
+  font-weight: 600;
+}
+
+.cal__day.is-selected::after { background: var(--coral); }
+
+/* 3. tijden */
+.book__day {
+  margin-bottom: 0.8rem;
+  font-family: var(--font-display);
+  font-stretch: 112.5%;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.book__day::first-letter,
+.book__picked::first-letter { text-transform: uppercase; }
+.book__day.is-empty { font-family: var(--font-body); font-weight: 400; font-stretch: 100%; letter-spacing: 0; color: var(--faint); }
+
+.book__slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 0.45rem;
+  max-height: 330px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.book__slot {
+  padding: 0.6rem 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--paper);
+  transition: border-color var(--t-fast) ease, background-color var(--t-fast) ease, color var(--t-fast) ease;
+  animation: calIn 0.35s var(--ease-out-expo) both;
+  animation-delay: calc(var(--n, 0) * 18ms);
+}
+
+.book__slot:hover { border-color: var(--line-strong); background: rgba(245, 240, 232, 0.05); }
+.book__slot.is-picked { background: var(--paper); border-color: var(--paper); color: var(--night); font-weight: 600; }
+
+/* 4. vragen: verschijnt zodra er een tijd gekozen is */
+.book__form,
+.book__done,
+.book__off { display: none; }
+
+.book__card[data-state="form"] .book__form { display: grid; }
+.book__card[data-state="done"] .book__grid,
+.book__card[data-state="off"] .book__grid { display: none; }
+.book__card[data-state="done"] .book__done { display: block; }
+.book__card[data-state="off"] .book__off { display: block; }
+
+.book__form {
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 2.15fr);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  padding-top: clamp(1.5rem, 3vw, 2.25rem);
+  border-top: 1px solid var(--line);
+  animation: calIn 0.45s var(--ease-out-expo) both;
+}
+
+.book__picked {
+  font-family: var(--font-display);
+  font-stretch: 112.5%;
+  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.book__picked span { display: block; margin-top: 0.3rem; font-family: var(--font-body); font-stretch: 100%; font-weight: 400; font-size: 0.9rem; letter-spacing: 0; color: var(--muted); }
+
+.book__change {
+  margin-top: 0.9rem;
+  padding: 0;
+  font-size: 0.88rem;
+  color: var(--sky);
+  background: linear-gradient(currentColor 0 0) left bottom / 100% 1px no-repeat;
+}
+
+.book__change:hover { color: var(--paper); }
+
+.book__fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.1rem;
+}
+
+.book__wide,
+.book__topics { grid-column: 1 / -1; }
+.book__topics { margin: 0; padding: 0; border: 0; }
+
+.book__phone { display: none; }
+.book__card:not([data-type="bellen"]) .book__company { grid-column: 1 / -1; }
+.book__card[data-type="bellen"] .book__phone { display: flex; }
+
+.form-optional { color: var(--faint); text-transform: none; letter-spacing: 0; font-family: var(--font-body); font-weight: 400; font-stretch: 100%; }
+
+.book__chips { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.1rem; }
+
+.chip { position: relative; }
+
+.chip span {
+  display: inline-block;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.88rem;
+  color: var(--muted);
+  transition: border-color var(--t-fast) ease, background-color var(--t-fast) ease, color var(--t-fast) ease;
+}
+
+.chip:hover span { border-color: var(--line-strong); color: var(--paper); }
+.chip input:checked + span { border-color: rgba(255, 128, 171, 0.55); background: rgba(255, 128, 171, 0.08); color: var(--paper); }
+
+.book__hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
+.book__actions {
+  grid-column: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.2rem;
+}
+
+.book__actions .btn:disabled { opacity: 0.5; pointer-events: none; }
+.book__actions .form-status { margin: 0; }
+
+/* bevestiging */
+.book__done { padding: clamp(0.5rem, 2vw, 1.5rem) 0; animation: calIn 0.45s var(--ease-out-expo) both; }
+.book__done:focus { outline: none; }
+.book__done .book__step span { border-color: var(--pink); color: var(--pink); }
+
+.book__done-title {
+  font-family: var(--font-display);
+  font-stretch: 112.5%;
+  font-weight: 700;
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  letter-spacing: -0.04em;
+}
+
+.book__done-text { max-width: 60ch; margin-top: 0.8rem; line-height: 1.7; color: var(--muted); }
+.book__done-text a { color: var(--paper); background: var(--spectrum) left bottom / 100% 1px no-repeat; }
+
+.book__off p { max-width: 60ch; line-height: 1.7; color: var(--muted); }
+.book__off a { color: var(--paper); background: var(--spectrum) left bottom / 100% 1px no-repeat; }
+
+@keyframes calIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 1000px) {
+  .book__grid { grid-template-columns: 1fr 1fr; }
+  .book__types { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; }
+  .book__types .book__step { width: 100%; }
+  .book-type { flex: 1 1 180px; }
+  .book__form { grid-template-columns: 1fr; }
+  .book__actions { grid-column: 1; }
+}
+
+@media (max-width: 640px) {
+  .book__grid { grid-template-columns: 1fr; }
+  .book-type__body em { display: none; }
+  .book__fields { grid-template-columns: 1fr; }
+  .book__slots { max-height: none; }
+}
 
 /* ─────────────────────────────────────────
    15. Footer: elke pagina eindigt bij zonsondergang

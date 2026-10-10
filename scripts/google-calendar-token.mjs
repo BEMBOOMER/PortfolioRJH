@@ -4,7 +4,7 @@
 // Sign in with the Google account whose calendar should receive the bookings,
 // then copy the printed refresh token into Vercel as GOOGLE_REFRESH_TOKEN.
 import http from 'node:http';
-import { exec } from 'node:child_process';
+import { exec, execSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 
 // Either pass the client JSON that Google lets you download, or set the env vars.
@@ -40,10 +40,17 @@ const server = http.createServer(async (req, res) => {
   const j = await r.json();
   res.end(j.refresh_token ? 'Done, you can close this tab and go back to the terminal.' : 'No refresh token received, see terminal.');
   if (j.refresh_token) {
-    // a ready-to-paste .env block: Vercel splits it into three variables when pasted into the Key field
-    console.log(`\nPaste this into Vercel > Settings > Environment Variables:\n\nGOOGLE_CLIENT_ID=${id}\nGOOGLE_CLIENT_SECRET=${secret}\nGOOGLE_REFRESH_TOKEN=${j.refresh_token}\n`);
+    // put a ready-to-paste .env block on the clipboard instead of printing secrets;
+    // Vercel splits it into three variables when pasted into the Key field
+    const block = `GOOGLE_CLIENT_ID=${id}\nGOOGLE_CLIENT_SECRET=${secret}\nGOOGLE_REFRESH_TOKEN=${j.refresh_token}\n`;
+    try {
+      execSync('pbcopy', { input: block });
+      console.log('\nGelukt. De drie regels staan op je klembord: plak ze (cmd+V) in het Key-veld in Vercel.\n');
+    } catch {
+      console.log(`\nPaste this into Vercel > Settings > Environment Variables:\n\n${block}`);
+    }
   } else {
-    console.log(j);
+    console.log('Geen refresh token ontvangen:', j.error || j);
   }
   server.close();
 });

@@ -590,27 +590,14 @@ function setupPhotoLine(root) {
   // autoplay; wacht zolang iemand aan het slepen of klikken is
   if (autoplay && n > 1) {
     setInterval(() => {
-      if (document.hidden || drag || performance.now() - lastTouch < autoplay) return;
+      if (document.hidden || drag || document.querySelector('dialog[open]') || performance.now() - lastTouch < autoplay) return;
       goTo(active >= n - 1 ? 0 : active + 1);
     }, autoplay);
   }
 
-  // groot bekijken
-  const box = document.getElementById('plLightbox');
-  const boxImg = box && box.querySelector('img');
-  const boxTitle = box && box.querySelector('.pw-lightbox__title');
+  // groot bekijken: dezelfde lightbox als de galerij eronder
   function openPhoto(i) {
-    if (!box || typeof box.showModal !== 'function') return;
-    const c = cards[i];
-    const img = c.querySelector('img');
-    boxImg.src = c.dataset.full || img.src;
-    boxImg.alt = img.alt;
-    boxTitle.textContent = c.dataset.title || '';
-    box.showModal();
-  }
-  if (box) {
-    box.querySelector('.pw-lightbox__close').addEventListener('click', () => box.close());
-    box.addEventListener('click', (e) => { if (e.target === box) box.close(); });
+    if (photoBox) photoBox.open(cards[i].dataset.full);
   }
 
   // horizontaal swipen met twee vingers op het trackpad (of shift + scrollwiel)
@@ -697,6 +684,61 @@ function setupPhotoLine(root) {
 }
 
 /* ─────────────────────────────────────────
+   Foto groot bekijken: één lightbox voor de fotolijn en de galerij.
+   Pijltjes (of de knoppen) bladeren door alle foto's van de pagina.
+───────────────────────────────────────── */
+let photoBox = null;
+
+function initPhotoBox() {
+  const box = document.getElementById('plLightbox');
+  if (!box || typeof box.showModal !== 'function') return;
+
+  // de galerij is de volledige lijst; zonder galerij bladeren we door de fotolijn
+  let items = [...document.querySelectorAll('.pg__btn')];
+  if (!items.length) items = [...document.querySelectorAll('.pl__card')];
+  if (!items.length) return;
+
+  const img = box.querySelector('img');
+  const title = box.querySelector('.pw-lightbox__title');
+  const caption = box.querySelector('.pw-lightbox__caption');
+  let at = 0;
+
+  function show(i) {
+    at = (i + items.length) % items.length;
+    const d = items[at].dataset;
+    img.src = d.full;
+    img.alt = d.title || '';
+    title.textContent = d.title || '';
+    if (caption) caption.textContent = d.caption || '';
+    // de buren alvast ophalen, dan bladert het zonder haperen
+    [at - 1, at + 1].forEach((k) => { new Image().src = items[(k + items.length) % items.length].dataset.full; });
+  }
+
+  function open(src) {
+    const i = items.findIndex((el) => el.dataset.full === src);
+    show(i < 0 ? 0 : i);
+    if (!box.open) box.showModal();
+  }
+
+  items.forEach((el) => {
+    if (el.matches('.pg__btn')) el.addEventListener('click', () => open(el.dataset.full));
+  });
+
+  box.querySelector('.pw-lightbox__close').addEventListener('click', () => box.close());
+  box.addEventListener('click', (e) => { if (e.target === box) box.close(); });
+  const prev = box.querySelector('.pw-lightbox__nav--prev');
+  const next = box.querySelector('.pw-lightbox__nav--next');
+  if (prev) prev.addEventListener('click', () => show(at - 1));
+  if (next) next.addEventListener('click', () => show(at + 1));
+  box.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') show(at - 1);
+    else if (e.key === 'ArrowRight') show(at + 1);
+  });
+
+  photoBox = { open };
+}
+
+/* ─────────────────────────────────────────
    11. Init
 ───────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
@@ -713,5 +755,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initShotFrames();
   initCopyCommand();
   initReel();
+  initPhotoBox();
   initPhotoLine();
 });

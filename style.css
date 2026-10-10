@@ -3330,13 +3330,129 @@ h1, h2, h3 { font-weight: 700; }
   .pl__sub { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 }
 
+/* de galerij onder de fotolijn: alle foto's, geordend per moment */
+.pg { margin-top: clamp(3.5rem, 8vw, 6rem); }
+.pg .dv-head { margin-bottom: 0; border-bottom: 0; }
+
+.pg__group {
+  --c: 5;
+  --g: 12px;
+  container-type: inline-size;
+  padding-top: clamp(1.5rem, 3vw, 2.25rem);
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  border-top: 1px solid var(--line);
+}
+
+.pg__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.pg__title {
+  font-family: var(--font-display);
+  font-stretch: 112.5%;
+  font-weight: 700;
+  font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+  letter-spacing: -0.03em;
+}
+
+.pg__desc { flex: 1 1 240px; color: var(--muted); }
+
+.pg__count {
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 600;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.pg__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--c), minmax(0, 1fr));
+  gap: 1.1rem var(--g);
+}
+
+.pg__item { min-width: 0; margin: 0; }
+.pg__item--wide { grid-column: span 2; }
+
+/* vaste hoogte uit de kolombreedte (2:3), zodat liggende foto's over twee kolommen precies even hoog zijn */
+.pg__btn {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: calc((100cqi - (var(--c) - 1) * var(--g)) / var(--c) * 1.5);
+  padding: 0;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.pg__btn img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease-out-expo), filter 0.3s ease;
+}
+
+.pg__btn:hover img { transform: scale(1.04); }
+.pg__btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+  pointer-events: none;
+}
+
+.pg__item figcaption { display: grid; gap: 0.1rem; margin-top: 0.55rem; }
+.pg__item figcaption b {
+  font-family: var(--font-display);
+  font-stretch: 112.5%;
+  font-weight: 600;
+  font-size: 0.88rem;
+  letter-spacing: -0.01em;
+}
+.pg__item figcaption span { font-size: 0.8rem; line-height: 1.4; color: var(--faint); }
+
+@media (max-width: 1100px) { .pg__group { --c: 4; } }
+@media (max-width: 820px)  { .pg__group { --c: 3; } }
+@media (max-width: 560px)  { .pg__group { --c: 2; --g: 10px; } .pg__item figcaption span { display: none; } }
+
+/* bladeren in de lightbox */
+.pw-lightbox__caption {
+  position: absolute;
+  left: 0.2rem;
+  right: 0.2rem;
+  top: calc(100% + 0.7rem);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.pw-lightbox__nav { position: fixed; top: 50%; margin-top: -22px; }
+.pw-lightbox__nav--prev { left: clamp(12px, 2.5vw, 32px); }
+.pw-lightbox__nav--next { right: clamp(12px, 2.5vw, 32px); }
+.pw-lightbox__inner--photo img { max-width: min(calc(100vw - 150px), 1200px); max-height: 80vh; }
+
+@media (max-width: 760px) {
+  .pw-lightbox__nav { top: auto; bottom: 20px; margin-top: 0; }
+  .pw-lightbox__nav--prev { left: auto; right: 72px; }
+  .pw-lightbox__nav--next { right: 16px; }
+  .pw-lightbox__inner--photo img { max-width: 92vw; max-height: 66vh; }
+}
+
 /* foto groot bekijken: dezelfde lightbox als bij de video's */
 .pw-lightbox__inner--photo { height: auto; aspect-ratio: auto; }
 
 .pw-lightbox__inner--photo img {
   display: block;
-  max-width: min(92vw, 1200px);
-  max-height: 84vh;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius);
   box-shadow: 0 40px 120px -30px rgba(255, 128, 171, 0.3);

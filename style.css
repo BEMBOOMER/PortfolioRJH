@@ -2979,6 +2979,13 @@ h1, h2, h3 { font-weight: 700; }
 .dv-wall figure img { display: block; }
 
 /* rij Instagram-iconen */
+/* Groot en klein: nummers verticaal gecentreerd naast de tekst */
+.dv-section--centered-nr .dv-shot__cap { align-items: center; }
+.dv-section--centered-nr .dv-shot__text { padding-top: 0; }
+.dv-section--centered-nr .dv-shot__nr { line-height: 1; padding-top: 0.08em; flex-shrink: 0; }
+.dv-shot--icons { margin-top: 2rem; }
+.dv-shot--icons .dv-icons { margin-top: 0; }
+
 .dv-icons {
   display: flex;
   flex-wrap: wrap;
